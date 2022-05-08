@@ -1,0 +1,145 @@
+﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Income
+            <div class="pull-right">
+                <button type="button" name="Product" data-toggle="modal" data-target="#Income" class="btn btn-primary btn-sm btn-flat" ng-click="AddIncome()"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+            </div>
+        </h3>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Income List</h3>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="col-md-2">
+                            <label>Search</label>
+                            <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Search" />
+                        </div>
+                        <div class="col-md-2">
+                            <label>Start Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm datepicker" id="txtsearchStartDate" placeholder="Start Date" />
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label>End Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm datepicker" id="txtsearchEndDate" placeholder="End Date" />
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="padding-top:25px;">
+                            <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                            <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                        </div>
+                        <div class="col-md-1">
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblIncome" class="table table-bordered" role="grid" style="width:100%;"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="ActionButtons" style="text-align:right;display:none">
+        </div>
+
+    </section>
+</div>
+
+
+<div class="modal fade" id="Income" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="ClearForm()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Income</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Income Name</label> 
+                            <input type="text" class="form-control input-sm" id="txtIncomeName" ng-model="Income.IncomeName" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Amount</label> 
+                            <input type="text" class="form-control input-sm" id="txtAmount" placeholder="Amount" ng-model="Income.Amount" valid-number  />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Income Date</label>
+                            <input type="text" class="form-control input-sm datepicker" id="txtIncomeDate" placeholder="Income Date" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Accounts Head</label>
+                            <select class="form-control input-sm" id="dpdAccountHead" ng-model="Income.AccountsHeadId" ng-options="head.AccountsHeadId as head.HeadName for head in AccountsHeadList">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Description</label><br />
+                            <textarea class="form-control input-sm" rows="3" id="txtDesc" placeholder="Description" ng-model="Income.Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Transaction Mode</label>
+                            <select class="form-control input-sm" id="TransactionMode" ng-model="Income.TransactionMode">
+                                <option value="">Select</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Cheque">Cheque</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Reference Number</label>
+                            <input type="text" class="form-control input-sm" id="txtReferenceNumber" placeholder="Reference Number" ng-model="Income.ReferenceNumber" valid-number />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveIncome()"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

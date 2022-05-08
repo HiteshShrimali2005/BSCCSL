@@ -1,0 +1,367 @@
+﻿<div class="content-wrapper">
+
+    <section class="content-header">
+        <h3>
+            Non Individual / Bussiness Loan Applicantion Form
+        </h3>
+        <div>
+            <a class="btn btn-primary btn-sm btn-flat" ng-click="EditBusinessLoan()"><i class="glyphicon glyphicon-plus"></i>Edit Business Loan</a>
+        </div>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12" style="padding-top:5px">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Non Indivisual Appliacant's details </legend>
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label for="focusedinput" class="control-label lablefont">Customer Name</label>
+                                    <input type="text" class="form-control input-sm" id="txtCustomerName" placeholder="CustomerName" ng-model="BusinessLoan.CustomerName" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="focusedinput" class="control-label lablefont">Established Date</label>
+                                    <input type="text" class="form-control input-sm" id="txtEstablishedDate" placeholder="Established Date" ng-model="BusinessLoan.EstablishDate" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="focusedinput" class="control-label lablefont">Number of years in Current Business</label>
+
+                                    <input type="text" class="form-control input-sm" placeholder="Number of years in Current Business" id="txtNumberOfYearsInBusiness" ng-model="BusinessLoan.NumberOfYearsInBusiness" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="focusedinput" class="control-label lablefont">PAN/GIR NO.</label>
+
+                                    <input type="text" class="form-control input-sm" id="txtPANOrGRINumber" placeholder="PAN/GIR NO." ng-model="BusinessLoan.PANOrGRINumber" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="focusedinput" class="control-label lablefont">Anual Turn Over&nbsp;&nbsp;</label>
+                                    <label class="labelradiocheckbox" ng-repeat="l in LookUp |filter : {CategoryName : 'AnualTurnOver'}">
+                                        <input icheck name="AnualTurnOver" type="radio" ng-model="$parent.BusinessLoan.AnualTurnOver" value="{{l.LookupId}}">&nbsp;&nbsp;<span>{{l.Name}}</span>&nbsp;&nbsp;
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--<div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="focusedinput" class="control-label lablefont">Anual Turn Over :</label><br />
+                                    <label class="labelradiocheckbox" ng-repeat="l in LookUp |filter : {CategoryName : 'AnualTurnOver'}">
+                                        <input icheck name="AnualTurnOver" type="radio" ng-model="$parent.BusinessLoan.AnualTurnOver" value="{{l.LookupId}}">&nbsp;&nbsp;<span>{{l.Name}}</span>&nbsp;&nbsp;
+                                    </label> 
+                                </div>
+                            </div>-->
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="focusedinput" class="control-label lablefont">Industry Type(Self Earning)  &nbsp;&nbsp;</label>
+                                    <label class="labelradiocheckbox" ng-repeat="l in LookUp |filter : {CategoryName : 'IndustryType'}">
+                                        <input icheck name="IndustryType" type="radio" ng-model="$parent.BusinessLoan.IndustryType" value="{{l.LookupId}}">&nbsp;&nbsp;<span>{{l.Name}}</span>&nbsp;&nbsp;
+                                    </label> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="focusedinput" class="control-label lablefont">Agriculturist if applicable &nbsp;&nbsp;</label>
+                                    <label class="labelradiocheckbox" ng-repeat="l in LookUp |filter : {CategoryName : 'AgricultureIfApplicable'}">
+                                        <input icheck name="AgricultureIfApplicable" type="radio" ng-model="$parent.BusinessLoan.AgricultureIfApplicable" value="{{l.LookupId}}">&nbsp;&nbsp;<span>{{l.Name}}</span>&nbsp;&nbsp;
+                                    </label> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="focusedinput" class="control-label lablefont">Company Type  &nbsp;&nbsp;</label>
+                                    <label class="labelradiocheckbox" ng-repeat="l in LookUp |filter : {CategoryName : 'CompanyType '}">
+                                        <input icheck name="CompanyType" type="radio" ng-model="$parent.BusinessLoan.CompanyType" value="{{l.LookupId}}">&nbsp;&nbsp;<span>{{l.Name}}</span>&nbsp;&nbsp;
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <br />
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Applicant's Financial Details</legend>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table id="tblCustomer" class="table table-bordered" role="grid" style="width:100%;">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th>Details</th>
+                                                    <th>(Na.v____Rs.)</th>
+                                                    <th>(Na.v____Rs.)</th>
+                                                    <th>(Na.v____Rs.)</th>
+                                                </tr>
+                                                <tr> <td>Selling</td> <td></td> <td></td></tr>
+                                                <tr><td>Operating Profit</td><td></td><td></td> </tr>
+                                                <tr><td>After Karvero</td><td></td><td></td> </tr>
+                                                <tr><td>Net Worths</td><td></td><td></td> </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <br />
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Avas Address Details</legend>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="focusedinput" class="control-label lablefont"><label>Primary Post Office Address</label></label>
+                                    <input type="text" class="form-control input-sm" placeholder="Primary Post Office Address" id="txtPrimaryPostOfficeAddress" ng-model="BusinessLoan.PrimaryPostOfficeAddress">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Number of year/month of Current Address</label>
+                                    <input type="text" placeholder="Number of year/month of Current Address" class="form-control input-sm" id="txtNumberOfYearsOfCurrentAddress" ng-model="BusinessLoan.NumberOfYearsOfCurrentAddress">
+
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Number of Years in Current City</label>
+                                    <input type="text" placeholder="Number of Years in Current City" class="form-control input-sm" id="txtNumberOfYearsOfCurrentCity" ng-model="BusinessLoan.NumberOfYearsOfCurrentCity">
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group required">
+                                        <label for="focusedinput" class="control-label lablefont">Address 1</label>
+                                        <textarea type="text" class="form-control input-sm" id="txtAccomodationAddress1" ng-model="BusinessLoan.AccomodationAddress1" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group ">
+                                        <label for="focusedinput" class="control-label lablefont">Address 2</label>
+                                        <textarea type="text" class="form-control input-sm" id="txtAccomodationAddress2" ng-model="BusinessLoan.AccomodationAddress2" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group required">
+                                        <label for="focusedinput" class="control-label lablefont">Landmark</label>
+                                        <input type="text" class="form-control input-sm" id="txtLandMark" placeholder="Landmark" ng-model="BusinessLoan.LandMark" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">City</label>
+                                        <input id="txtcity" class="form-control input-sm" type="text" placeholder="City" ng-model="BusinessLoan.City">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group required">
+                                        <label for="focusedinput" class="control-label lablefont">State</label>
+                                        <input type="text" class="form-control input-sm" id="txtState" placeholder="State" ng-model="BusinessLoan.State" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">PinCode</label>
+                                        <input id="txtPincode" class="form-control input-sm" type="text" placeholder="PinCode" ng-model="BusinessLoan.Pincode">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Country</label>
+                                        <input id="txtContry" class="form-control input-sm" type="text" placeholder="Country" ng-model="BusinessLoan.Country">
+                                    </div>
+                                </div>
+                            </div>
+                            <label> <strong> Avas's Contact Details </strong></label>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group required">
+                                        <label for="focusedinput" class="control-label lablefont">Country Code</label>
+                                        <input type="text" class="form-control input-sm" id="txtCountryCode" placeholder="Country Code" ng-model="BusinessLoan.CountryCode" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">STD Code</label>
+                                        <input id="txtSTDCode" class="form-control input-sm" type="text" placeholder="STD Code" ng-model="BusinessLoan.STDCode">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Phone No.</label>
+                                        <input id="txtPhoneNo" class="form-control input-sm" type="text" placeholder="Phone No." ng-model="BusinessLoan.PhoneNo">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Accetension</label>
+                                        <input id="txtAccetension" class="form-control input-sm" type="text" placeholder="Accetension" ng-model="BusinessLoan.Accetension">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group required">
+                                        <label for="focusedinput" class="control-label lablefont">Email</label>
+                                        <input type="text" class="form-control input-sm" id="txtEmail" placeholder="Email" ng-model="BusinessLoan.Email" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Mobile No.</label>
+                                        <input id="txtMobileNo" class="form-control input-sm" type="text" placeholder="Mobile No." ng-model="BusinessLoan.MobileNo">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label><strong>Accomodation Type : </strong></label>
+                                    <label class="labelradiocheckbox" ng-repeat="l in LookUp |filter : {CategoryName : 'AccomodationType'}">
+                                        <input icheck name="AccomodationType" type="radio" ng-model="$parent.BusinessLoan.AccomodationType" value="{{l.LookupId}}">&nbsp;&nbsp;<span>{{l.Name}}</span>&nbsp;&nbsp;
+                                    </label> 
+                                </div>
+                            </div>
+                        </fieldset>
+                        <br />
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border"> Office Address</legend>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Primary Post Office Address</label>
+                                        <input type="text" class="form-control input-sm" placeholder="Primary Post Office Address" id="txtOfficePrimaryPostOfficeAddress" ng-model="BusinessLoan.OfficePrimaryPostOfficeAddress">
+                                    </div>
+                                    
+                                </div>
+                                <div class=" form-group col-md-4">
+                                    <label>Number of year/month in Current Organization</label>
+                                    <input type="text" class="form-control input-sm" placeholder="Number of year/month in Current Organization" id="txtNumberOfYearsOfCurrentOrganization" ng-model="BusinessLoan.NumberOfYearsOfCurrentOrganization">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Number of Years of Total Experience</label>
+                                    <input type="text" placeholder="Number of Years of Total Experience" class="form-control input-sm" id="NumberOfYearsOfExperience" ng-model="BusinessLoan.NumberOfYearsOfExperience">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Company Name</label>
+                                        <input id="txtCompanyName" class="form-control input-sm" type="text" placeholder="Company Name" ng-model="BusinessLoan.CompanyName">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Position</label>
+                                        <input id="txtPosition" class="form-control input-sm" type="text" placeholder="Position" ng-model="BusinessLoan.Position">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group required">
+                                        <label for="focusedinput" class="control-label lablefont">Address 1</label>
+                                        <textarea type="text" class="form-control input-sm" id="txtOfficeAccomodationAddress1"ng-model="BusinessLoan.OfficeAccomodationAddress1" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group ">
+                                        <label for="focusedinput" class="control-label lablefont">Address 2</label>
+                                        <textarea type="text" class="form-control input-sm" id="OfficeAccomodationAddress2"  ng-model="BusinessLoan.OfficeAccomodationAddress2" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group required">
+                                        <label for="focusedinput" class="control-label lablefont">Landmark</label>
+                                        <input type="text" class="form-control input-sm" id="txtOfficeLandMark" placeholder="Landmark" ng-model="BusinessLoan.OfficeLandMark" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">City</label>
+                                        <input id="txtOfficeCity" class="form-control input-sm" type="text" placeholder="City" ng-model="BusinessLoan.OfficeCity">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                             
+                                <div class="col-md-4">
+                                    <div class="form-group required">
+                                        <label for="focusedinput" class="control-label lablefont">State</label>
+                                        <input type="text" class="form-control input-sm" id="txtOfficeState" placeholder="State" ng-model="BusinessLoan.OfficeState" />
+                                    </div>
+                                </div>
+                           
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">PinCode</label>
+                                        <input id="txtOfficePincode" class="form-control input-sm" type="text" placeholder="PinCode" ng-model="BusinessLoan.OfficePincode">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Country</label>
+                                        <input id="txtOfficeCountry" class="form-control input-sm" type="text" placeholder="Country" ng-model="BusinessLoan.OfficeCountry">
+                                    </div>
+                                </div>
+                            </div>
+                            <label> <strong> Office Contact Details </strong></label>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group required">
+                                        <label for="focusedinput" class="control-label lablefont">Country Code</label>
+                                        <input type="text" class="form-control input-sm" id="txtOfficeCountryCode" placeholder="Country Code" ng-model="BusinessLoan.OfficeCountryCode" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">STD Code</label>
+                                        <input id="txtOfficeSTDCode" class="form-control input-sm" type="text" placeholder="STD Code" ng-model="BusinessLoan.OfficeSTDCode">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Phone No.</label>
+                                        <input id="txtOfficePhoneNo" class="form-control input-sm" type="text" placeholder="Phone No." ng-model="BusinessLoan.OfficePhoneNo">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Extension</label>
+                                        <input id="txtOfficeAccExtension" class="form-control input-sm" type="text" placeholder="Extension" ng-model="BusinessLoan.OfficeAccExtension">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group required">
+                                        <label for="focusedinput" class="control-label lablefont">Email</label>
+                                        <input type="text" class="form-control input-sm" id="txtOfficeEmail" placeholder=" email" ng-model="BusinessLoan.OfficeEmail" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Mobile No.</label>
+                                        <input id="txtOfficeMobileNo" class="form-control input-sm" type="text" placeholder="Mobile No" ng-model="BusinessLoan.OfficeMobileNo">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label><strong>Accomodation Type : </strong></label>
+                                    <label class="labelradiocheckbox" ng-repeat="l in LookUp |filter : {CategoryName : 'AccomodationType'}">
+                                        <input icheck name="OfficeAccomodationType" type="radio" ng-model="$parent.BusinessLoan.OfficeAccomodationType" value="{{l.LookupId}}">&nbsp;&nbsp;<span>{{l.Name}}</span>&nbsp;&nbsp;
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <br />
+                        <div>
+                            <button class="btn btn-primary btn-sm btn-flat pull-right" ng-click="SaveBusinessLoan()"><i class="glyphicon glyphicon-plus"></i> Save Business Loan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

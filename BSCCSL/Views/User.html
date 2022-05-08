@@ -1,0 +1,74 @@
+﻿
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            User
+            <div class="pull-right">
+                <button type="button" name="User" data-toggle="modal" data-target="#User" class="btn btn-primary btn-sm btn-flat" ng-click="Add();"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+            </div>
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">User List</h3>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="col-md-3">
+                            <label>Search</label>
+                            <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Name or User Code" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>Role</label>
+                            <div>
+                                <select class="form-control input-sm" id="rolesearch">
+                                    <option value="">Select</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Cashier">Cashier</option>
+                                    <option value="Agent">Agent</option>
+                                    <option value="Clerk">Clerk</option>
+                                    <option value="CashierPlusClerk">Cashier + Clerk</option>
+                                    <option value="Scree_Sales">Scree-Sales</option>
+                                    <option value="Sales_Manager">Sales Manager</option>
+                                </select>
+                            </div>
+                        </div><br />
+                        <div class="col-md-3">
+                            <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                            <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                        </div>
+                        <div class="col-md-1">
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblUser" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Name</th>
+                                            <th>Gender</th>
+                                            <th>Phone No</th>
+                                            <th>DOB</th>
+                                            <th>Branch</th>
+                                            <th>User Code</th>
+                                            <th>Role</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<ng-include src="'Views/AddUser.html'"></ng-include>

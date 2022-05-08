@@ -1,0 +1,793 @@
+﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Transaction
+        </h3>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12" style="padding-bottom:10px">
+                <div class="col-md-7"></div>
+                <div class="col-md-3">
+                    <input type="text" id="txtaccountno" class="form-control input-sm" ng-model="Accountno" placeholder="Account Number" />
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SearchAccount()"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;Search</button>
+                    <button type="button" class="btn btn-default btn-sm btn-flat" ng-click="Reset()"><i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Reset</button>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="HolderData.details.length >0">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title pull-left" ng-if="show==1">Branch Name : {{HolderData.BranchName}}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <h3 class="box-title pull-center" ng-if="show==1">
+                            Account Type :{{HolderData.ProductTypeName}}
+                            <span>
+                                ({{HolderData.AccountNo}})
+                            </span>
+                        </h3>
+
+                        <h3 class="box-title pull-right" ng-if="show==1">Current Balance : {{HolderData.Balance  | number : 2}} </h3><br />
+                        <h3 class="box-title pull-right" ng-if="show==1">Unclear Balance : {{HolderData.UnclearBalance  | number : 2}}</h3><br />
+                        <h3 class="box-title pull-right" ng-if="show==1 && HolderData.ProductType == 5">Total Pending EMI Amount : {{HolderData.TotalLoanPendingAmount  | number : 2}}</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12" ng-show="show==1">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-condensed" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Holder Photo</th>
+                                            <th>Holder Name</th>
+                                            <th>Address</th>
+                                            <th>DOB</th>
+                                            <th>Gender</th>
+                                            <th>Holder Sign</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="holder in HolderData.details" ng-show="HolderData.details.length!=0">
+                                            <td>
+                                                <a>
+                                                    <img id="holderpic_{{$index}}" height="100" width="80" data-toggle="modal" data-target="#myModal" src="../Documents/{{holder.HolderPhoto}}" />
+                                                </a>
+                                            </td>
+                                            <td>{{holder.FirstName+ " " +holder.LastName}}</td>
+                                            <td>{{holder.Address}}</td>
+                                            <td>{{holder.DOB | date:'dd/MM/yyyy'}}</td>
+                                            <td>{{holder.Sex}}</td>
+                                            <td>
+                                                <a>
+                                                    <img id="holderpic_{{$index}}" height="100" width="80" data-toggle="modal" data-target="#myModal" src="../Documents/{{holder.Holdersign}}" />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr ng-show="HolderData.details.length==0">
+                                            <td rowspan="4">
+                                                No data Found.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-show="HolderData.Status != 6">
+                            <div class="col-md-8 pull-right" style="text-align:right">
+                                <button class="btn btn-warning btn-sm btn-flat" ng-click="CreateAutoFD()" ng-show="(HolderData.ProductType == 1 && HolderData.ProductCode == 'SA04')">Create FD</button>
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="OpenDepositModal()" ng-show="(HolderData.ProductType == 1 || HolderData.ProductType == 2)">Deposit</button>
+                                <button class="btn btn-success btn-sm btn-flat " ng-click="OpenWithdrawModal()" ng-show="(HolderData.ProductType == 1 || HolderData.ProductType == 2)">Withdraw</button>
+                                <button class="btn btn-info btn-sm btn-flat" ng-click="OpenInterAccTransferModal()" ng-show="(HolderData.ProductType == 1 || HolderData.ProductName == 'Akshaya Tritiya')">Inter Account</button>
+                                <button class="btn btn-sm btn-flat" ng-click="OpenBankTransfer()" ng-show="HolderData.ProductType == 1">Bank Transfer</button>
+                                <button class="btn btn-warning btn-sm btn-flat" ng-click="OpenLoanPrePayment()" ng-show="HolderData.ProductType == 1">Loan PrePayment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="HolderData.details.length >0">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Transaction List </h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtserchStartDate" placeholder="Start Date" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>End Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtserchEndDate" placeholder="End Date" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Type</label>
+                                <select class="form-control input-sm" id="ddlSearchType" ng-model="SearchType">
+                                    <option value="">Select Type</option>.
+                                    <option value="1">CR</option>
+                                    <option value="2">DR</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5" style="padding-top:25px;">
+                                <button class="btn btn-primary btn-flat btn-sm" ng-click="SearchData()"><i class="fa fa-search"></i> Search</button>
+                                <button class="btn btn-default btn-flat btn-sm" ng-click="SearchClearData()"><i class="fa fa-refresh"></i> Clear</button>
+                                <button type="button" class="btn btn-info btn-sm btn-flat" ng-click="DownloadPDF()"><i class="glyphicon glyphicon-download"></i>&nbsp;&nbsp;Download PDF</button>
+                                <!--<button class="btn btn-sm btn-flat" ng-click="PrintRDStatement()" ng-show="HolderData.ProductType == 4">Print</button>-->
+
+                            </div>
+                        </div>
+                        <div class="col-md-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblTransaction" class="table table-bordered" role="grid" style="width:100%;" ng-show="show==1">
+                                    <thead>
+                                        <tr role="row" class="align-center">
+                                            <th>Date</th>
+                                            <th>WithDrawal</th>
+                                            <th>Deposit</th>
+                                            <th>Balance</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal fade" id="Withdraw" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="ClearForm()">&times;</button>
+                <h4 class="modal-title">Withdraw</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!--<div class="col-md-6" >
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Transaction Time</label>
+                            <div>
+                                <input type="text" class="form-control input-sm" id="txtWithdrawTransactionTime">
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Transaction Type</label>
+                            <div>
+                                <select class="form-control input-sm" id="ddlWithdrawTransactionType" ng-model="WithdrawTransactionType">
+                                    <option value="">Select</option>.
+                                    <option value="1">Cash</option>
+                                    <option value="2">DD</option>
+                                    <option value="3">Cheque</option>
+                                    <option value="7">NEFT</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Withdraw Amount</label>
+                            <div>
+                                <input type="text" class="form-control input-sm" id="txtWithdrawamount" placeholder="Withdraw Amount" ng-model="WithdrawAmount" valid-Number />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" ng-hide="WithdrawTransactionType == 1 || WithdrawTransactionType == 0 || WithdrawTransactionType == 7">
+                            <label for="focusedinput" class="control-label lablefont">Cheque Date</label>
+                            <div>
+                                <input type="text" class="form-control input-sm datepicker" id="txtWithdrawCheckDate" placeholder="Date of Clearing">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" ng-hide="WithdrawTransactionType == 1 || WithdrawTransactionType == 0 || WithdrawTransactionType == 7">
+                            <label for="focusedinput" class="control-label lablefont">Cheque Number</label>
+                            <div>
+                                <input type="text" class="form-control input-sm" id="txtWithdrawChequeNumber" placeholder="Cheque Number" ng-model="WithdrawCheckNumber">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" ng-show="WithdrawTransactionType == 7">
+                            <label for="focusedinput" class="control-label lablefont">NEFT Date</label>
+                            <input type="text" class="form-control input-sm datepicker" id="txtWithdrawNEFTDate" placeholder="Enter NEFT Date">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" ng-show="WithdrawTransactionType == 7">
+                            <label for="focusedinput" class="control-label lablefont">NEFT Number</label>
+                            <input type="text" class="form-control input-sm" id="txtWithdrawNEFTNumber" placeholder="NEFT Number" ng-model="WithdrawNEFTNumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Description</label>
+                            <textarea class="form-control input-sm" rows="3" id="txtDescription" placeholder="Description" ng-model="Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-sm btn-flat" ng-click="Withdraw()"><i class="fa fa-check"></i>Withdraw</button>
+                <button class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Deposit" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="ClearForm()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Deposit</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!--<div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Transaction Time</label>
+                            <input type="text" class="form-control input-sm" id="txtTransactionTime">
+                        </div>
+                    </div>-->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Transaction Type</label>
+                            <select class="form-control input-sm" id="ddlTransactionType" ng-model="TransactionType">
+                                <option value="">Select</option>
+                                <option value="1">Cash</option>
+                                <option value="2" ng-show="HolderData.ProductType == 1 || HolderData.ProductType == 2">DD</option>
+                                <option value="3" ng-show="HolderData.ProductType == 1 || HolderData.ProductType == 2">Cheque</option>
+                                <option value="5" ng-show="HolderData.ProductType == 1 || HolderData.ProductType == 2">Balance Transfer</option>
+                                <option value="7" ng-show="HolderData.ProductType == 1 || HolderData.ProductType == 2">NEFT</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Deposit Amount</label>
+                            <input type="text" class="form-control input-sm" id="txtDepositamount" placeholder="Deposit Amount" ng-model="DepositAmount" valid-Number />
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" ng-hide="TransactionType == 1 || TransactionType == 0 || TransactionType == 5 || TransactionType == 7">
+                            <label for="focusedinput" class="control-label lablefont">Cheque Date</label>
+                            <input type="text" class="form-control input-sm datepicker" id="txtChequeDate" placeholder="Date of Clearing">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" ng-hide="TransactionType == 1 || TransactionType == 0 || TransactionType == 5 || TransactionType == 7">
+                            <label for="focusedinput" class="control-label lablefont">Cheque Number</label>
+                            <input type="text" class="form-control input-sm" id="txtCheckNumber" placeholder="Cheque Number" ng-model="CheckNumber">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" ng-show="TransactionType == 7">
+                            <label for="focusedinput" class="control-label lablefont">NEFT Date</label>
+                            <input type="text" class="form-control input-sm datepicker" id="txtNEFTDate" placeholder="Enter NEFT Date">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" ng-show="TransactionType == 7">
+                            <label for="focusedinput" class="control-label lablefont">NEFT Number</label>
+                            <input type="text" class="form-control input-sm" id="txtNEFTNumber" placeholder="NEFT Number" ng-model="NEFTNumber">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" ng-hide="TransactionType == 1 || TransactionType == 0 || TransactionType == 5">
+                            <label for="focusedinput" class="control-label lablefont">Bank Name</label>
+                            <input type="text" class="form-control input-sm" id="txtBankName" placeholder="Bank Name" ng-model="BankName">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Description</label>
+                            <textarea class="form-control input-sm" rows="3" id="txtDescription" placeholder="Description" ng-model="Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnDeposit" class="btn btn-primary btn-sm btn-flat" ng-click="Deposit()"><i class="fa fa-check"></i>Deposit</button>
+                <button class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-include src="'Views/CheckBounce.html'"></ng-include>
+
+<div class="modal fade" id="ClearChequePopup" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="ClearRecordOnCLose()">&times;</button>
+                <h4 class="modal-title">Cheque Clear Details</h4>
+            </div>
+            <div class="modal-body" style="margin-left: 0.5cm">
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Cheque Details</legend>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label">Cheque Number</label> {{TransactionData.CheckNumber}}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="focusedinput">Cheque Date</label> {{TransactionData.ChequeDate | date:'dd/MM/yyyy'}}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label ">Bank Name</label> {{TransactionData.BankName}}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label ">Deposite Amount</label> {{TransactionData.Amount}}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label ">Transaction Type</label> {{TransactionTypeName}}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label ">Transaction Time</label> {{TransactionData.TransactionTime | date:'dd/MM/yyyy hh:mm a'}}
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="form-inline" style="padding-top:0.5cm">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Cheque Clear Date</label>
+                                &nbsp;
+                                <input type="text" class="form-control input-sm datepicker" id="txtChequeCleanceDate" placeholder="Date of Clearing" />
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="row" style="padding-top:0.5cm">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div>
+                                <label>
+                                    <input icheck type="checkbox" ng-model="IsSameBranch" ng-change="RemoveErrorMessageinUncheck()" id="chksamebank" />  Same Bank
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control input-sm" id="txtAccNumber" ng-hide="!IsSameBranch" placeholder="Account Number" ng-model="SameBranchAccountNo" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-sm btn-flat" ng-model="Clicked" ng-hide="!IsSameBranch" ng-click="SearchAccountNumber();"><i class="glyphicon glyphicon-search"></i>Search</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4" ng-show="IsSameBranch">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label" ng-show="CustomerData.length > 0">Balance : {{AccBalance | number :2}} </label>
+                        </div>
+                    </div>
+                </div>
+                <!--<div>
+                    <h4 class="modal-title">Cheque Details</h4>
+                </div>-->
+                <div class="row">
+                    <div class="col-lg-12" ng-show="CustomerData.length > 0">
+                        <div class="table-responsive">
+                            <table id="tblTransaction" class="table table-bordered" role="grid" style="width:100%;" ng-show="show==1">
+                                <thead>
+                                    <tr role="row" class="align-center">
+                                        <th>Holder Name </th>
+                                        <th>Address</th>
+                                        <th>DOB</th>
+                                        <th>Mobile NO</th>
+                                        <th>Sign</th>
+                                    </tr>
+                                    <tr role="row" class="align-center" ng-repeat="c in CustomerData">
+                                        <td>{{c.CustomerName}}</td>
+                                        <td>{{c.Address}}</td>
+                                        <td>{{c.DOB | date:'dd/MM/yyyy'}}</td>
+                                        <td>{{c.MobileNo}}</td>
+                                        <td>
+                                            <a>
+                                                <img id="holdersign_{{$index}}" height="100" width="80" data-toggle="modal" data-target="#myModal" src="../Documents/{{c.Holdersign}}" />
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="ClearCheque();"><i class="glyphicon glyphicon-ok"></i> Clear Cheque</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" ng-click="BounceCheque();"><i class="glyphicon glyphicon-refresh"></i> Bounce Cheque</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="InterAccountTransfer" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Inter Account Transfer</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">From Account</label>
+                            <input type="text" class="form-control input-sm" id="txtFromAccount" placeholder="From Account" ng-model="Accountno" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">To Account</label>
+                            <select class="form-control input-sm" id="ddlToAccount" ng-model="RefCustomerProductId" ng-options="RD.CustomerProductId as RD.AccountNumber for RD in RDList" ng-change="PendingRDInstallments(RefCustomerProductId)">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--<div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Transaction Time</label>
+                            <input type="text" class="form-control input-sm" id="txtinterAcTransactionTime" placeholder="TransactionTime">
+                        </div>
+                    </div>-->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Amount</label>
+                            <input type="number" class="form-control input-sm" id="txtAmount" placeholder="Amount" ng-model="Amount" step="0.01" valid-Number readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Installment Date</th>
+                                        <th>Installment Amount</th>
+                                        <th ng-hide="HolderData.ProductName == 'Akshaya Tritiya'">LatePaymentCharges</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="installment in PendingInstallments">
+                                        <td><input icheck type="checkbox" ng-model="installment.Check" id="chkCheck_{{$index}}" ng-change="SelectInstallments()"></td>
+                                        <td class="text-center">{{installment.CreatedDate | date:'dd/MM/yyyy'}}</td>
+                                        <td class="text-right">{{installment.Amount | number : 2}}</td>
+                                        <td class="text-right" ng-hide="HolderData.ProductName == 'Akshaya Tritiya'"> <div class="form-group"><input type="text" id="txtLatePaymentCharges_{{$index}}" class="form-control input-sm" ng-model="installment.LatePaymentCharges" valid-Number ng-change="SelectInstallments()" /></div> </td>
+                                        <td class="text-right">{{installment.Amount +  (installment.LatePaymentCharges == ''? 0 : parseFloat(installment.LatePaymentCharges)) | number : 2}}</td>
+                                    </tr>
+                                    <tr ng-if="PendingInstallments.length == 0">
+                                        <td colspan="5" class="text-center">
+                                            No Pending Installments
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveInterAccountTransfer()" ng-show="PendingInstallments.length > 0"><i class="fa fa-check"></i>Transfer</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="BankTransfer" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="ClearBankTransferForm()">&times;</button>
+                <h4 class="modal-title">Bank Account Transfer</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">From Account</label>
+                            <input type="text" class="form-control input-sm" id="txtFromAccount" placeholder="From Account" ng-model="BankTransfer.Accountno" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">To Account</label>
+                            <input type="text" class="form-control input-sm" id="txtToAccount" placeholder="To Account" ng-model="BankTransfer.ToAccountNo" ng-blur="GetCustomerDataFromAccountNumber(BankTransfer.ToAccountNo)">
+                        </div>
+                    </div>
+                    <!--<div class="col-md-3">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Transaction Time</label>
+                            <input type="text" class="form-control input-sm" id="txtBankAcTransactionTime" placeholder="TransactionTime">
+                        </div>
+                    </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Amount</label>
+                                        <input type="text" class="form-control input-sm" id="txtBankTrnAmount" placeholder="Amount" ng-model="BankTransfer.Amount" valid-Number>
+                                    </div>
+                                </div>-->
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Description</label>
+                            <textarea class="form-control input-sm" rows="3" id="txtDescription" placeholder="Description" ng-model="BankTransfer.Description"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Amount</label>
+                            <input type="text" class="form-control input-sm" id="txtBankTrnAmount" placeholder="Amount" ng-model="BankTransfer.Amount" valid-Number>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12" ng-show="CustomerData.length > 0">
+                        <div class="table-responsive">
+                            <table id="tblTransaction" class="table table-bordered" role="grid" style="width:100%;" ng-show="show==1">
+                                <thead>
+                                    <tr role="row" class="align-center">
+                                        <th>Holder Name </th>
+                                        <th>Address</th>
+                                        <th>DOB</th>
+                                        <th>Mobile NO</th>
+                                        <th>Sign</th>
+                                    </tr>
+                                    <tr role="row" class="align-center" ng-repeat="c in CustomerData">
+                                        <td>{{c.CustomerName}}</td>
+                                        <td>{{c.Address}}</td>
+                                        <td>{{c.DOB | date:'dd/MM/yyyy'}}</td>
+                                        <td>{{c.MobileNo}}</td>
+                                        <td>
+                                            <a>
+                                                <img id="holdersign_{{$index}}" height="100" width="80" data-toggle="modal" data-target="#myModal" src="../Documents/{{c.Holdersign}}" />
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveBankTransfer()" ng-show="CustomerData.length > 0"><i class="fa fa-check"></i>Transfer</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearBankTransferForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="LoanPrepayment" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="ClearLoanPrePayment()">&times;</button>
+                <h4 class="modal-title">Loan PrePayment</h4>
+            </div>
+            <div class="modal-body">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active" id="tabPrepayment"><a id="btntabPrePayment" data-target="#tab_Prepayment" data-toggle="tab" class="cursor">Loan PrePayment Amountisation</a></li>
+                        <li id="tabAmountisation" ng-show="LoanAmountisation.length > 0"><a id="btnAmountisation" data-target="#tab_amountisation" data-toggle="tab" class="cursor">Loan Amountisation</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_Prepayment">
+                            <div class="row">
+                                <!--<div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Transaction Time</label>
+                                        <input type="text" class="form-control input-sm" id="txtLoanPrePaymentTransactionTime">
+                                    </div>
+                                </div>-->
+                                <div class="col-md-6">
+                                    <label for="focusedinput" class="control-label lablefont">Loan Account</label>
+                                    <div class="form-group">
+                                        <select class="form-control input-sm" id="ddlLoanAccount" ng-model="PrePayment.CustomerProductId" ng-options="RD.CustomerProductId as RD.AccountNumber for RD in RDList | filter : {ProductType : 5}" ng-change="GetLoanDetail(PrePayment.CustomerProductId)">
+                                            <option value="">Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Total Loan Amount</label><br />
+                                        <input type="text" class="form-control input-sm" id="txtTotalLoanAmount" placeholder="Loan Amount" ng-model="PrePayment.TotalLoanAmount" valid-Number readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Pending Principal</label>
+                                        <input type="text" class="form-control input-sm" id="txtRemainingAmount" placeholder="Payment Amount" ng-model="PrePayment.RemainingAmount" valid-Number readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Paid Principal Amount</label>
+                                        <input type="text" class="form-control input-sm" id="txtPaidPrincipalAmount" placeholder="Paid prin Amount" ng-model="PrePayment.PaidPrincipalAmount" valid-Number readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="PrePaymentClosingLoandiv">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Pending Interest (till today)</label>
+                                        <input type="text" class="form-control input-sm" id="txtPendingInteresttilldate" placeholder="Payment Amount" ng-model="Totalremaininginteresttilldate" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Total Closing Balance (till today)</label>
+                                        <input type="text" class="form-control input-sm" id="txtTotalBalncetilldate" ng-model="TotalBalancetillDate" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Prepayment Amount</label>
+                                        <input type="text" class="form-control input-sm" id="txPrePaymenttDepositamount" placeholder="Payment Amount" ng-model="PrePayment.PaymentAmount" valid-Number ng-blur="CalculateLoanAmountisation()" max="{{PrePayment.RemainigPayment}}" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="PrePaymentMonthlyDiv">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Monthly EMI Amount</label>
+                                        <input type="text" class="form-control input-sm" id="txtMonthlyEMI" ng-model="PrePayment.MonthlyInstallmentAmount" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="PrePaymentTermDiv">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Term</label>
+                                        <input type="text" class="form-control input-sm" id="txtTerm" placeholder="Term" ng-model="PrePayment.Term" valid-Number ng-blur="CalculateLoanAmountisation()" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Total Pending Installment Amount</label>
+                                        <input type="text" class="form-control input-sm" id="txtTerm" placeholder="Total Pending Installment Amount" ng-model="PrePayment.TotalPendingInstallmentAmount" valid-Number disabled />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div id="tab_amountisation" class="tab-pane">
+                            <div class="row">
+                                <div class="table-responsive" style="padding-top:25px;">
+                                    <table class="table table-bordered" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr No. </th>
+                                                <th style="text-align:right">Installment Date</th>
+                                                <th style="text-align:right">MonthlyEMI</th>
+                                                <th style="text-align:right">Principal Amount</th>
+                                                <th style="text-align:right">Interest Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="amt in LoanAmountisation">
+                                                <td>{{$index + 1}}</td>
+                                                <td style="text-align:right">{{amt.Installmentdate | date  : 'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:right">{{amt.MonthlyEMI  | number : 2}}</td>
+                                                <td style="text-align:right">{{amt.PrincipalAmt | number : 2}}</td>
+                                                <td style="text-align:right">{{amt.Interest | number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td ng-if="LoanAmountisation.length == 0">
+                                                    No data found.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="AddPrePayment()"><i class="fa fa-check"></i>Add Payment</button>
+                <button type="button" id="btnCloseLoan" class="btn btn-primary btn-sm btn-flat" ng-click="CloseLoan()"><i class="fa fa-remove"></i>&nbsp;Close Loan</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearBankTransferForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img class="img-responsive img" src="" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if ((charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+</script>

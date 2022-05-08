@@ -1,0 +1,95 @@
+﻿<style>
+    .InstallmentTotal {
+        font-size: 20px;
+    }
+</style>
+<div class="content-wrapper">
+    <section class="content-header">
+        <h3>
+            Commission Payment
+        </h3>
+
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Commission Payment List</h3>
+                        </div>
+                        <div class="box-body">
+                            <div style="padding-bottom:10px">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-2">
+                                            <label>Agent Name</label>
+                                            <div class="input-group">
+                                                <input type="text" id="txtAccountlistsearch" class="form-control input-sm" ng-model="AgentName" placeholder="Agent Name" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Start Date</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control input-sm" id="txtStartDateforSearch"  placeholder="Start Date"/>
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>End Date</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control input-sm" id="txtEndDateforSearch" placeholder="End Date" />
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div>
+                                                <label>&nbsp;</label>
+                                            </div>
+                                            <button type="button" data-toggle="modal" class="btn btn-primary btn-sm btn-flat" ng-click="SearchCommissionList()"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;Search</button>
+                                            <label>&nbsp;</label>
+                                            <button type="button" data-toggle="modal" class="btn btn-default btn-sm btn-flat" ng-click="Reset()"><i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">&nbsp;</div>
+                            <div class="col-lg-12">
+                                <span class="InstallmentTotal pull-right">Total Paid Commission Amount : <label class="label label-success">{{TotalPaidCommission | currency:'₹ '}}</label></span>
+                            </div>
+                            <div class="col-lg-12">&nbsp;</div>
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table id="tblCommissionPayment" class="table table-bordered" role="grid" style="width:100%;">
+                                        <thead>
+                                            <tr role="row" class="align-center">
+                                                <th>Agent Name</th>
+                                                <th>Agent MobileNo</th>
+                                                <th>Customer Name</th>
+                                                <th>MobileNo</th>
+                                                <th>Product Type</th>
+                                                <th>Payment Date</th>
+                                                <th>Paid Amount</th>
+                                                <th>Paid By</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+
+
+
+
+
+
+

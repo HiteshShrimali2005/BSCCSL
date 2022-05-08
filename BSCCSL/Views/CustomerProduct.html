@@ -1,0 +1,769 @@
+﻿<style>
+    #CustomerProduct .form-group {
+        min-height: 80px;
+    }
+</style>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="pull-right">
+            <button type="button" class="btn btn-primary btn-sm btn-flat" data-target="#CustomerProduct" data-toggle="modal" ng-model="AssigenProductClicked"><i class="glyphicon glyphicon-plus"></i>Assign product</button>
+        </div><br />
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12" ng-repeat="c in CustomerData">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h2 for="focusedinput" class="box-title ng-binding" style="font-size:20px"> {{c.CustomerName}} ({{c.ClienId}})</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a>
+                                    <img id="holderpic_{{$index}}" height="100" width="80" data-toggle="modal" data-target="#myModal" src="../Documents/{{c.HolderPhoto}}" />
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5> <strong> Sex : </strong> {{c.Sex}} </h5>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <h5 style="overflow: hidden;text-overflow: ellipsis"> <span><strong> Address : </strong>{{c.Address}} </span></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5><strong> DOB :</strong>   {{c.DOB | date :  "dd/MM/yyyy"}}</h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5> <strong> Mobile No. : </strong>  {{c.Mobile}} </h5>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <h5> <strong> Email : </strong>   {{c.Email}} </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pull-right">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5> <strong>City :</strong>   {{c.City}} </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Product List</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table id="tblProduct" class="table  table-bordered" role="grid" style="width:100%;">
+                                <thead>
+                                    <!--<tr role="row">
+                                        <th>Account No</th>
+                                        <th>Product Name</th>
+                                        <th>Product Type</th>
+                                        <th>Interest Rate</th>
+                                        <th>Payment Type</th>
+                                        <th>Time Period</th>
+                                        <th>OpeningDate</th>
+                                        <th>Insurance</th>
+                                        <th>Status</th>
+                                        <th>Active </th>
+                                        <th>Action</th>
+                                    </tr>-->
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<div class="modal fade" id="CustomerProduct" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="ClearForm()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Assign Product</h4>
+            </div>
+            <div class="modal-body">
+                <div class="box-body">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Product Type</label> <!--ng-model="ProductTypelist-->
+                            <select class="form-control input-sm" id="ddlProductTypelist" ng-disabled="CustomerProduct.CustomerProductId != null" ng-change="GetProductNameAsSelectedType(CustomerProduct.ProductType);" ng-model="CustomerProduct.ProductType">
+                                <option value="">Select</option>
+                                <option value="1">Saving Account</option>
+                                <option value="2">Current Account</option>
+                                <option value="3">Fixed Deposit</option>
+                                <option value="4">Recurring Deposit</option>
+                                <option value="5">Loan</option>
+                                <option value="6">Regular Income Planner</option>
+                                <option value="7">Monthly Income Scheme</option>
+                                <option value="8">Dhan Vruddhi Yojana</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--<div class="col-md-3" ng-show="CustomerProduct.ProductType == 5">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Loan Type</label>
+                            <select class="form-control input-sm" id="ddlLoanType" ng-model="CustomerProduct.LoanTypeId" ng-options="ln.LookupId as ln.Name for ln in LoanType" ng-change="GetLoanProductAsPerLoanTypeId()">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>-->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Product Name</label> <!--ng-model="ProductNamelist"-->
+                            <select class="form-control input-sm" id="ddlProductNamelist" ng-disabled="CustomerProduct.CustomerProductId != null" ng-change="CheckCustomerAccountExist()" ng-model="CustomerProduct.ProductId">
+                                <option value="">Select</option>
+                                <option ng-if="CustomerProduct.CustomerProductId == null" ng-repeat="item in Productlist | filter:{LoanType : '!Group Loan'}" value="{{item.ProductId}}">{{item.ProductName }}</option>
+                                <option ng-if="CustomerProduct.CustomerProductId != null" ng-repeat="item in Productlist" value="{{item.ProductId}}">{{item.ProductName }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Employee Name</label><br />
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" id="txtempname" placeholder="Employee Name" ng-model="CustomerProduct.EmpName" readonly="readonly" />
+                                <span class="input-group-btn">
+                                    <button type="button" name="Employee" id="btnemployee" data-toggle="modal" data-target="#Employee" ng-click="Agent=false" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Employee Code</label>
+                            <input type="text" class="form-control input-sm" id="txtempcode" placeholder="Employee Code" ng-model="CustomerProduct.EmpCode" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Agent Name</label><br />
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" id="txtAgentname" placeholder="Agent Name" ng-model="CustomerProduct.AgentName" readonly="readonly" />
+                                <span class="input-group-btn">
+                                    <button type="button" name="Employee" id="btnemployee" data-toggle="modal" data-target="#Agent" ng-click="Agent=true" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Agent Code</label>
+                            <input type="text" class="form-control input-sm" id="txtagentcode" placeholder="Agent Code" ng-model="CustomerProduct.AgentCode" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div ng-show="CustomerProduct.ProductId !='' && CustomerProduct.ProductId != 0 && CustomerProduct.ProductId != undefined">
+                        <div class="col-md-3" ng-hide="CustomerProduct.ProductType == 1 || CustomerProduct.ProductType == 2 || CustomerProduct.ProductType == 5">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Time Period</label>
+                                <select class="form-control input-sm" id="ddlTimePeriod" ng-model="CustomerProduct.TimePeriod" ng-change="TimePeriodChange();CheckInterstrateinTerm();">
+                                    <option value="">Select</option>
+                                    <option value="1">Months</option>
+                                    <option value="2">Years</option>
+                                    <option value="3">Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-hide="CustomerProduct.ProductType == 1 ||  CustomerProduct.ProductType == 2 || CustomerProduct.ProductType == 5">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Month/Year/Day</label>
+                                <input type="text" class="form-control input-sm" name="NoOfMonthsORYears" id="txtNoOfMonthsORYears" ng-model="CustomerProduct.NoOfMonthsORYears" placeholder="No of MonthsOrYears" valid-number ng-change="TimePeriodChange();CheckInterstrateinTerm();">
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.ProductType != 5">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Interest Rate(%)</label>
+                                <input id="txtInterestRateCP" class="form-control input-sm" type="text" ng-model="CustomerProduct.InterestRate" ng-change="CalculateMaturityAmount()" valid-number percentage-field />
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-hide="CustomerProduct.ProductType == 1 ||  CustomerProduct.ProductType == 2 || CustomerProduct.ProductType == 5">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Amount</label>
+                                <input id="txtAmount" class="form-control input-sm" placeholder="Amount" ng-model="CustomerProduct.Amount" valid-number ng-change="CalculateMaturityAmount()">
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.CustomerProductId == undefined && CustomerProduct.ProductType == 4">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Previous Opening Date</label>
+                                <input type="text" id="txtPreviousOpeningDateCP" class="form-control input-sm datepicker" placeholder="Opening date">
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.CustomerProductId == undefined && CustomerProduct.ProductType == 4">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Difference in Days</label>
+                                <input type="text" class="form-control input-sm" name="Date Diff" id="txtDiffDays" ng-model="CustomerProduct.DiffDays" placeholder="Diff Days" disabled="disabled" valid-number>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Opening Date</label>
+                                <input type="text" id="txtOpeningDateCP" class="form-control input-sm datepicker" placeholder="Opening date">
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-hide="CustomerProduct.ProductType == 1 ||  CustomerProduct.ProductType == 2 || CustomerProduct.ProductType == 5">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Maturity Date</label>
+                                <input type="text" class="form-control input-sm datepicker" name="Premium" id="txtMaturityDate" placeholder="Maturity Date" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 6 || CustomerProduct.ProductType == 7 || CustomerProduct.ProductType == 8">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Installment Date</label>
+                                <input id="txtDueDate" class="form-control input-sm datepicker" type="text" placeholder="Installment Date">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3" ng-hide="CustomerProduct.ProductType == 1 ||  CustomerProduct.ProductType == 2 || CustomerProduct.ProductType == 5">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Maturity Amount</label>
+                                <input type="text" class="form-control input-sm" name="Maturity Amount" id="txtMaturityAmount" ng-model="CustomerProduct.MaturityAmount" placeholder="Maturity Amount" disabled="disabled" valid-number>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.ProductType == 5 || CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 6 || CustomerProduct.ProductType == 8">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Late Payment Fees(%)</label>
+                                <input class="form-control input-sm" name="LatePaymentFees" id="txtLatePaymentFeesCP" ng-model="CustomerProduct.LatePaymentFees" placeholder="Late Payment Fees" valid-number percentage-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 6 || CustomerProduct.ProductType == 7 || CustomerProduct.ProductType == 8">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Payment Type</label>
+                                <select class="form-control input-sm" id="ddlPaymentTypeCP" ng-model="CustomerProduct.PaymentType" ng-change="CalculateMaturityAmount()">
+                                    <option value="">Select</option>
+                                    <option value="1" ng-hide="CustomerProduct.ProductType == 6">Daily</option>
+                                    <option value="2">Monthly</option>
+                                    <option value="3">Quarterly</option>
+                                    <option value="4">Half-Yearly</option>
+                                    <option value="5">Yearly</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.ProductType == 4 && (CustomerProduct.Status < 2 ||  CustomerProduct.Status == null)">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Opening Balance</label>
+                                <input type="text" class="form-control input-sm" name="Balance" id="txtOpeningBalance" ng-model="CustomerProduct.OpeningBalance" placeholder="Opening Balance" ng-blur="CalculateMaturityAmount()">
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-hide="CustomerProduct.ProductType == 1 || CustomerProduct.ProductType == 2">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Saving Account Number</label>
+                                <input type="text" class="form-control input-sm" name="Premium" id="txtaccno" ng-model="SavingAccountNo" placeholder="Account Number" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.ProductType == 1">
+                            <div class="form-group">
+                                <label>Insurance</label><br />
+                                <label>
+                                    <input icheck type="checkbox" name="forsaving" value="LI" id="chkli" ng-model="CustomerProduct.InsuranceTypeLI">&nbsp;&nbsp;LI
+                                </label>
+                                <label>
+                                    <input icheck type="checkbox" name="forsaving" value="GI" id="chkgi" ng-model="CustomerProduct.InsuranceTypeGI">&nbsp;&nbsp;GI
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.InsuranceTypeLI == true">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">LI Type</label><br />
+                                <label>
+                                    <input icheck type="radio" name="litype" id="radioregular" ng-value="1" ng-model="CustomerProduct.LIType"> Regular
+                                </label>
+                                <label>
+                                    <input icheck type="radio" name="litype" id="radiosingle" ng-value="2" ng-model="CustomerProduct.LIType">Single
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.InsuranceTypeLI == true && CustomerProduct.ProductType == 1">
+                            <div class="form-group">
+                                <!--style="min-height:55px;"-->
+                                <label for="focusedinput" class="control-label lablefont">LI Commencement Date</label>
+                                <input id="txtLICommencementDate" class="form-control input-sm datepicker" type="text" placeholder="Commencement Date">
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.InsuranceTypeLI == true && CustomerProduct.ProductType == 1">
+                            <div class="form-group">
+                                <!--style="min-height:55px;"-->
+                                <label class="control-label lablefont">LI Premium</label>
+                                <input type="text" class="form-control input-sm" name="Premium" id="txtLIPremium" ng-model="CustomerProduct.LIPremium" placeholder="Premium" valid-number>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.InsuranceTypeLI == true && CustomerProduct.ProductType == 1">
+                            <div class="form-group">
+                                <!--style="min-height:55px;"-->
+                                <label for="focusedinput" class="control-label lablefont">LI Due Date</label>
+                                <input id="txtLIDueDate" class="form-control input-sm datepicker" type="text" placeholder="LI Due Date">
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.InsuranceTypeGI == true && CustomerProduct.ProductType == 1 ">
+                            <div class="form-group">
+                                <!--style="min-height:55px;"-->
+                                <label for="focusedinput" class="control-label lablefont">GI Commencement Date</label>
+                                <input id="txtGICommencementDate" class="form-control input-sm datepicker" type="text" placeholder="Commencement Date">
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.InsuranceTypeGI == true && CustomerProduct.ProductType == 1 ">
+                            <div class="form-group">
+                                <!--style="min-height:55px;"-->
+                                <label class="control-label lablefont">GI Premium</label>
+                                <input type="text" class="form-control input-sm" name="Premium" id="txtGIPremium" ng-model="CustomerProduct.GIPremium" placeholder="Premium" valid-number>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.InsuranceTypeGI == true && CustomerProduct.ProductType == 1">
+                            <div class="form-group">
+                                <!--style="min-height:55px;"-->
+                                <label for="focusedinput" class="control-label lablefont">GI Due Date</label>
+                                <input id="txtGIDueDate" class="form-control input-sm datepicker" type="text" placeholder="GI Due Date">
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-hide="CustomerProduct.ProductType == 1 ||  CustomerProduct.ProductType == 2 || CustomerProduct.ProductType == 5">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Certificate Number</label>
+                                <input type="text" class="form-control input-sm" name="" id="txtcertynum" ng-model="CustomerProduct.CertificateNumber" placeholder="Certificate Number">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Old Account Number</label>
+                                <input type="text" class="form-control input-sm" name="" id="txtOldAccountNumber" ng-model="CustomerProduct.OldAccountNumber" placeholder="Old Account Number">
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="CustomerProduct.ProductType == 4 && (CustomerProduct.Status < 2 ||  CustomerProduct.Status == null)">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Skip First Installment</label><br />
+                                <label>
+                                    <input icheck type="checkbox" name="SkipFirstInstallment" value="SkipFirstInstallment" id="chkASkipFirstInstallment" ng-model="CustomerProduct.SkipFirstInstallment" ng-change="CalculateMaturityAmount()">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Is Active</label><br />
+                                <label>
+                                    <input icheck type="checkbox" name="IsActive" value="IsActive" id="chkActiveCP" ng-model="CustomerProduct.IsActive" ng-init="CustomerProduct.IsActive=true">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SubmitCustomerProduct()" ng-show="(CustomerProduct.ProductType == 3 || CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 6 || CustomerProduct.ProductType == 7 || CustomerProduct.ProductType == 8) && (CustomerProduct.CustomerProductId != '0000000-0000-0000-0000-000000000000' && CustomerProduct.CustomerProductId != undefined && CustomerProduct.CustomerProductId != null && CustomerProduct.Status == 1)"><i class="fa fa-check"></i>Submit</button>
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveCustomerProduct()" ng-hide="(CustomerProduct.ProductType == 3 || CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 6 || CustomerProduct.ProductType == 7 || CustomerProduct.ProductType == 8) && (CustomerProduct.Status != 1 && CustomerProduct.Status != null)"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="CertificateReprint" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="ClearForm()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">RePrint Product</h4>
+            </div>
+            <div class="modal-body">
+                <div class="box-body">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active" id="tab1"><a id="btntab1" data-target="#tab_1" data-toggle="tab" class="cursor">Reprint</a></li>
+                            <li id="tab2"><a id="btntab2" data-target="#tab_2" data-toggle="tab" class="cursor">RePrint History</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="control-label lablefont">Is Duplicate</label><br />
+                                                <input type="checkbox" class="form-control input-sm" id="chkIsDuplicate" icheck ng-model="Reprint.IsDuplicate" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="control-label lablefont">Reason</label><br />
+                                                <textarea id="txtReason" class="form-control input-sm" ng-model="Reprint.Reason"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab_2">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="CertificatePrintHistory">
+                                            <thead>
+                                                <tr>
+                                                    <th>Duplicate</th>
+                                                    <th>Reason</th>
+                                                    <th>Date</th>
+                                                    <th>Printed By</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary  btn-sm btn-flat" ng-click="SaveRePrint()"><i class="fa fa-print"></i> Print</button>
+                <button type="button" class="btn btn-default  btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="CustomerDepositPrint" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="width:1000px;">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="ClearForm()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Print Product</h4>
+            </div>
+            <div class="modal-body" id="print" style="min-height:1200px;">
+                <div style="position: absolute;font-size:22px">
+                    <div style="position: absolute;float:left;top:110px;width:650px">
+                        <div style="position: absolute;top:0px;left:350px;">{{CustomerPrintdata.Productdata.ProductName}} </div>
+                        <div style="position: absolute;top:30px;left:350px;"><span ng-if="Reprint.IsDuplicate"> (Duplicate)</span> </div>
+                        <div style="position: absolute;top:80px;left:150px;">{{CustomerPrintdata.Productdata.AccountNumber}}</div>
+                        <div style="position: absolute;top:110px;left:150px;">{{CustomerPrintdata.Holdername}}</div>
+                        <div style="position: absolute;top:210px;left:150px;line-height:20px;">{{CustomerPrintdata.Productdata.Address}}</div>
+                        <div style="position: absolute;top:300px;left:150px;">{{CustomerPrintdata.Productdata.Nomineename}}</div>
+                        <div style="position: absolute;top:350px;left:150px;">{{CustomerPrintdata.Productdata.Relation}}</div>
+                        <div style="position: absolute;top:410px;left:150px;">{{CustomerPrintdata.Amount}}</div>
+                    </div>
+                    <div style="position: absolute;float:right;top:60px;width:200px;">
+                        <div style="position: absolute;top:0px;left:750px;width:200px">{{CustomerPrintdata.Productdata.BranchName}} - ({{CustomerPrintdata.Productdata.BranchCode}})</div>
+                        <div style="position: absolute;top:65px;left:750px;width:200px">{{CustomerPrintdata.Productdata.ClientId}}</div>
+                        <div style="position: absolute;top:130px;left:750px;width:200px">{{CustomerPrintdata.Productdata.CertificateNo}} </div>
+                        <div style="position: absolute;top:200px;left:750px;width:200px">{{CustomerPrintdata.Productdata.Openingdate| date:'dd/MM/yyyy'}} </div>
+                        <div style="position: absolute;top:270px;left:750px;width:200px">{{CustomerPrintdata.Productdata.Openingdate| date:'dd/MM/yyyy'}}</div>
+                        <div style="position: absolute;top:340px;left:750px;width:200px">{{CustomerPrintdata.Productdata.MaturityDate | date:'dd/MM/yyyy'}}</div>
+                        <div style="position: absolute;top:410px;left:750px;width:200px">{{CustomerPrintdata.Productdata.NoofMonthOrYear+' '+CustomerPrintdata.Productdata.TimePeriodName}} </div>
+                        <div style="position: absolute;top:480px;left:750px;width:200px">{{CustomerPrintdata.Productdata.InterestRate+' %'}}</div>
+                        <div style="position: absolute;top:540px;left:720px;width:200px"><span ng-if="CustomerPrintdata.Productdata.ProductType != 3 && CustomerPrintdata.Productdata.ProductType !=7">({{CustomerPrintdata.Productdata.PaymentTypeName}})</span> {{CustomerPrintdata.Productdata.Amount | number : 2}}</div>
+                        <div style="position: absolute;top:610px;left:750px;width:200px">{{CustomerPrintdata.Productdata.MaturityAmount| number : 2}}</div>
+                        <div style="position: absolute;top:650px;left:750px;width:200px"><span ng-if="CustomerPrintdata.Productdata.ProductType == 7">({{CustomerPrintdata.Productdata.PaymentTypeName}}) {{CustomerPrintdata.EMI}} </span></div>
+                    </div>
+                </div>
+
+                <div style="position: absolute;top:860px;left:0;font-size:22px">
+                    <div style="position: absolute;top:0px;left:350px;"><span ng-if="Reprint.IsDuplicate"> (Duplicate)</span></div>
+                    <div style="position: absolute;top:30px;left:200px;">
+                        {{CustomerPrintdata.Productdata.ClientId}}
+                    </div>
+                    <div style="position: absolute;top:25px;left:480px;width:150px;">{{CustomerPrintdata.Productdata.AccountNumber}}</div>
+                    <div style="position: absolute;top:25px;left:790px;width:150px;">
+                        {{CustomerPrintdata.Productdata.CertificateNo}}
+                    </div>
+                    <div style="position: absolute;top:75px;left:200px;width:150px;">
+                        {{CustomerPrintdata.Productdata.Openingdate| date:'dd/MM/yyyy'}}
+                    </div>
+                    <div style="position: absolute;top:75px;left:520px;width:150px;">
+                        {{CustomerPrintdata.Productdata.Openingdate| date:'dd/MM/yyyy'}}
+                    </div>
+                    <div style="position: absolute;top:135px;left:200px;width:450px;">
+                        {{CustomerPrintdata.Holdername}}
+                    </div>
+                    <div style="position: absolute;top:185px;left:200px;width:200px;">
+                        {{CustomerPrintdata.Productdata.Amount | number : 2}}
+                    </div>
+                    <div style="position: absolute;top:185px;left:530px;width:150px;">
+                        {{CustomerPrintdata.Productdata.MaturityDate | date:'dd/MM/yyyy'}}
+                    </div>
+                    <div style="position: absolute;top:185px;left:770px;width:150px;">
+                        {{CustomerPrintdata.Productdata.NoofMonthOrYear+' '+CustomerPrintdata.Productdata.TimePeriodName}}
+                    </div>
+                    <div style="position: absolute;top:245px;left:200px;width:150px;">
+                        {{CustomerPrintdata.Productdata.InterestRate+' %'}}
+                    </div>
+                    <div style="position: absolute;top:245px;left:540px;width:250px;">
+                        {{CustomerPrintdata.Productdata.MaturityAmount| number : 2}}
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary  btn-sm btn-flat" ng-click="printPageArea(CustomerPrintdata.Productdata.CustomerProductId, CustomerPrintdata.Productdata.IsCertificatePrinted)"><i class="fa fa-print"></i> Print</button>
+                <button type="button" class="btn btn-default  btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img class="img-responsive img" src="" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="PrintRIPMIS" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="CustomerRIPPrintdata = null" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Print</h4>
+            </div>
+            <div class="modal-body" id="printRIP">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table style="width:100%" cellspacing="5">
+                                <tr>
+                                    <td style="font-weight:bold"> Customer Name: </td>
+                                    <td colspan="5"> {{CustomerRIPPrintdata.CustomerName}} </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold"> Amount : </td>
+                                    <td style="text-align:left"> {{CustomerRIPPrintdata.Amount  | number : 2}}</td>
+                                    <td style="font-weight:bold"> Opening Date : </td>
+                                    <td style="text-align:left"> {{CustomerRIPPrintdata.OpeningDate  | date : 'dd/MM/yyyy'}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold"> Interest Rate : </td>
+                                    <td style="text-align:left"> {{CustomerRIPPrintdata.InterestRate  | number}} %</td>
+                                    <td style="font-weight:bold"> Terms :</td>
+                                    <td style="text-align:left"> {{CustomerRIPPrintdata.NoofMonthOrYear}} {{CustomerRIPPrintdata.TimePeriod}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold"> Payment Frequency : </td>
+                                    <td style="text-align:left"> {{CustomerRIPPrintdata.PaymentName}}</td>
+                                    <td style="font-weight:bold"></td>
+                                    <td style="text-align:left"></td>
+                                </tr>
+                            </table>
+                            <div class="table-responsive" style="padding-top:25px;">
+                                <table class="table table-bordered" style="width:100%;" id="PlannerTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Sr No. </th>
+                                            <th class="text-center">Installment Date</th>
+                                            <th class="text-right">Amount</th>
+                                            <th class="text-center" ng-if="CustomerRIPPrintdata.ProductType == 6">Maturity Date</th>
+                                            <th class="text-right" ng-if="CustomerRIPPrintdata.ProductType == 6">Maturity Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="amt in CustomerRIPPrintdata.RIPList">
+                                            <td class="text-center">{{$index + 1}}</td>
+                                            <td class="text-center">{{amt.InstallmentDate | date  : 'dd/MM/yyyy'}}</td>
+                                            <td class="text-right">{{amt.Amount  | number : 2}}</td>
+                                            <td class="text-center" ng-if="CustomerRIPPrintdata.ProductType == 6">&nbsp;</td>
+                                            <td class="text-right" ng-if="CustomerRIPPrintdata.ProductType == 6">&nbsp;</td>
+                                        </tr>
+                                        <tr ng-repeat="amt in CustomerRIPPrintdata.RIPList" ng-if="CustomerRIPPrintdata.ProductType == 6">
+                                            <td class="text-center">{{CustomerRIPPrintdata.RIPList.length + $index + 1}}</td>
+                                            <td class="text-center">&nbsp;</td>
+                                            <td class="text-right">&nbsp;</td>
+                                            <td class="text-center">{{amt.MaturityDate | date  : 'dd/MM/yyyy'}}</td>
+                                            <td class="text-right">{{amt.MaturityAmount | number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="text-right text-bold">TOTAL AMOUNT</td>
+                                            <td class="text-right text-bold">{{CustomerRIPPrintdata.RIPList | sumByKey : 'Amount' | currency:''}}</td>
+                                            <td class="text-right text-bold" ng-if="CustomerRIPPrintdata.ProductType == 6">MATURITY BENEFIT</td>
+                                            <td class="text-right text-bold" ng-if="CustomerRIPPrintdata.ProductType == 6">{{CustomerRIPPrintdata.RIPList | sumByKey : 'MaturityAmount' | currency:''}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-if="RegularIncomeList.length == 0">
+                                                No data found.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary  btn-sm btn-flat" ng-click="PrintRIP('printRIP')"><i class="fa fa-print"></i> Print</button>
+                <button type="button" class="btn btn-default  btn-sm btn-flat" data-dismiss="modal" ng-click="CustomerRIPPrintdata = null"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="PrematureRIPModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="Premature = null" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Premature {{Premature.ProductTypeName}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table style="width:100%" cellspacing="5">
+                                <tr>
+                                    <td style="font-weight:bold"> Opening Date : </td>
+                                    <td style="text-align:left"> {{Premature.OpeningDate  | date : 'dd/MM/yyyy'}}</td>
+                                    <td style="font-weight:bold"> Interest Rate : </td>
+                                    <td style="text-align:left"> {{Premature.InterestRate  | number}} %</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold"> Terms :</td>
+                                    <td style="text-align:left"> {{Premature.NoOfMonthsORYears}} {{Premature.Period}}</td>
+                                    <td style="font-weight:bold" ng-show="Premature.ProductType == 6">Total Amount : </td>
+                                    <td style="text-align:left" ng-show="Premature.ProductType == 6"> {{Premature.TotalAmount  | number : 2}}</td>
+                                    <td style="font-weight:bold" ng-show="Premature.ProductType != 6">Premature Charges : </td>
+                                    <td style="text-align:left" ng-show="Premature.ProductType != 6"> {{Premature.PrematureCharges  | number : 2}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold" ng-show="Premature.ProductType != 6"> Premature Percentage : </td>
+                                    <td style="text-align:left" ng-show="Premature.ProductType != 6"> {{Premature.PrematurePercentage}} %</td>
+                                    <td style="font-weight:bold" ng-show="Premature.ProductType != 6"> Balance </td>
+                                    <td style="text-align:left" ng-show="Premature.ProductType != 6">{{Premature.Balance  | number : 2}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary  btn-sm btn-flat" ng-click="PrematureRIP()" ng-show="Premature.ProductType == 6"><i class="fa fa-save"></i> Submit</button>
+                <button type="button" class="btn btn-primary  btn-sm btn-flat" ng-click="PrematureRDFD()" ng-show="Premature.ProductType != 6"><i class="fa fa-save"></i> Submit</button>
+                <button type="button" class="btn btn-default  btn-sm btn-flat" data-dismiss="modal" ng-click="Premature = null"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="PrintAKSHYATRITYA" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="CustomerRIPPrintdata = null" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Print</h4>
+            </div>
+            <div class="modal-body" id="printAKSHYATRITYA">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table style="width:100%" cellspacing="5">
+                                <tr>
+                                    <td style="font-weight:bold"> Customer Name: </td>
+                                    <td colspan="5"> {{CustomerAKSHYATRITYAPrintdata.CustomerName}} </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold"> Amount : </td>
+                                    <td style="text-align:left"> {{CustomerAKSHYATRITYAPrintdata.Amount  | number : 2}}</td>
+                                    <td style="font-weight:bold"> Opening Date : </td>
+                                    <td style="text-align:left"> {{CustomerAKSHYATRITYAPrintdata.OpeningDate  | date : 'dd/MM/yyyy'}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold"> Interest Rate : </td>
+                                    <td style="text-align:left"> {{CustomerAKSHYATRITYAPrintdata.InterestRate  | number}} %</td>
+                                    <td style="font-weight:bold"> Terms :</td>
+                                    <td style="text-align:left"> {{CustomerAKSHYATRITYAPrintdata.NoofMonthOrYear}} {{CustomerAKSHYATRITYAPrintdata.TimePeriod}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold"> Payment Frequency : </td>
+                                    <td style="text-align:left"> {{CustomerAKSHYATRITYAPrintdata.PaymentName}}</td>
+                                    <td style="font-weight:bold"></td>
+                                    <td style="text-align:left"></td>
+                                </tr>
+                            </table>
+                            <div class="table-responsive" style="padding-top:25px;">
+                                <table class="table table-bordered" style="width:100%;" id="PlannerTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Sr No. </th>
+                                            <th class="text-center">Year</th>
+                                            <th class="text-center">Account</th>
+                                            <th class="text-right">Inst. Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="amt in CustomerAKSHYATRITYAPrintdata.RIPList">
+                                            <td class="text-center">{{$index + 1}}</td>
+                                            <td class="text-center">{{amt.Years}}</td>
+                                            <td class="text-center">{{amt.Account}}</td>
+                                            <td class="text-right">{{amt.Amount  | number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="text-right text-bold">TOTAL AMOUNT</td>
+                                            <td class="text-right text-bold">{{CustomerAKSHYATRITYAPrintdata.RIPList | sumByKey : 'Amount' | currency:''}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-if="CustomerAKSHYATRITYAPrintdata.RIPList.length == 0">
+                                                No data found.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary  btn-sm btn-flat" ng-click="PrintRIP('printAKSHYATRITYA')"><i class="fa fa-print"></i> Print</button>
+                <button type="button" class="btn btn-default  btn-sm btn-flat" data-dismiss="modal" ng-click="CustomerAKSHYATRITYAPrintdata = null"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-include src="'Views/AgentList.html'"></ng-include>
+<ng-include src="'Views/EmployeeList.html'"></ng-include>
+
+<script>
+    function check(e, value) {
+        //Check Charater
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (value.indexOf(".") != -1) if (unicode == 46) return false;
+        if (unicode != 8) if ((unicode < 48 || unicode > 57) && unicode != 46) return false;
+    }
+    function checkLength() {
+        var fieldVal = document.getElementById('txtInterestRateCP').value;
+        //Suppose u want 3 number of character
+        if (fieldVal <= 100) {
+            return true;
+        }
+        else {
+            var str = document.getElementById('txtInterestRateCP').value;
+            str = str.substring(0, str.length - 1);
+            document.getElementById('txtInterestRateCP').value = str;
+        }
+    }
+</script>

@@ -1,0 +1,299 @@
+﻿<style>
+    #Product .form-group {
+        min-height: 80px;
+    }
+</style>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Product
+            <div class="pull-right">
+                <button type="button" name="Product" data-toggle="modal" data-target="#Product" class="btn btn-primary btn-sm btn-flat" ng-click="Add()"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+            </div>
+        </h3>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Product List</h3>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="col-md-2">
+                            <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Product Name" />
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchDataProduct()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                            <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearProductData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                        </div>
+                        <div class="col-md-1">
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblProduct" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Product Name</th>
+                                            <th>Product Type</th>
+                                            <th>Product Code</th>
+                                            <th>Interest Rate</th>
+                                            <th>Interest Type</th>
+                                            <th>Frequency</th>
+                                            <th>Payment Type</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Is Active</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal fade" id="Product" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="ClearForm()">&times;</button>
+                <h4 class="modal-title">Add New Product</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active" id="tab1"><a id="btntab1" data-target="#tab_1" data-toggle="tab" class="cursor">Assign Product</a></li>
+                            <li id="tab2" ng-show="Product.ProductType == 3 || Product.ProductType == 4"><a id="btntab2" data-target="#tab_2" data-toggle="tab" class="cursor">Add Term</a></li>
+                            <li id="tab3" ng-show="Product.ProductType == 3 || Product.ProductType == 4"><a id="btntab3" data-target="#tab_3" data-toggle="tab" class="cursor">List</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1">
+                                <div class="panel-body">
+                                    <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border">
+                                            Product
+                                        </legend>
+                                        <div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Product Name</label>
+                                                    <input type="text" class="form-control input-sm" id="txtProductName" placeholder="Product Name" ng-model="Product.ProductName" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Product Type</label>
+                                                    <select class="form-control input-sm" id="ProductType" ng-model="Product.ProductType">
+                                                        <option value="">Select</option>
+                                                        <option value="1">Saving Account</option>
+                                                        <option value="2">Current Account</option>
+                                                        <option value="3">Fixed Deposit</option>
+                                                        <option value="4">Recurring Deposit</option>
+                                                        <option value="5">Loan</option>
+                                                        <option value="6">Regular Income Planner</option>
+                                                        <option value="7">Monthly Income Scheme</option>
+                                                        <option value="8">Dhan Vruddhi Yojana</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" ng-show="Product.ProductType == 5">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Loan Type</label>
+                                                    <select class="form-control input-sm" id="ddlLoanType" ng-model="Product.LoanTypeId" ng-options="ln.LookupId as ln.Name for ln in LoanType">
+                                                        <option value="">Select</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Product Code</label>
+                                                    <input type="text" class="form-control input-sm" id="txtProductcode" placeholder="Product Code" ng-model="Product.ProductCode" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" ng-hide="Product.ProductType == 3 || Product.ProductType == 4 || Product.ProductType == 2">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Interest Rate</label>
+                                                    <input type="text" class="form-control input-sm" id="txtInterestRate" placeholder="Interest Rate" ng-model="Product.InterestRate" percentage-field />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col-md-3" ng-hide="Product.ProductType == 2">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Interest Type</label>
+                                                    <select class="form-control input-sm" id="InterestType" ng-model="Product.InterestType">
+                                                        <option value="">Select</option>
+                                                        <option value="1">Credit</option>
+                                                        <option value="2">Debit</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" ng-hide="Product.ProductType == 2">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Frequency Type</label>
+                                                    <select class="form-control input-sm" id="Frequency" ng-model="Product.Frequency">
+                                                        <option value="">Select</option>
+                                                        <option value="1">Daily</option>
+                                                        <option value="2">Monthly</option>
+                                                        <option value="3">Quarterly</option>
+                                                        <option value="4">Half-Yearly</option>
+                                                        <option value="5">Yearly</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" ng-hide="Product.ProductType == 1 || Product.ProductType == 2 || Product.ProductType == 3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Payment Type</label>
+                                                    <select class="form-control input-sm" id="PaymentType" ng-model="Product.PaymentType">
+                                                        <option value="">Select</option>
+                                                        <option value="1">Daily</option>
+                                                        <option value="2">Monthly</option>
+                                                        <option value="3">Quarterly</option>
+                                                        <option value="4">Half-Yearly</option>
+                                                        <option value="5">Yearly</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Start Date</label>
+                                                    <input id="txtStart" class="form-control input-sm" type="text" placeholder="Start Date">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">End Date</label>
+                                                    <input id="txtEnd" class="form-control input-sm" type="text" placeholder="End Date">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" ng-if="Product.ProductType == 5 || Product.ProductType == 4">
+                                                <div class="form-group">
+                                                    <label class="control-label lablefont">Late Payment Fees (%)</label>
+                                                    <input type="text" class="form-control input-sm" name="LatePaymentFees" id="txtLatePaymentFees" ng-model="Product.LatePaymentFees" percentage-field valid-number>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="control-label lablefont">Commission Percentage</label>
+                                                    <input type="text" class="form-control input-sm" name="LatePaymentFees" id="txtCommissionPercentage" ng-model="Product.CommissionPercentage" percentage-field valid-number>
+                                                </div>
+                                            </div>
+                                            <!--<div class="col-md-4" ng-if="Product.ProductType == 3 || Product.ProductType == 4">
+                                                <div class="form-group">
+                                                    <label class="control-label lablefont">Time Period</label>
+                                                    <div>
+                                                        <select class="form-control input-sm" id="ddlTimePeriod" ng-model="Product.TimePeriod">
+                                                            <option value="">Select</option>
+                                                            <option value="1">Months</option>
+                                                            <option value="2">Years</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+                                            <!--<div class="col-md-4" ng-if="Product.ProductType == 3 ">
+                                                <div class="form-group">
+                                                    <label class="control-label lablefont">Enter Month/Year</label>
+                                                    <div>
+                                                        <input type="text" class="form-control input-sm" name="MonthsORYears" id="txtNoOfMonthsORYears" ng-model="Product.NoOfMonthsORYears" placeholder="No Of MonthsORYears" valid-number>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="control-label lablefont">Is Active</label>
+                                                    <div>
+                                                        <input icheck type="checkbox" name="IsActive" value="IsActive" id="chkActive" ng-model="Product.IsActive">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pull-right modal-footer">
+                                            <button type="button" class="btn btn-primary  btn-sm btn-flat" ng-click="SaveProduct()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                            <button type="button" class="btn btn-default  btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div id="tab_2" class="tab-pane">
+                                <div class="panel-body">
+                                    <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border">Add Term</legend>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">From</label>
+                                                    <input type="text" class="form-control input-sm" id="txtfrom" placeholder="From" ng-model="Term.From" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">To</label>
+                                                    <input type="text" class="form-control input-sm" id="txtTo" placeholder="To" ng-model="Term.To" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="control-label lablefont">Time Period </label><!--ng-change="ddlTimePeriod()"-->
+                                                    <select class="form-control input-sm" id="ddlTimePeriod" ng-model="Term.TimePeriod">
+                                                        <option value="">Select</option>
+                                                        <option value="1">Months</option>
+                                                        <option value="2">Years</option>
+                                                        <option value="3">Days</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Interest Rate(%)</label>
+                                                    <input type="text" class="form-control input-sm" id="txtinterest" placeholder="InterestRate" ng-model="Term.InterestRate" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveTerm()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                        <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearTerm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab_3" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="table-responsive">
+                                                <table id="tblterm" class="table table-bordered" role="grid" style="width:100%;">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th>From</th>
+                                                            <th>To</th>
+                                                            <th>Time Period</th>
+                                                            <th>Interest Rate</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>

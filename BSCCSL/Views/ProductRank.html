@@ -1,0 +1,101 @@
+﻿
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Product Rank
+            <div class="pull-right">
+                <button type="button" name="User" data-toggle="modal" data-target="#User" class="btn btn-primary btn-sm btn-flat" ng-click="Add()"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+            </div>
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">User List</h3>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="col-md-3">
+                            <label>Search</label>
+                            <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Name or User Code" />
+                        </div>
+          
+                        <div class="col-md-3">
+                            <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                            <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                        </div>
+                        <div class="col-md-1">
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblProductRank" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Product Type</th>
+                                            <th>Product Name</th>
+                                            <th>Percentage</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal fade" id="ProductRank" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Product Rank</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Product Type</label> <!--ng-model="ProductTypelist-->
+                            <select class="form-control input-sm" id="ddlProductTypelist" ng-change="GetProductNameAsSelectedType(CustomerProduct.ProductType);" ng-model="productRank.ProductType">
+                                <option value="">Select</option>
+                                <option value="1">Saving Account</option>
+                                <option value="2">Current Account</option>
+                                <option value="3">Fixed Deposit</option>
+                                <option value="4">Recurring Deposit</option>
+                                <option value="5">Loan</option>
+                                <option value="6">Regular Income Planner</option>
+                                <option value="7">Monthly Income Scheme</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Product Name</label> <!--ng-model="ProductNamelist"-->
+                            <select class="form-control input-sm" id="ddlProductNamelist" ng-model="productRank.ProductId">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Percentage</label>
+                            <input id="txtPercentage" class="form-control input-sm" type="text" placeholder="User Code" ng-model="productRank.Percentage" valid-number percentage-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveProductRank()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,140 @@
+﻿
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Cash Flow
+            <button type="button" class="btn btn-sm btn-default btn-flat pull-right" ng-click="GoBack();"><i class="fa fa-backward fa-fw"></i>BACK</button>
+
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Cash Flow Data</h3>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label>From Date</label>
+                                <div class="input-group">
+                                    <input type="text" id="txtFromDate" class="form-control input-sm" placeholder="From Date" />
+                                </div>
+
+                            </div>
+                            <div class="col-lg-2">
+                                <label>To Date</label>
+                                <div class="input-group">
+                                    <input type="text" id="txtToDate" class="form-control input-sm" placeholder="From Date" />
+
+                                </div>
+                            </div>
+                            <br />
+                            <div class="col-lg-3">
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                                <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                                <button class="btn btn-primary btn-flat btn-sm" ng-click="PrintCashFlowData()" title="Print Report"><i class="fa fa-print"></i>&nbsp;Print PDF</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="col-lg-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive" id="divCashFlow">
+                                <div style="text-align:center;display:none" id="HeaderDiv">
+                                    <h4>Cash Flow Report</h4>
+                                    <p id="lblDuration"></p>
+                                    <p id="lblBranch"></p>
+                                </div>
+                                <table id="tblCashFlow" class="table" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th> Date </th>
+                                            <th ng-show="CashFlowData.length > 0" style="float:right">Opening Balance : {{OpeningBalance}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="(key, value) in CashFlowData | groupBy: 'PostingDate'">
+                                            <td style="font-weight:bold;text-align:left">
+                                                {{key}}
+                                            </td>
+                                            <td>
+                                                <table class="table" style="width:100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="text-align:left"> Branch Name </th>
+                                                            <th style="text-align:left"> Particular </th>
+                                                            <th style="text-align:center">Type </th>
+                                                            <th style="text-align:center">Voucher Number</th>
+                                                            <th style="text-align:right"> Debit </th>
+                                                            <th style="text-align:right"> Credit </th>
+                                                            <th style="text-align:right"> Balance </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="branch in value | orderBy:'BranchName1'" style="border-bottom:2px dotted silver">
+                                                            <td width="10%">{{branch.BranchName}}</td>
+                                                            <td width="20%">
+                                                                <span style="font-weight:bold"> {{branch.Particular}}</span><br />
+                                                                <span> {{branch.Description}}</span>
+                                                            </td>
+                                                            <td width="10%" style="text-align:center">{{branch.EntryTypeName}}</td>
+                                                            <td width="10%" style="text-align:center">{{branch.VoucherNumber}}</td>
+                                                            <td width="15%" style="text-align:right">{{branch.Debit  | number : 2}}</td>
+                                                            <td width="15%" style="text-align:right">{{branch.Credit | number : 2}}</td>
+
+                                                            <td width="10%" style="text-align:right" ng-show="branch.Balance > 0">{{branch.Balance | number : 2}} DR</td>
+                                                            <td width="10%" style="text-align:right" ng-show="branch.Balance < 0">{{(branch.Balance * -1) | number : 2}} CR</td>
+                                                            <td width="10%" style="text-align:right" ng-show="branch.Balance == 0.00">0.00</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr ng-show="CashFlowData.length == 0">
+                                            <td id="EmptyData">
+                                                No data found.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <table class="table" style="width:100%;" ng-show="CashFlowData.length > 0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="10%"></td>
+                                                            <td width="30%"></td>
+                                                            <td width="10%"></td>
+                                                            <td width="10%" style="font-weight:bold;text-align:center">Total</td>
+                                                            <td width="15%" style="font-weight:bold;text-align:right">{{TotalDebitAmount | number:2}}</td>
+                                                            <td width="15%" style="font-weight:bold;text-align:right">{{TotalCreditAmount | number:2}}</td>
+                                                            <td width="10%"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr ng-show="CashFlowData.length > 0">
+                                            <td></td>
+                                            <td style="text-align:right;font-weight:bold">
+                                                Closing Balance : {{ClosingBalance}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+

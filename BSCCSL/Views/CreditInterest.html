@@ -1,0 +1,68 @@
+﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Credit Interest
+        </h3>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12" style="padding-bottom:10px">
+                <div class="col-md-3">
+                    <input type="text" id="txtaccountno" class="form-control input-sm" ng-model="Accountno" placeholder="Account Number" />
+                </div>
+                <div class="col-md-9">
+                    <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SearchAccount()"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;Search</button>
+                    <button type="button" class="btn btn-default btn-sm btn-flat" ng-click="Reset()"><i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Reset</button>
+                    <button ng-show="HolderData.details.length > 0 && HolderData.Status != 6 && (HolderData.ProductType == 1 || HolderData.ProductType == 2)" class="btn btn-primary btn-sm btn-flat" ng-click="OpenDepositModal()">Deposit</button>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+<div class="modal fade" id="Deposit" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="ClearForm()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Deposit</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Interest Amount</label>
+                            <input type="text" class="form-control input-sm" id="txtDepositamount" placeholder="Interest Amount" ng-model="DepositAmount" valid-Number />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Description</label>
+                            <textarea class="form-control input-sm" rows="3" id="txtDescription" placeholder="Description" ng-model="Description"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="btnDeposit" class="btn btn-primary btn-sm btn-flat" ng-click="CreditInterest()"><i class="fa fa-check"></i>Deposit</button>
+                <button class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if ((charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+</script>

@@ -1,0 +1,93 @@
+﻿
+<style>
+    @media print {
+        .page-break {
+            display: block;
+            page-break-before: always;
+        }
+    }
+    /*.break { page-break-before: always; }*/
+</style>
+<div class="content-wrapper">
+    <section class="content">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title"> Passbook Print</h3>
+            </div>
+            <div class="box-body">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <label>Account Number</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control input-sm" id="txtSearchAccountNo" ng-model="AccountNo" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Start Date</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control datepicker input-sm" id="txtSearchFromDate" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label>End Date</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control datepicker input-sm" id="txtSearchToDate" />
+                        </div>
+                    </div>
+                    <div class="col-md-2" style="padding-top:25px;">
+                        <button class="btn btn-primary btn-flat btn-sm" ng-click="SearchTransactionList()"><i class="fa fa-search"></i> Search</button>
+                        <button class="btn btn-default btn-flat btn-sm" ng-click="SearchClearData()"><i class="fa fa-refresh"></i> Clear</button>
+                    </div>
+                    <div class="col-md-1" ng-show="transactionList.length > 0">
+                        <label>Rows</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control input-sm" id="txtRows" ng-model="passbookprint.LastPageCount" />
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="padding-top:25px;" ng-show="transactionList.length > 0">
+                        <button class="btn btn-primary btn-flat btn-sm" ng-click="PrintTransaction()"><i class="fa fa-print"></i> Print</button>
+                        <button class="btn btn-primary btn-flat btn-sm" ng-click="PrintAccountDetail()"><i class="fa fa-print"></i>Holder Detail</button>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table id="tblTransaction" style="width:100%;line-height:20px;">
+                            <thead>
+                                <tr>
+                                    <th width="13%">Date</th>
+                                    <th width="12%">Cheque No.</th>
+                                    <th width="25%">Particular</th>
+                                    <th width="15%">WithDrawal</th>
+                                    <th width="15%">Deposit</th>
+                                    <th width="15%">Balance</th>
+                                    <th width="10%">Initial</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="trans in transactionList">
+                                    <td width="13%">
+                                        {{trans.TransactionTime  | date:'dd/MM/yyyy'}}
+                                    </td>
+                                    <td width="12%">
+                                        {{trans.CheckNumber}}
+                                    </td>
+                                    <td style="width:25%">{{trans.Description}} </td>
+                                    <td width="15%">
+                                        <span ng-if="trans.Type == 2">{{trans.Amount}} </span>
+                                    </td>
+                                    <td width="15%">
+                                        <span ng-if="trans.Type == 1">{{trans.Amount}} </span>
+                                    </td>
+                                    <td width="15%">
+                                        {{trans.Balance}}
+                                    </td>
+                                    <td width="10%"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

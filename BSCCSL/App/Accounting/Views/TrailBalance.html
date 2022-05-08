@@ -1,0 +1,132 @@
+﻿<style>
+
+    /*sub Data*/
+    td.details-control {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        cursor: pointer;
+        -moz-osx-font-smoothing: grayscale;
+        color: green;
+        font-size: 18px;
+    }
+
+        td.details-control:before {
+            content: "\f055";
+        }
+
+    tr.shown td.details-control {
+        color: red;
+    }
+
+        tr.shown td.details-control:before {
+            content: "\f056";
+        }
+    /*sub Data*/
+
+    /*Child Data*/
+
+    td.subdetails-control {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        cursor: pointer;
+        -moz-osx-font-smoothing: grayscale;
+        color: green;
+        font-size: 18px;
+    }
+
+        td.subdetails-control:before {
+            content: "\f055";
+        }
+
+    tr.shown td.subdetails-control {
+        color: red;
+    }
+
+        tr.shown td.subdetails-control:before {
+            content: "\f056";
+        }
+
+    /*Child Data*/
+    .InstallmentTotal {
+        font-size: 20px;
+    }
+</style>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Trail Balance
+            <button type="button" class="btn btn-sm btn-default btn-flat pull-right" ng-click="GoBack();"><i class="fa fa-backward fa-fw"></i>BACK</button>
+
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Trail Balance List</h3>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label>Financial Year</label>
+                                <select id="ddlFinyear" class="form-control input-sm center-block" ng-model="FinYear" ng-change="ChangeFinancialYear(FinYear)">
+                                    <option value="">Select</option>
+                                    <option value="2017-2018">2017-2018</option>
+                                    <option value="2018-2019">2018-2019</option>
+                                    <option value="2019-2020">2019-2020</option>
+                                    <option value="2020-2021">2020-2021</option>
+                                </select>
+                            </div>
+
+                            <!--<div class="col-md-2">
+                                <label>From Date</label>
+                                <input type="text" id="txtFromDate" class="form-control input-sm" placeholder="From Date" />
+                            </div>
+                            <div class="col-md-2">
+                                <label>To Date</label>
+                                <input type="text" id="txtToDate" class="form-control input-sm" placeholder="From Date" />
+                            </div>-->
+                            <br />
+                            <div class="col-lg-2">
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                                <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                            </div>
+                            <div class="col-lg-2 pull-right">
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="CloseFinancialYear()"><i class="fa fa-check"></i>&nbsp; Close Financial Year</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">&nbsp;</div>
+
+                        <div class="col-lg-12">
+                            <span class="InstallmentTotal col-lg-5 col-xs-12">Total Closing Debit Amount : <label class="label label-success">{{TotalDebitAmount | currency:'₹ '}}</label></span>
+                            <span class="InstallmentTotal col-lg-2 col-xs-12"></span>
+                            <span class="InstallmentTotal col-lg-5 col-xs-12">Total Closing Credit Amount : <label class="label label-success">{{TotalCreditAmount | currency:'₹ '}}</label></span>
+                        </div>
+
+                        <div class="col-md-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblTrialBalanceParentAccount" class="table table-bordered" role="grid" style="width:100%;"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+

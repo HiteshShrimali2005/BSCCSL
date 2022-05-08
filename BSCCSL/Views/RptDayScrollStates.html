@@ -1,0 +1,249 @@
+﻿
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Day Scroll Stats
+        </h3>
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Day Scroll Stats</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="DayScrollDiv">
+                                <div style="padding-bottom:10px">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <label>Start Date</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control input-sm" id="txtStartDateforSearch" placeholder="Start Date" />
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>End Date</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control input-sm" id="txtEndDateforSearch" placeholder="End Date" />
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div>
+                                                    <label>&nbsp;</label>
+                                                </div>
+                                                <button type="button" data-toggle="modal" class="btn btn-primary btn-sm btn-flat" ng-click="SearchTransactionListAll()"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;Search</button>
+                                                <label>&nbsp;</label>
+                                                <button type="button" data-toggle="modal" class="btn btn-default btn-sm btn-flat" ng-click="ClearAll()"><i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(1)"><span class="DayscrollFont text-bold">Saving Deposit:</span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-success DayscrollFont pull-right">{{TotalSavingDeposite | currency:'&#8377;'}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(10)"><span class="DayscrollFont text-bold">Saving Withdrawals:</span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-danger DayscrollFont pull-right">{{TotalSavingWithdraw | currency:'&#8377;'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(2)"><span class="DayscrollFont text-bold">Saving Deposit By Cash: </span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-success DayscrollFont pull-right">{{TotalSavingCashDeposite | currency:'&#8377;'}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(11)"><span class="DayscrollFont text-bold">Saving Withdrawals By Cash: </span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-danger DayscrollFont pull-right">{{TotalSavingCashWithdraw | currency:'&#8377;'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(3)"><span class="DayscrollFont text-bold">Saving Deposit By Cheque: </span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-success DayscrollFont pull-right">{{TotalSavingChequeDeposite | currency:'&#8377;'}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(12)"><span class="DayscrollFont text-bold">Saving Withdrawals By Cheque: </span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-danger DayscrollFont pull-right">{{TotalSavingChequeWithdraw | currency:'&#8377;'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(4)"><span class="DayscrollFont text-bold">No. Of Customers Deposited By Cash:</span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-success DayscrollFont pull-right">{{NoOfCustomerSavingCashDeposite}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(13)"><span class="DayscrollFont text-bold">No. Of Customers Withdraw By Cash:</span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-danger DayscrollFont pull-right">{{NoOfCustomerSavingCashWithdraw}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(5)"><span class="DayscrollFont text-bold">No. Of Customers Deposited By Cheque:</span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-success DayscrollFont pull-right">{{NoOfCustomerSavingChequeDeposite}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(14)"><span class="DayscrollFont text-bold">No. Of Customers Withdraw By Cheque:</span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-danger DayscrollFont pull-right">{{NoOfCustomerSavingChequeWithdraw}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(6)"><span class="DayscrollFont text-bold">Total Current Deposit:</span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-success DayscrollFont pull-right">{{TotalCurrentDeposite | currency:'&#8377;'}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(15)"><span class="DayscrollFont text-bold">Total Current Withdrawals: </span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-danger DayscrollFont pull-right">{{TotalCurrentWithdraw | currency:'&#8377;'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(7)"><span class="DayscrollFont text-bold">Total Recurring Deposit:</span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-success DayscrollFont pull-right">{{TotalRecuringDeposite | currency:'&#8377;'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(8)"><span class="DayscrollFont text-bold">Total Fixed Deposit: </span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-success DayscrollFont pull-right">{{TotalFixedDeposite | currency:'&#8377;'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="col-md-7">
+                                            <a style="cursor:pointer" ng-click="GetDayScrollStatsDetails(9)"><span class="DayscrollFont text-bold">Total Dhan Vrudhhi Yojana Deposit: </span></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="label label-success DayscrollFont pull-right">{{TotalDhanVrudhiYojanaDeposite | currency:'&#8377;'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div id="DayScrollDetailsDiv">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <button class="btn btn-default btn-sm btn-flat pull-right" ng-click="GetDayScrollStats()"><i class="fa fa-arrow-left"></i>&nbsp; Back</button>
+                                    </div>
+                                    <div class="row">
+                                        <table style="width:100%;" class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="15%" style="text-align:left"> Date </th>
+                                                    <th width="25%" style="text-align:left"> Particular </th>
+                                                    <th width="25%" style="text-align:left"> Account Number </th>
+                                                    <th width="15%" style="text-align:right"> Amount </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr  ng-show="DayScrollDetailsList.length != 0" ng-repeat="data in DayScrollDetailsList" style="border-bottom:2px dotted silver">
+                                                    <td>
+                                                        <span style="font-weight:bold"> {{data.Date | date : 'dd/MM/yyyy'}} </span><br />
+                                                    </td>
+
+                                                    <td>
+                                                        <span style="font-weight:bold"> {{data.CustomerName}}</span><br />
+                                                    </td>
+                                                    <td>
+                                                        <span> {{data.AccountNumber}}</span><br />
+                                                    </td>
+
+                                                    <td style="text-align:right">{{data.Amount  | number : 2}}</td>
+                                                </tr>
+                                                <tr ng-show="DayScrollDetailsList.length == 0" style="text-align:center">
+                                                    <td colspan="4">No Records Found</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+
+
+
+
+
+
+

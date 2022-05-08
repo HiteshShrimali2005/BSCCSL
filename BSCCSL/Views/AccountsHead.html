@@ -1,0 +1,105 @@
+﻿
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Accounts Head
+            <div class="pull-right">
+                <button type="button" name="AccountHead" data-toggle="modal" data-target="#AccountsHead" class="btn btn-primary btn-sm btn-flat" ng-click="AddAccountHead()"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+            </div>
+        </h3>
+        <section class="content ng-scope">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Accounts Head List</h3>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="col-md-2">
+                                <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Head name" />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                                <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+
+                            </div>
+                            <div class="col-md-1">
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table id="tblAccountsHead" class="table table-bordered" role="grid" style="width:100%;">
+                                        <thead>
+                                            <tr role="row">
+                                                <th>Head Name</th>
+                                                <th>Description</th>
+                                                <th>Type</th>
+                                                <th>Parent Value</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+
+<div class="modal fade" id="AccountsHead" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add New Accounts Head</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Head Name</label>
+                            <select class="form-control input-sm" id="dpdheadType" ng-model="AccountsHead.HeadType">
+                                <option value="">Select</option>
+                                <option value="1">Income</option>
+                                <option value="2">Expense</option>
+                                <option value="3">Assets</option>
+                                <option value="4">Liability</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Head Name</label>
+                            <input type="text" class="form-control input-sm" id="txtheadName" placeholder="Head Name" ng-model="AccountsHead.HeadName" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Description</label>
+                            <textarea id="txtDescription" class="form-control input-sm" placeholder="Description" ng-model="AccountsHead.Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Parent Head</label>
+                            <select class="form-control input-sm" id="dpdParentHead" ng-model="AccountsHead.ParentHead" ng-options="head.AccountsHeadId as head.HeadName for head in ParentHeadList">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveAccountsHead()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>

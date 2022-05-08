@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6C029D90-40D3-411A-9296-DC49CBB36939}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BSCCSL.Models</RootNamespace>
+    <AssemblyName>BSCCSL.Models</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountDetail.cs" />
+    <Compile Include="Accounting\Accounts.cs" />
+    <Compile Include="Accounting\CashFlowViewModel.cs" />
+    <Compile Include="Accounting\PandLFinancialYearClosingBalance.cs" />
+    <Compile Include="Accounting\FinancialYearClosingBalance.cs" />
+    <Compile Include="Accounting\FinancialYearViewModel.cs" />
+    <Compile Include="Accounting\GeneralLedgerViewModel.cs" />
+    <Compile Include="Accounting\JournalEntry.cs" />
+    <Compile Include="Accounting\JournalEntryTransactions.cs" />
+    <Compile Include="Accounting\JournalEntryViewModel.cs" />
+    <Compile Include="Accounting\BalanceSheetViewModel.cs" />
+    <Compile Include="Accounting\PandLClosingYearModel.cs" />
+    <Compile Include="Accounting\ProfitandLossStatementViewModel.cs" />
+    <Compile Include="Accounting\TrialBalanceViewModel.cs" />
+    <Compile Include="AccountsHead.cs" />
+    <Compile Include="AgentCommission.cs" />
+    <Compile Include="AgentCommissionHistory.cs" />
+    <Compile Include="AgentHierarchy.cs" />
+    <Compile Include="AgentRank.cs" />
+    <Compile Include="Application.cs" />
+    <Compile Include="AuditLog.cs" />
+    <Compile Include="BankMaster.cs" />
+    <Compile Include="BankTransaction.cs" />
+    <Compile Include="Borrower.cs" />
+    <Compile Include="Branch.cs" />
+    <Compile Include="BusinessLoan.cs" />
+    <Compile Include="Charges.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="CustomerAppViewModel.cs" />
+    <Compile Include="CustomerNotification.cs" />
+    <Compile Include="CustomerProduct.cs" />
+    <Compile Include="CustomerProofDocument.cs" />
+    <Compile Include="CustomerShare.cs" />
+    <Compile Include="DailyInterest.cs" />
+    <Compile Include="DataTableSearch.cs" />
+    <Compile Include="DDSPaymentListModel.cs" />
+    <Compile Include="DisbursementLetter.cs" />
+    <Compile Include="EducationLoan.cs" />
+    <Compile Include="ErrorLog.cs" />
+    <Compile Include="Expense.cs" />
+    <Compile Include="FreezedRDModel.cs" />
+    <Compile Include="GoldLoan.cs" />
+    <Compile Include="GroupLoan.cs" />
+    <Compile Include="Income.cs" />
+    <Compile Include="JournalVoucherModel.cs" />
+    <Compile Include="Loan.cs" />
+    <Compile Include="LoanPayment.cs" />
+    <Compile Include="Lookup.cs" />
+    <Compile Include="LookupCategory.cs" />
+    <Compile Include="Messages.cs" />
+    <Compile Include="MortgageLoan.cs" />
+    <Compile Include="Nominee.cs" />
+    <Compile Include="PassbookPrint.cs" />
+    <Compile Include="RDFDPrematurePercentage.cs" />
+    <Compile Include="PrematureRDFDPercentage.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductCommission.cs" />
+    <Compile Include="ProductEnquiry.cs" />
+    <Compile Include="RDPayment.cs" />
+    <Compile Include="Reference.cs" />
+    <Compile Include="BorrowerLoanDetails.cs" />
+    <Compile Include="Report.cs" />
+    <Compile Include="Setting.cs" />
+    <Compile Include="SMSLog.cs" />
+    <Compile Include="Term.cs" />
+    <Compile Include="Transaction.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserTokens.cs" />
+    <Compile Include="VehicleLoan.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

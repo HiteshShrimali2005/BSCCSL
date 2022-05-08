@@ -1,0 +1,216 @@
+﻿<style>
+    #tbldetail td {
+        border: 1px solid black;
+    }
+
+    #borrowerdetail td {
+        border: none;
+    }
+
+    #loancharges td {
+        border: none;
+    }
+</style>
+
+<div class="modal fade" id="divDisbursementLetter" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Disbursement Letter</h4>
+            </div>
+            <div class="modal-body" id="DisbursementLetter">
+                <table style="width:100%">
+                    <tr>
+                        <td>
+                            <table style="width:100%;border-bottom: 1px double black">
+                                <tr>
+                                    <td style="width:60%"> <img src="../dist/img/Picture1.png" /></td>
+                                    <td style="width:40%">
+                                        {{DisbursementLetter.LoanDetail.BranchName}}<br />
+                                        {{DisbursementLetter.LoanDetail.BranchAddress}}
+                                        {{DisbursementLetter.LoanDetail.BranchPhone}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;font-weight:bold"> Date: {{DisbursementLetter.LoanDetail.DateofApplication |date:'dd-MM-yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center"> <span style="text-align:center;border: 1px double black;padding:5px"> LETTER OF SANCTION</span>  </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;font-weight:bold">
+                            To, <br />
+                            <table style="width:100%">
+                                <tr ng-repeat="holder in DisbursementLetter.LoanHolder">
+                                    <td>
+                                        {{holder.CustomerName}} <br />
+                                        {{holder.Address}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;font-weight:bold">
+                            Dear Sir,
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;font-weight:bold">  Ref: Your Loan application dated {{DisbursementLetter.LoanDetail.DateofApplication  |date:'dd-MM-yyyy'}} for Rs. {{DisbursementLetter.LoanDetail.TotalLoanAmount}} <br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;font-weight:bold">TERMS AND CONDITIONS</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table id="tbldetail" style="width:100%" cellpadding="5" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td width="283">
+                                            <p><strong>Nature of Advance</strong></p>
+                                        </td>
+                                        <td>
+                                            <p><strong>MT-</strong></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="283">
+                                            <p><strong>Amount Sanctioned &nbsp;&nbsp;in figures</strong></p>
+                                        </td>
+                                        <td>
+                                            <p><strong>{{DisbursementLetter.LoanDetail.TotalLoanAmount}}</strong></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="283">
+                                            <p><strong>In words</strong></p>
+                                        </td>
+                                        <td>
+                                            <p><strong>{{DisbursementLetter.LoanDetail.AmountInWords}}</strong></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="283">
+                                            <p><strong>Purpose</strong></p>
+                                        </td>
+                                        <td>
+                                            <p><strong>{{DisbursementLetter.LoanDetail.ReasonForUse}}</strong></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="283">
+                                            <p><strong><strong>Security</strong></strong></p>
+                                        </td>
+                                        <td>
+                                            <p><strong>&nbsp;</strong></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="283">
+                                            <p><strong>Security Value </strong></p>
+                                        </td>
+                                        <td>
+                                            <p><strong>&nbsp;</strong></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="283">
+                                            <p><strong>Margin</strong></p>
+                                        </td>
+                                        <td>
+                                            <p><strong></strong></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="283">
+                                            <p><strong>Rate of Interest &nbsp;(compounded monthly)</strong></p>
+                                        </td>
+                                        <td>
+                                            <p><strong>{{DisbursementLetter.LoanDetail.LoanIntrestRate}}</strong></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="283">
+                                            <p><strong>Repayment Period</strong></p>
+                                        </td>
+                                        <td>
+                                            <p><strong>{{DisbursementLetter.LoanDetail.Term}}</strong></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="283">
+                                            <p><strong>Equated Monthly Installments ( E M I )</strong></p>
+                                        </td>
+                                        <td>
+                                            <p><strong>{{DisbursementLetter.LoanDetail.MonthlyInstallmentAmount}}</strong></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="283">
+                                            <p><strong>Nominee Name</strong></p>
+                                            <p><strong>D.O.B. </strong></p>
+                                            <p><strong>Place</strong></p>
+                                        </td>
+                                        <td>
+                                            <p><strong>{{DisbursementLetter.LoanDetail.Name}}</strong></p>
+                                            <p><strong>{{DisbursementLetter.LoanDetail.NomineeDOB | date : 'dd-MM-yyyy'}}</strong></p>
+                                            <p><strong>{{DisbursementLetter.LoanDetail.PlaceofBirth}}</strong></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="283"><strong>Name of Sureties</strong></td>
+                                        <td width="402">
+                                            <table id="borrowerdetail" style="width:100%;">
+                                                <tr ng-repeat="borrower in DisbursementLetter.BorrowerDetail">
+                                                    <td>
+                                                        {{borrower.CustomerName}} <br />
+                                                        {{borrower.Address}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="283"><strong>Charges</strong></td>
+                                        <td>
+                                            <table id="loancharges" style="width:100%;">
+                                                <tr ng-repeat="charges in DisbursementLetter.Loancharges">
+                                                    <td> {{charges.Name}} </td>
+                                                    <td> {{charges.Value}} </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                This letter of sanction is valid for 3 months. The Society reserves the right to cancel/alter/modify the terms and conditions of sanction, at any point of time, without prior notice.
+                                Kindly return the duplicate copy of this sanction letter duly signed by you, in token of your acceptance.
+                                Yours faithfully,
+                            </strong>
+                            <br />
+                            <br />
+                            <strong>
+                                President/Chairman
+                            </strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="PrintDisbursementLetter()"><i class="glyphicon glyphicon-print"></i> Print</button>
+                    <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

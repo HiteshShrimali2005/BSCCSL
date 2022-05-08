@@ -1,0 +1,122 @@
+﻿
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Branch
+            <div class="pull-right">
+                <button type="button" name="Branch" data-toggle="modal" data-target="#Branch" class="btn btn-primary btn-sm btn-flat" ng-click="Add()"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+            </div>
+        </h3>
+        <section class="content ng-scope">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Branch List</h3>
+                        </div>
+                        <div class="col-xs-12">
+
+                            <div class="col-md-2">
+                                <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Branch Name or Code" />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                                <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+
+                            </div>
+                            <div class="col-md-1">
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table id="tblBranch" class="table table-bordered" role="grid" style="width:100%;">
+                                        <thead>
+                                            <tr role="row">
+                                                <th>Branch Name</th>
+                                                <th>Address</th>
+                                                <th>Branch Code</th>
+                                                <th>Registration No</th>
+                                                <th>Phone NO</th>
+                                                <th>IsHO</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+
+<div class="modal fade" id="Branch" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add New Branch</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Branch Name</label>
+                            <input type="text" class="form-control input-sm" id="txtBranchName" placeholder="Branch Name" ng-model="Branch.BranchName" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Phone Number</label>
+                            <input type="text" class="form-control input-sm" id="txtBranchPhone" placeholder="PhoneNo" ng-model="Branch.BranchPhone" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Branch Code</label>
+                            <input type="text" class="form-control input-sm" id="txtBranchCode" placeholder="Branch Code" ng-model="Branch.BranchCode" readonly />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Registration No</label>
+                            <input type="text" class="form-control input-sm" id="txtRegistrationNo" placeholder="Registration No" ng-model="Branch.RegistrationNo" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Address</label>
+                            <textarea id="txtBranchAddress" class="form-control input-sm" placeholder="Address" ng-model="Branch.BranchAddress"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Is HO</label>
+                            <label>
+                                <input icheck type="checkbox" name="IsHO" value="IsHO" id="chkHO" ng-model="Branch.IsHO">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Is Active</label>
+                            <label>
+                                <input icheck type="checkbox" name="IsActive" value="IsActive" id="chkActive" ng-model="Branch.IsActive">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveBranch()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>

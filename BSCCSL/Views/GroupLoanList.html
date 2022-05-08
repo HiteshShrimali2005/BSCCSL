@@ -1,0 +1,48 @@
+﻿<div class="content-wrapper">
+    <section class="content-header">
+        <h3>
+            Group Loan
+            <div class="pull-right">
+                <a class="btn btn-primary btn-sm btn-flat" ui-sref="App.GroupLoan"><i class="glyphicon glyphicon-plus"></i> Add Group Loan</a>
+            </div>
+        </h3>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Group Loan List</h3>
+                    </div><br />
+                    <div class="col-md-3">
+                        <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Group Number Or Group Name"/>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                        <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblGroupLoan" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Group Number </th>
+                                            <th>Group Name </th>
+                                            <th>Product Name</th>
+                                            <th>Loan Amount</th>
+                                            <th>Interest Rate</th>
+                                            <th>No. Of Members</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

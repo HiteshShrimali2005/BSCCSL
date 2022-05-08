@@ -1,0 +1,889 @@
+﻿<style type="text/css">
+    .labelradiocheckbox span {
+        font-weight: normal;
+    }
+
+    .modal {
+        overflow: auto;
+    }
+</style>
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h3>
+            Group Loan
+        </h3>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="panel-body">
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Group Details</legend>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Date of Application</label>
+                                        <input type="text" class="form-control input-sm datepicker" placeholder="Date of Application" id="txtGrpdateofapplication" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">ID No.</label>
+                                        <input type="text" class="form-control input-sm" id="txtGrpIDNO" ng-model="GrpLoan.IDNO" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Group Name</label>
+                                        <input type="text" class="form-control input-sm" id="txtGrpGroupName" ng-model="GrpLoan.GroupName" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Distance From Branch To Congregation </label>
+                                        <input type="text" class="form-control input-sm" id="txtGrpDistanceFromBranch" ng-model="GrpLoan.DistanceFromBranch" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset><br />
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Loan Details</legend>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Product Name</label> <!--ng-model="ProductNamelist"-->
+                                        <select class="form-control input-sm" id="ddlProductNamelist" ng-change="GetInterestRate(GrpLoan.ProductId)" ng-model="GrpLoan.ProductId" ng-options="item.ProductId as item.ProductName for item in Productlist">
+                                            <option value="">Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Employee Name</label><br />
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-sm" id="txtempname" placeholder="Employee Name" ng-model="GrpLoan.EmpName" readonly="readonly" />
+                                            <span class="input-group-btn">
+                                                <button type="button" name="Employee" id="btnemployee" data-toggle="modal" data-target="#Employee" ng-click="Agent=false" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Employee Code</label>
+                                        <input type="text" class="form-control input-sm" id="txtempcode" placeholder="Employee Code" ng-model="GrpLoan.EmpCode" readonly="readonly" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Agent Name</label><br />
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-sm" id="txtAgentname" placeholder="Agent Name" ng-model="GrpLoan.AgentName" readonly="readonly" />
+                                            <span class="input-group-btn">
+                                                <button type="button" name="Employee" id="btnemployee" data-toggle="modal" data-target="#Agent" ng-click="Agent=true" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Agent Code</label>
+                                        <input type="text" class="form-control input-sm" id="txtagentcode" placeholder="Agent Code" ng-model="GrpLoan.AgentCode" readonly="readonly" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Opening Date</label>
+                                        <input type="text" class="form-control input-sm datepicker" placeholder="Date of opening" id="txtGrpdateofOpening" />
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Installment Date</label>
+                                        <input type="text" class="form-control input-sm datepicker" placeholder="Date of installment" id="txtGrpdateofInstallment" />
+                                    </div>
+                                </div>-->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Terms Of Loan :</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Interest Rate(%)</label>
+                                        <input type="text" class="form-control input-sm" id="txtGrpInterestRate" ng-model="GrpLoan.InterestRate" percentage-Field />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Necessary Loan Amount(₹)</label>
+                                        <input type="text" class="form-control input-sm" id="txtamount" ng-model="GrpLoan.GroupLoanAmount" numbers-Only />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Credit Cheque</label>
+                                        <input type="text" class="form-control input-sm" id="txtinterestrate" ng-model="GrpLoan.CreditCheque" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Date</label>
+                                        <input type="text" class="form-control input-sm datepicker" placeholder="Date of credit cheque" id="txtGrpdateofCreditapplication" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Installment Duration</label>
+                                        <div>
+                                            <label class="labelradiocheckbox" ng-repeat="l in LookUp |filter : {CategoryName : 'GroupLoanInstallmentDuration'}">
+                                                <input icheck name="InstallmentDuration" type="radio" id="Du_{{$index}}" ng-model="GrpLoan.InstallmentDuration" value="{{l.LookupId}}"><span>{{l.Name}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">The Need of Loan</label>
+                                        <div>
+                                            <label class="labelradiocheckbox" ng-repeat="l in LookUp |filter : {CategoryName : 'NeedOfLoan'}">
+                                                <input icheck name="NeedOfLoan" type="radio" id="Need_{{$index}}" ng-model="GrpLoan.NeedOfLoan" value="{{l.LookupId}}"><span>{{l.Name}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Previously the loan was borrowed from this Society ?</label>
+                                        <div>
+                                            <label class="labelradiocheckbox">
+                                                <input icheck type="radio" name="PreviouslyBorrowed" ng-value="true" id="PreYes" ng-model="GrpLoan.PreviouslyBorrowed"><span>Yes</span>
+                                            </label>
+                                            <label class="labelradiocheckbox">
+                                                <input icheck type="radio" name="PreviouslyBorrowed" ng-value="false" id="PreNo" ng-model="GrpLoan.PreviouslyBorrowed"><span>No</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" ng-show="GrpLoan.PreviouslyBorrowed == true">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Loan Amount</label>
+                                        <input type="text" class="form-control input-sm" ng-model="GrpLoan.PreviousLoanAmount" id="txtGrpPreviousLoanAmount" numbers-Only />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group" ng-show="(GrpLoan.PreviouslyBorrowed == true) ? true : false">
+                                        <label for="focusedinput" class="control-label lablefont">Loan Completed</label>
+                                        <input type="text" class="form-control input-sm datepicker" placeholder="Date of Completed" id="txtGrpPreviousLoanCompleted" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset><br />
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Member Details</legend>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Account Number</label><br />
+                                        <input type="text" class="form-control input-sm" placeholder="Account Number" id="txtaccountnum" ng-model="SearchAccountNo" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>&nbsp;</label><br />
+                                        <butoon class="btn btn-primary btn-sm  btn-flat" id="btnsearch" ng-click="SearchCustomer()"><i class="fa fa-search"></i>Search</butoon>
+                                    </div>
+                                </div>
+                                <div class="col-md-4"></div>
+                                <div class="col-md-2" style="padding-top:25px">
+                                    <button ng-show="GrpLoan.GroupLoanId != null && AccountHolderList.length > 0" class="btn btn-primary btn-sm btn-flat pull-right" ng-click="OpenLoanChargesModal()"><i class="fa fa-plus"></i>&nbsp; Add charges to all</button>
+                                </div>
+                                <div class="col-md-2" style="padding-top:25px">
+                                    <button ng-show="(AccountHolderList | filter:{Check: true}).length > 0" class="btn btn-primary btn-sm btn-flat pull-right" ng-click="OpenApproveGroupLoanModal()"><i class="fa fa-check"></i>&nbsp;Approve Group Loan</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="box-body">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive">
+                                            <table id="tblCustomerpersonal" class="table table-bordered" role="grid" style="width:100%;">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th><input type="checkbox" icheck id="chkAll" ng-model="CheckAll" ng-change="CheckAllCheckbox()" ng-disabled="(AccountHolderList | filter:{LoanStatus: 1}).length == 0" /> </th>
+                                                        <th>Client Id</th>
+                                                        <th>Account Number</th>
+                                                        <th>Customer Name</th>
+                                                        <th>Amount</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr role="row" ng-repeat="cd in AccountHolderList">
+                                                        <td><input type="checkbox" icheck id="chkAccount" ng-model="cd.Check" ng-disabled="cd.LoanStatus == 1 || cd.LoanStatus == 7 ||  cd.LoanStatus == 4" /> </td>
+                                                        <td>{{cd.ClientId}}</td>
+                                                        <td>{{cd.AccountNumber}}</td>
+                                                        <td>{{cd.CustomerName}}</td>
+                                                        <td class="text-center"><div class="form-group"><input type="text" id="Amt_{{cd.ClientId}}" ng-model="cd.LoanAmount" class="form-control input-sm" /></div></td>
+                                                        <td>
+                                                            <button type="button" name="Loan" id="btnPersonalLoan" data-toggle="modal" data-target="#GroupPersonalLoan" ng-show="cd.LoanId!=null" class="btn btn-primary btn-sm btn-flat" ng-click="GetLoanDetailsByLoanId(cd)"><i class="fa fa-edit">&nbsp;Loan</i></button>
+                                                            <button ng-click="RemoveMember(cd,$index)" class="btn btn-danger btn-sm btn-flat"><i class="glyphicon glyphicon-minus"></i>&nbsp;Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr role="row" ng-if="AccountHolderList.length == 0">
+                                                        <td colspan="9" class="text-center">No members selected</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset><br />
+                        <div class="pull-right">
+                            <butoon class="btn btn-primary btn-sm btn-flat" ng-click="SaveGroupLoanDetails()"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Group Loan</butoon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal fade modal-fullscreen footer-to-bottom" id="GroupPersonalLoan" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="ClearLoanModal()">&times;</button>
+                <h4 class="modal-title">Loan Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active" id="tab7"><a id="btntab7" data-target="#tab_7" data-toggle="tab" class="cursor">Loan Details</a></li>
+                            <li id="tab9"><a id="btntab9" data-target="#tab_9" data-toggle="tab" class="cursor">Loan Charges </a></li>
+                            <li id="tab10"><a id="btntab10" data-target="#tab_10" data-toggle="tab" class="cursor">Documents</a></li>
+                            <li id="tab11"><a id="btntab11" data-target="#tab_11" data-toggle="tab" class="cursor">Amountisation</a></li>
+                            <li id="tab8"><a id="btntab8" data-target="#tab_8" data-toggle="tab" class="cursor">Update Status</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_7">
+                                <div class="panel-body">
+                                    <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border">Loan Details</legend>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Date of Application</label>
+                                                    <input type="text" class="form-control input-sm datepicker" placeholder="Date of Application" id="txtLoandateofapplication" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Present Customer of Bank</label><br />
+                                                    <div class="col-md-8">
+                                                        <label class="labelradiocheckbox">
+                                                            <input icheck type="radio" name="customer" value="Yes" id="radioyes" ng-model="PersonalLoan.PresentcustomerBank"><span>Yes</span>
+                                                        </label>
+                                                        <label class="labelradiocheckbox">
+                                                            <input icheck type="radio" name="customer" value="No" id="radiono" ng-model="PersonalLoan.PresentcustomerBank"><span>No</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Client ID</label>
+                                                    <input type="text" class="form-control input-sm" id="txtcustomerid" ng-model="PersonalLoan.ClientId" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Place</label>
+                                                    <input type="text" class="form-control input-sm" id="txtplace" ng-model="PersonalLoan.Place" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Loan Amount ₹</label>
+                                                    <input type="text" class="form-control input-sm" id="txtamount" ng-model="PersonalLoan.LoanAmount" ng-keyup="PersonalLoan.DisbursementAmount = PersonalLoan.LoanAmount" numbers-Only />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Interest Rate ₹(%)</label>
+                                                    <input type="text" class="form-control input-sm" id="txtinterestrate" ng-model="PersonalLoan.LoanIntrestRate" readonly percentage-Field ng-disabled="PersonalLoan.IsDisbursed" />
+                                                </div>
+                                            </div>
+                                            <!--<div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Processing Charge</label>
+                                                    <input type="text" class="form-control input-sm" id="txtinterestrate" ng-model="PersonalLoan.ProcessingCharge" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Service Tax</label>
+                                                    <input type="text" class="form-control input-sm" id="txtinterestrate" ng-model="PersonalLoan.ServiceTax" />
+                                                </div>
+                                            </div>-->
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Term (In Months)</label>
+                                                    <input type="text" class="form-control input-sm" id="txtterm" ng-model="PersonalLoan.Term" numbers-Only ng-disabled="PersonalLoan.IsDisbursed" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Disbursement Amount</label>
+                                                    <input type="text" class="form-control input-sm" id="txtDisbursementAmt" ng-model="PersonalLoan.DisbursementAmount" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3" ng-show="PersonalLoan.LoanStatus == 4 || PersonalLoan.LoanStatus == 7">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Installment Date</label>
+                                                    <input type="text" class="form-control input-sm datepicker" id="txtInstallmentDate" ng-disabled="PersonalLoan.IsDisbursed" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Reason For Use</label><br />
+                                                    <div class="col-md-12">
+                                                        <label class="labelradiocheckbox" ng-repeat="l in LookUp |filter : {CategoryName : 'ReasonForUse'}">
+                                                            <input icheck name="reason" type="radio" id="radio_{{$index}}" value="{{l.LookupId}}" ng-model="$parent.PersonalLoan.ReasonForUse"><span>{{l.Name}}</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Customer Type</label><br />
+                                                    <label class="labelradiocheckbox" ng-repeat="l in LookUp |filter : {CategoryName : 'CustomerType'}">
+                                                        <input icheck name="customertype" type="radio" id="radio_{{$index}}" value="{{l.LookupId}}" ng-model="$parent.PersonalLoan.CustomerType"><span>{{l.Name}}</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab_8">
+                                <div class="row">
+                                    <div class="panel-body">
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Update Status</legend>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Loan Status</label><br />
+                                                        <select id="ddlLoanStatus" class="form-control input-sm center-block" ng-model="UpdateStatus.LoanStatus" ng-change="UpdateStatus.Comment = null">
+                                                            <option value="">Select</option>
+                                                            <option value="1" ng-disabled="PersonalLoan.LoanStatus == 7">Draft</option>
+                                                            <option value="2" ng-disabled="PersonalLoan.LoanStatus == 7">Submit</option>
+                                                            <option ng-hide="Role != 1" value="3" ng-disabled="PersonalLoan.LoanStatus == 7">InProcess</option>
+                                                            <option ng-hide="Role != 1" value="4" ng-disabled="PersonalLoan.LoanStatus == 7">Approved</option>
+                                                            <option ng-hide="Role != 1" value="7" disabled>Disbursed</option>
+                                                            <option ng-hide="Role != 1" value="5">Reject</option>
+                                                            <option ng-hide="Role != 1" value="6">Cancel</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Comment</label><br />
+                                                        <textarea class="form-control input-sm" placeholder="Comment" id="txtComnent" ng-model="UpdateStatus.Comment"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered" style="width:100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Status</th>
+                                                                    <th>Comment</th>
+                                                                    <th>Updated By</th>
+                                                                    <th>Updated Date</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="loanStatus in LoanStatusList">
+                                                                    <td>{{loanStatus.LoanStatusName}}</td>
+                                                                    <td>{{loanStatus.Comment}}</td>
+                                                                    <td>{{loanStatus.UpdatedByName}}</td>
+                                                                    <td>{{loanStatus.UpdatedDate | date : 'dd/MM/yyyy hh:mm:ss a'}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-center" colspan="4" ng-if="LoanStatusList.length == 0">
+                                                                        No data found.
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="panel-body">
+                                        <fieldset class="scheduler-border" ng-if="PersonalLoan.IsDisbursed == true">
+                                            <legend class="scheduler-border">Disbursement Detail</legend>
+                                            <table style="width:100%" cellspacing="5">
+                                                <tr>
+                                                    <td style="font-weight:bold"> Total Amount : </td>
+                                                    <td style="text-align:left"> {{PersonalLoan.TotalDisbursementAmount  | number : 2}}</td>
+                                                    <td style="font-weight:bold"> Disbursement Through : </td>
+                                                    <td style="text-align:left" ng-switch on="PersonalLoan.DisburseThrough"> <span ng-switch-when="1"> Saving Account</span> <span ng-switch-when="2"> Cheque</span></td>
+                                                    <td style="font-weight:bold"> </td>
+                                                    <td style="text-align:left"> </td>
+                                                </tr>
+                                                <tr ng-if="PersonalLoan.DisburseThrough == 2">
+                                                    <td style="font-weight:bold"> Bank Name : </td>
+                                                    <td style="text-align:left"> {{PersonalLoan.BankName}}</td>
+                                                    <td style="font-weight:bold"> Cheque Date :</td>
+                                                    <td style="text-align:left"> {{PersonalLoan.ChequeDate | date : 'dd/MM/yyyy' }} </td>
+                                                    <td style="font-weight:bold">Cheque No : </td>
+                                                    <td style="text-align:left"> {{PersonalLoan.ChequeNo}}</td>
+                                                </tr>
+                                            </table>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab_9" class="tab-pane">
+                                <div class="row">
+                                    <div class="panel-body">
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Loan Charges</legend>
+                                            <div class="row">
+                                                <div class="col-md-2 pull-right">
+                                                    <button class="btn btn-primary btn-sm btn-flat" ng-click="AddCharges()" ng-disabled="PersonalLoan.IsDisbursed == true"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-condensed" style="width:100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        Name
+                                                                    </th>
+                                                                    <th colspan="2">
+                                                                        No. Of Shares
+                                                                    </th>
+                                                                    <th>
+                                                                        Value
+                                                                    </th>
+                                                                    <th>Delete</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="width:20%;">
+                                                                        <span>Share</span>
+                                                                    </td>
+                                                                    <td style="width:13%;">
+                                                                        <input class="form-control input-sm" ng-model="NoOfShares" numbers-Only placeholder="No. Of Shares" ng-keyup="ChangeShareValue(NoOfShares)" ng-disabled="PersonalLoan.LoanStatus == 7" />
+                                                                    </td>
+                                                                    <td style="width:10%;">
+                                                                        <h5> &nbsp;&nbsp; X&nbsp; 100.00 &nbsp;&nbsp;&nbsp;=</h5>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="row">
+                                                                            <div class="form-group" ng-class="{'col-md-6' : PersonalLoan.LoanStatus == 4 || PersonalLoan.LoanStatus == 7 ,'col-md-12': PersonalLoan.LoanStatus != 4 &&  PersonalLoan.LoanStatus != 7}" ">
+                                                                                <input class="form-control input-sm" ng-model="TotalValue" readonly />
+                                                                            </div>
+                                                                            <div class="form-group col-md-6" ng-show="PersonalLoan.LoanStatus == 4 || PersonalLoan.LoanStatus == 7">
+                                                                                <input class="form-control input-sm" id="txtShareCertificateNo" ng-model="ShareCertificateNo" placeholder="Certificate No." ng-disabled="PersonalLoan.LoanStatus == 7" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        &nbsp;
+                                                                    </td>
+                                                                </tr>
+                                                                <tr ng-repeat="charges in LoanCharges | filter : {IsDelete : false, Name : '!Share'}">
+                                                                    <td colspan="3">
+                                                                        <input class="form-control input-sm" ng-model="charges.Name" ng-disabled="PersonalLoan.LoanStatus == 7" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <input class="form-control input-sm" ng-model="charges.Value" valid-Number ng-disabled="PersonalLoan.LoanStatus == 7" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <button class="btn btn-danger btn-sm btn-flat" ng-click="RemoveCharges($index)" ng-disabled="PersonalLoan.LoanStatus == 7"><i class="glyphicon glyphicon-remove"></i> Delete </button>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3" ng-if="LoanCharges.length == 0">
+                                                                        No data found.
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab_10" class="tab-pane">
+                                <div class="row">
+                                    <div class="panel-body">
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Documents</legend>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-2">
+                                                        <label for="focusedinput" class="control-label lablefont"></label><br />
+                                                        <input type="file" id="loanDocs" ng-files="getTheFiles($files)" multiple />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered" style="width:100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        DocumentName
+                                                                    </th>
+                                                                    <th>
+                                                                        Delete
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="docs in LoanDocuments">
+                                                                    <td><a href="http://localhost:51314/LoanDocuments/{{docs.Path}}" target="_blank" download="{{docs.DocumentName}}">{{docs.DocumentName}}</a></td>
+                                                                    <td><button class="btn btn-danger btn-sm btn-flat" ng-click="DeleteDocuments(docs.LoanDocumentId)"><i class="glyphicon glyphicon-remove"></i> Delete</button></td>
+                                                                </tr>
+                                                                <tr ng-if="LoanDocuments.length == 0">
+                                                                    <td colspan="2" class="text-center">No documents availbale</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab_11" class="tab-pane">
+                                <div class="row">
+                                    <div class="panel-body">
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Amountisation</legend>
+                                            <div class="row">
+                                                <div class="col-md-2 pull-right">
+                                                    <button class="btn btn-primary btn-sm btn-flat" ng-click="PrintAmountisation()"><i class="glyphicon glyphicon-print"></i> Print</button>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="printAmountisation">
+                                                <div class="col-md-12">
+                                                    <table style="width:100%" cellspacing="5">
+                                                        <tr>
+                                                            <td style="font-weight:bold" colspan="2"> Customer Name: </td>
+                                                            <td colspan="4"> {{CustomerList}} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="font-weight:bold"> Disbursement Amount : </td>
+                                                            <td style="text-align:left"> {{PersonalLoan.DisbursementAmount  | number : 2}}</td>
+                                                            <td style="font-weight:bold"> Total Charge : </td>
+                                                            <td style="text-align:left"> {{TotalCharges  | number : 2}}</td>
+                                                            <td style="font-weight:bold"> Total Loan Amount : </td>
+                                                            <td style="text-align:left"> {{PrincipalAmount  | number : 2}}</td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="font-weight:bold"> Interest Rate : </td>
+                                                            <td style="text-align:left"> {{PersonalLoan.LoanIntrestRate  | number : 2}}</td>
+                                                            <td style="font-weight:bold"> Terms :</td>
+                                                            <td style="text-align:left"> {{PersonalLoan.Term  | number : 2}} Months</td>
+                                                            <td style="font-weight:bold"> </td>
+                                                            <td style="text-align:left"> </td>
+                                                        </tr>
+                                                    </table>
+                                                    <div class="table-responsive" style="padding-top:25px;">
+                                                        <table class="table table-bordered" style="width:100%;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Sr No. </th>
+                                                                    <th style="text-align:right">Installment Date</th>
+                                                                    <th style="text-align:right">MonthlyEMI</th>
+                                                                    <th style="text-align:right">Principal Amount</th>
+                                                                    <th style="text-align:right">Interest Amount</th>
+                                                                    <th style="text-align:right">Payment Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="amt in LoanAmountisation">
+                                                                    <td>{{$index + 1}}</td>
+                                                                    <td style="text-align:right">{{amt.Installmentdate | date  : 'dd/MM/yyyy'}}</td>
+                                                                    <td style="text-align:right">{{amt.MonthlyEMI  | number : 2}}</td>
+                                                                    <td style="text-align:right">{{amt.PrincipalAmt | number : 2}}</td>
+                                                                    <td style="text-align:right">{{amt.Interest | number : 2}}</td>
+                                                                    <td style="text-align:right">
+                                                                        <div ng-switch="amt.IsPaid">
+                                                                            <span ng-switch-when="true" class="label label-success">
+                                                                                Paid
+                                                                            </span>
+                                                                            <span ng-switch-when="false" class="label label-danger">
+                                                                                UnPaid
+                                                                            </span>
+                                                                            <span ng-switch-default class="label label-primary">
+                                                                                Pending
+                                                                            </span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td ng-if="LoanAmountisation.length == 0">
+                                                                        No data found.
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-right">
+                    <button ng-show="DocumentShown == 0" class="btn btn-primary btn-sm btn-flat" ng-click="SaveLoanDetails()"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                    <button ng-show="DocumentShown == 0" class="btn btn-primary btn-sm btn-flat" ng-click="SaveLoanDetails('Close')"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save & Close</button>
+                    <button ng-show="DocumentShown == 1" class="btn btn-primary btn-sm btn-flat" ng-click="UploadDocuments()"><i class="glyphicon glyphicon-floppy-disk"></i> Upload</button>
+                </div>
+                <div class="pull-left" ng-show="DocumentShown == 0 && Disbursement == 1">
+                    <butoon class="btn btn-success btn-sm btn-flat" ng-click="OpenModalDisbursementAmount()" ng-show="PersonalLoan.LoanStatus == 4 && PersonalLoan.IsDisbursed == false  && Role == 1"><i class="glyphicon glyphicon-check"></i> Disburse Amount</butoon>
+                    <button class="btn btn-primary btn-sm btn-flat" ng-click="OpenModalDisbursementLetter()" ng-show="(PersonalLoan.LoanStatus == 4 || PersonalLoan.LoanStatus == 7) && PersonalLoan.IsDisbursed == true"><i class="glyphicon glyphicon-print"></i> Disbursement Letter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade footer-to-bottom" id="LoanCharges" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="ClearLoanCharges()">&times;</button>
+                <h4 class="modal-title">Loan Charges</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="panel-body">
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Loan Charges</legend>
+                            <div class="row">
+                                <div class="col-md-2 pull-right">
+                                    <button class="btn btn-primary btn-sm btn-flat" ng-click="AddLoanCharges()"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+
+                                        <table class="table table-bordered table-condensed" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Name
+                                                    </th>
+                                                    <th colspan="2">
+                                                        No. Of Shares
+                                                    </th>
+                                                    <th>
+                                                        Value
+                                                    </th>
+                                                    <th>Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <span>Share</span>
+                                                    </td>
+                                                    <td style="width:15%;">
+                                                        <input class="form-control input-sm" ng-model="NoOfSharesAll" numbers-Only placeholder="No. Of Shares" ng-keyup="ChangeShareValueAll(NoOfSharesAll)" />
+                                                    </td>
+                                                    <td style="width:18%;">
+                                                        <h5> &nbsp;&nbsp; X&nbsp; 100.00 &nbsp;&nbsp;&nbsp;=</h5>
+                                                    </td>
+                                                    <td>
+                                                        <div class="row">
+                                                            <div class="form-group col-md-12">
+                                                                <input class="form-control input-sm" ng-model="TotalValueAll" readonly />
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                                <tr ng-repeat="charges in AllLoanCharges | filter : {IsDelete : false, Name : '!Share'}">
+                                                    <td colspan="3">
+                                                        <input class="form-control input-sm" ng-model="charges.Name" />
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control input-sm" ng-model="charges.Value" valid-Number />
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-danger btn-sm btn-flat" ng-click="RemoveAllCharges($index)"><i class="glyphicon glyphicon-remove"></i> Delete </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" ng-if="LoanCharges.length == 0">
+                                                        No data found.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-sm btn-flat" ng-click="SaveAllLoanCharges()"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                <button class="btn btn-default btn-sm btn-flat" data-dismiss="modal"><i class="fa fa-remove"></i> Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="DisbursementAmount" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Disburse Amount</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Total Amount</label>
+                            <input id="txtTotalDisbursementAmount" class="form-control" ng-model="PersonalLoan.TotalDisbursementAmount" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Through</label>
+                            <select id="ddlThrough" class="form-control" ng-model="PersonalLoan.DisburseThrough">
+                                <option value="">Select</option>
+                                <option value="1"> Saving Account</option>
+                                <option value="2"> Cheque</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="PersonalLoan.DisburseThrough == 2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Cheque Number</label>
+                            <input type="text" class="form-control input-sm" id="txtChequeNo" placeholder="Cheque Number" ng-model="PersonalLoan.ChequeNo">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Bank Name</label>
+                            <input type="text" class="form-control input-sm" id="txtBankName" placeholder="Bank Name" ng-model="PersonalLoan.BankName">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="PersonalLoan.DisburseThrough == 2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Cheque Date</label>
+                            <input type="text" class="form-control input-sm datepicker" id="txtChequeDate" placeholder="Date of Clearing">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-sm btn-flat" ng-click="SaveDisbursementAmount()"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                <button class="btn btn-default btn-sm btn-flat" data-dismiss="modal"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ApproveGroupLoan" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Approve Group Loan</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Status</label>
+                            <select id="ddlLoanStatus" class="form-control input-sm center-block" ng-model="ApproveStatus" disabled ng-init="ApproveStatus = '4'">
+                                <option value="1" disabled>Draft</option>
+                                <option value="2" disabled>Submit</option>
+                                <option value="3" disabled>InProcess</option>
+                                <option value="4" selected>Approved</option>
+                                <option value="7" disabled>Disbursed</option>
+                                <option value="5" disabled>Reject</option>
+                                <option value="6" disabled>Cancel</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Reason</label>
+                            <textarea class="form-control input-sm" placeholder="Comment" id="txtComnent" ng-model="ApproveComment"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-sm btn-flat" ng-click="ApproveGroupLoan()"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                <button class="btn btn-default btn-sm btn-flat" data-dismiss="modal"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-include src="'Views/AgentList.html'"></ng-include>
+<ng-include src="'Views/EmployeeList.html'"></ng-include>
+<ng-include src="'Views/DisbursementLetter.html'"></ng-include>

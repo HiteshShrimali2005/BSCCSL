@@ -1,0 +1,45 @@
+﻿
+<div class="modal fade" id="CheckBounce" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" style="width:750px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="ClearOnBounceClose()">&times;</button>
+                <h4 class="modal-title">Fill Cheque Bounce Details</h4>
+            </div>
+            <div class="modal-body" id="DivCheckBounce">
+                <div class="row" style="margin-left: 0.5cm">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Select Reason</label>
+                            <div>
+                                <select class="form-control input-sm" id="ddlBounceReson" ng-model="BounceReson">
+                                    <option value="">Select</option>.
+                                    <option value="1">Insufficient Funds</option>
+                                    <option value="2">Signature Mismatch</option>
+                                    <option value="3">Difference in Amount in Words and Numbers</option>
+                                    <option value="4">Disfigured or Damaged Cheque</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-left: 0.5cm">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Penalty Charge</label>
+                            <div>
+                                <input type="text" class="form-control input-sm" id="txtPenalty" placeholder="Penalty Amount" ng-model="Penalty" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SavePenalty();"><i class="glyphicon glyphicon-save"></i> Save</button>
+                    <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearOnBounceClose();"><i class="glyphicon glyphicon-remove"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

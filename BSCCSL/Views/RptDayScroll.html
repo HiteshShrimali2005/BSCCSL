@@ -1,0 +1,91 @@
+﻿
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Day Scroll
+        </h3>
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Day Scroll List</h3>
+                        </div>
+                        <div class="box-body">
+                            <div style="padding-bottom:10px">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-2">
+                                            <label>Start Date</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control input-sm" id="txtStartDateforSearch" placeholder="Start Date" />
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>End Date</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control input-sm" id="txtEndDateforSearch" placeholder="End Date" />
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div>
+                                                <label>&nbsp;</label>
+                                            </div>
+                                            <button type="button" data-toggle="modal" class="btn btn-primary btn-sm btn-flat" ng-click="SearchTransactionListAll()"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;Search</button>
+                                            <label>&nbsp;</label>
+                                            <button type="button" data-toggle="modal" class="btn btn-default btn-sm btn-flat" ng-click="ClearAll()"><i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">&nbsp;</div>
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table id="tblTransactionforall" class="table table-bordered" role="grid" style="width:100%;">
+                                        <thead>
+                                            <tr role="row" class="align-center">
+                                                <th>Date</th>
+                                                <th>AccountNumber</th>
+                                                <th>Name</th>
+                                                <th>Mobile No</th>
+                                                <th>Description</th>
+                                                <th>Deposit</th>
+                                                <th>Withdrawal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                        <tfoot>
+                                            <tr style="font-weight:bold">
+                                                <td> </td>
+                                                <td> </td>
+                                                <td> </td>
+                                                <td> </td>
+                                                <td id="labelTotal">Total </td>
+                                                <td id="lblTotalDepositeAmount"> </td>
+                                                <td id="lblTotalWithDrawAmount"></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+
+
+
+
+
+
+

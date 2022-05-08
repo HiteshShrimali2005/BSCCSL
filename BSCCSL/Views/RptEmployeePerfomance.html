@@ -1,0 +1,106 @@
+﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Employee Perfomance
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Employee Perfomance List</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Employee Name</label>
+                                <input type="text" id="txtAgentlistsearch" class="form-control input-sm" placeholder="Employee Name" ng-model="EmployeeName" />
+                            </div>
+                            <div class="col-md-2">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtStartDateforSearch" placeholder="Start Date" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>End Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtEndDateforSearch" placeholder="End Date" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>&nbsp;</label><br />
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchEmployeePerfomanceList()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                                <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                            </div>
+                            <div class="col-md-1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <!--<table id="tblEmployeePerfomanceList" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Employee Code</th>
+                                            <th>Employee Name</th>
+                                            <th>Product Name</th>
+                                            <th>Product Type</th>
+                                            <th>Total Product</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                </table>-->
+
+                                <table id="tblEmpPerfomanceListHO" class="table" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:left"> Employee Name </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="(key, value) in EmployeeProductListdata | groupBy: 'EmployeeName'  ">
+                                            <td style="font-weight:bold;text-align:left">
+                                                {{key}}
+                                            </td>
+                                            <td ng-repeat="branch in value">
+                                                <table style="width:150px;" class=" table table-responsive">
+                                                    <thead>
+                                                        <tr>
+                                                            <th> {{branch.ProductName}} </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td ng-show="branch.ProductType == 1"><span>{{branch.Balance | number:2}} ({{branch.TotalCount}})</span></td>
+                                                            <td ng-show="branch.ProductType != 1"><span>{{branch.Amount | number : 2}} ({{branch.TotalCount}})</span></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr ng-show="EmployeeProductListdata.length == 0">
+                                            <td id="EmptyDatanotHO">
+                                                No data found.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

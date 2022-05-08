@@ -1,0 +1,187 @@
+﻿<div class="content-wrapper">
+    <section class="content-header">
+        <h3>
+          Cheque
+        </h3>
+
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Unclear Cheque List</h3>
+                    </div><br />
+                    <div class="col-md-2">
+                        <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Account Number" />
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchCheque()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                        <button class="btn btn-default btn-sm btn-flat" ng-click="ClearChequeData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblcheque" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row"> 
+                                            <th>Account No.</th>
+                                            <th>Name</th>
+                                            <th>Product</th>
+                                            <th>Balance</th>
+                                            <th>Transaction Date</th>
+                                            <th>Cheque Amount</th>
+                                            <th>Cheque No.</th>
+                                            <th>Cheque Date</th>  
+                                            <th>Bank Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="modal fade" id="ClearChequePopup" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="ClearRecordOnCLose()">&times;</button>
+                <h4 class="modal-title">Cheque Clear Details</h4>
+            </div>
+            <div class="modal-body" style="margin-left: 0.5cm">
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Cheque Details</legend>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label">Cheque Number : </label> {{TransactionData.CheckNumber}}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="focusedinput">Cheque Date :</label> {{TransactionData.ChequeDate | date:'dd/MM/yyyy'}}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label ">Bank Name :</label> {{TransactionData.BankName}}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label ">Deposite Amount :</label> {{TransactionData.Amount}}
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label "> Transaction Type :</label> {{TransactionType}}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label ">Transaction Time : </label> {{TransactionData.TransactionTime | date:'dd/MM/yyyy hh:mm a'}}
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="form-inline" style="padding-top:0.5cm">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Cheque Clear Date  :   </label>
+                                &nbsp;
+                                <input type="text" class="form-control input-sm datepicker" id="txtChequeCleanceDate" placeholder="Date of Clearing">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="row" style="padding-top:0.5cm">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div>
+                                <label>
+                                    <input icheck type="checkbox" ng-model="IsSameBranch" ng-change="stateChanged()" id="chksamebank">  Same Bank
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control input-sm" id="txtAccNumber" ng-hide="!IsSameBranch" placeholder="Account Number" ng-model="AccountNo" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-sm btn-flat"  ng-hide="!IsSameBranch" ng-click="SearchAccountNumber();"><i class="glyphicon glyphicon-search"></i>Search</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4" ng-hide="!IsSameBranch">
+                        <div class="form-group" ng-show="AccBalance!=null">
+                            <label for="focusedinput" class="control-label">Balance : {{AccBalance | number :2}} </label>
+                        </div>
+                    </div>
+                </div>
+                <!--<div>
+                    <h4 class="modal-title">Cheque Details</h4>
+                </div>-->
+                <div class="row"  ng-hide="!IsSameBranch">
+                    <div class="col-lg-12" ng-show="CustomerData.length > 0">
+                        <div class="table-responsive">
+                            <table id="tblTransaction" class="table table-bordered" role="grid" style="width:100%;" >
+                                <thead>
+                                    <tr role="row" class="align-center">
+                                        <th>Holder Name </th>
+                                        <th>Address</th>
+                                        <th>DOB</th>
+                                        <th>Mobile NO</th>
+                                        <th>Sign</th>
+                                    </tr>
+                                    <tr role="row" class="align-center" ng-repeat="c in CustomerData">
+                                        <td>{{c.CustomerName}}</td>
+                                        <td>{{c.Address}}</td>
+                                        <td>{{c.DOB | date:'dd/MM/yyyy'}}</td>
+                                        <td>{{c.MobileNo}}</td>
+                                        <td>
+                                            <a>
+                                                <img id="holdersign_{{$index}}" height="100" width="80" data-toggle="modal" data-target="#myModal" src="../Documents/{{c.Holdersign}}" />
+                                            </a>
+                                            <!--<a class="example-image-link" href="../Documents/{{c.Holdersign}}" data-lightbox="example-set" data-title="Click the right half of the image to move forward.">
+                                                <img class="example-image" src="../Documents/{{c.Holdersign}}" style="width:100px;height:100px;">
+                                            </a>-->
+                                        <!--<a class="zoom_img"><img id="CustSignImage" class="form-control" alt="Member Profile" style="width:100px;height:100px;" src="../Documents/{{c.Holdersign}}" /></a>--></td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="ClearCheque();"><i class="glyphicon glyphicon-ok"></i> Clear Cheque</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" ng-click="BounceCheque();"><i class="glyphicon glyphicon-refresh"></i> Bounce Cheque</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img class="img-responsive img" src="" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-include src="'Views/CheckBounce.html'"></ng-include>

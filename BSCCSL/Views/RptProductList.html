@@ -1,0 +1,94 @@
+﻿<style>
+    .InstallmentTotal {
+        font-size: 20px;
+    }
+</style>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Customer Product
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"> Customer Product List</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Customer Name</label>
+                                <input type="text" id="txtAccountlistsearch" class="form-control input-sm" placeholder="Customer Name" ng-model="CustomerName" />
+                            </div>
+                            <div class="col-md-2">
+                                <label>Product Name</label>
+                                <input type="text" id="txtProductName" class="form-control input-sm" placeholder="Product Name" ng-model="ProductName" />
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtStartDateforSearch" placeholder="Start Date" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>End Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtEndDateforSearch" placeholder="End Date" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Agent Name</label>
+                                <input type="text" id="txtAgentName" class="form-control input-sm" placeholder="Agent Name" ng-model="AgentName" />
+                            </div>
+                            <div class="col-md-2">
+                                <label>&nbsp;</label><br />
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="Search()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                                <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblProductList" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Client ID</th>
+                                            <th>Account Number</th>
+                                            <th>Agent Name</th>
+                                            <th>Customer Name</th>
+                                            <th>MobileNo</th>
+                                            <th>Product Name</th>
+                                            <th>Opening Date</th>
+                                            <th>Amount</th>
+                                            <th>Current Balance</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="7" style="text-align:right;font-weight:bold" id="labelTotal">Total</td>
+                                            <td id="lblTotalAmount" style="font-weight:bold"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,233 @@
+﻿fieldset.scheduler-border {
+    width: auto !important;
+    font-size: 14px;
+    border: solid 1px #39435C !important;
+    border-radius: 10px;
+    padding: 0 10px 10px 10px;
+    border-bottom: none;
+}
+
+legend.scheduler-border {
+    width: auto !important;
+    color: #39435C;
+    border: 1px solid #39435C;
+    padding: 0px 20px 0px 20px;
+    border-radius: 25px;
+}
+
+.form-group.required .control-label:after {
+    content: "*";
+    color: red;
+}
+
+.DayscrollFont {
+    font-size: 16px;
+}
+
+@media (min-width: 768px) {
+    .custom-modal {
+        width: 1100px;
+    }
+}
+
+
+/*.main-header .logo {
+    width: 175px;
+}
+
+.main-header .navbar {
+    margin-left: 175px;
+}
+
+.main-sidebar, .left-side {
+    width: 175px;
+}
+
+.content-wrapper, .right-side, .main-footer {
+    margin-left: 175px;
+}*/
+.cursor {
+    cursor: pointer;
+}
+
+.blue {
+    color: white;
+    background-color: #2a58d9;
+}
+
+.right {
+    text-align: right;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.nav-tabs .disabled:hover {
+    cursor: not-allowed;
+}
+
+.nav-tabs .disabled a {
+    pointer-events: none;
+}
+
+#overlay {
+    background: rgba(255,255,255,0.7);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 5000;
+    top: 0;
+    left: 0;
+    float: left;
+    text-align: center;
+    padding-top: 25%;
+}
+
+.floatRight {
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
+
+.modal.in {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+/*.ng-hide-remove,
+.ng-hide-add {
+    display: block !important;
+}
+
+.ng-hide-remove {
+    transition: all linear 500ms;
+}
+
+.ng-hide-add {
+    transition: all linear 250ms;
+}*/
+/*body {
+  padding-top: 50px;
+}*/
+
+/*modal fullscreen */
+
+.modal.modal-fullscreen {
+    /* Maximize the main wrappers on the screen */
+    /* Make the parent wrapper of the modal box a full-width block */
+    /* Remove borders and effects on the content */
+    /**
+	 * /!\ By using this feature, you force the header and footer to be placed
+	 * in an absolute position. You must handle by yourself the margin of the
+	 * content.
+	 */
+}
+
+    .modal.modal-fullscreen .modal-dialog,
+    .modal.modal-fullscreen .modal-content {
+        /*bottom: 0;*/
+        left: 20px;
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+
+    .modal.modal-fullscreen .modal-dialog {
+        margin: 0;
+        width: 97%;
+        height: 100%;
+        animation-duration: 0.6s;
+    }
+
+    .modal.modal-fullscreen .modal-content {
+        border: none;
+        -moz-border-radius: 0;
+        border-radius: 0;
+        -webkit-box-shadow: inherit;
+        -moz-box-shadow: inherit;
+        -o-box-shadow: inherit;
+        box-shadow: inherit;
+        /* change bg color below */
+        /* background:#1abc9c; */
+    }
+
+    .modal.modal-fullscreen.force-fullscreen {
+        /* Remove the padding inside the body */
+    }
+
+        .modal.modal-fullscreen.force-fullscreen .modal-body {
+            padding: 0;
+        }
+
+        .modal.modal-fullscreen.force-fullscreen .modal-header,
+        .modal.modal-fullscreen.force-fullscreen .modal-footer {
+            left: 0;
+            position: absolute;
+            right: 0;
+        }
+
+        .modal.modal-fullscreen.force-fullscreen .modal-header {
+            top: 0;
+        }
+
+        .modal.modal-fullscreen.force-fullscreen .modal-footer {
+            bottom: 0;
+        }
+
+.img-wrapper {
+    width: 150%;
+    padding-bottom: 150%; /* your aspect ratio here! */
+    position: relative;
+}
+
+    .img-wrapper img {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        /* optional: if you want the smallest images to fill the .thumbnail */
+    }
+
+.login-box, .register-box {
+    width: 360px;
+    margin: 1% auto;
+}
+
+
+.zoom_img img {
+    -moz-transition: -moz-transform 0.5s ease-in;
+    -webkit-transition: -webkit-transform 0.5s ease-in;
+    -o-transition: -o-transform 0.5s ease-in;
+}
+
+    .zoom_img img:hover {
+        -moz-transform: scale(2);
+        -webkit-transform: scale(2);
+        -o-transform: scale(2);
+    }
+
+.btn:focus {
+    outline: none;
+}
+
+#tdCustomerDocument {
+    text-align: justify;
+    word-break: break-word;
+}
+
+#DeductShareAmountDiv {
+    display: none;
+}
+
+#DeductAdmissionFeeDiv {
+    display: none;
+}

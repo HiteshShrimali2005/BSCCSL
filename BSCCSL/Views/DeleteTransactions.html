@@ -1,0 +1,94 @@
+﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Delete Transaction
+        </h3>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12" style="padding-bottom:10px">
+                <div class="col-md-7"></div>
+                <div class="col-md-3">
+                    <input type="text" id="txtaccountno" class="form-control input-sm" ng-model="Accountno" placeholder="Account Number" />
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SearchAccount()"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;Search</button>
+                    <button type="button" class="btn btn-default btn-sm btn-flat" ng-click="Reset()"><i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Reset</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" ng-show="HolderData.details.length >0">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Transaction List </h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtserchStartDate" placeholder="Start Date" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>End Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtserchEndDate" placeholder="End Date" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Type</label>
+                                <select class="form-control input-sm" id="ddlSearchType" ng-model="SearchType">
+                                    <option value="">Select Type</option>.
+                                    <option value="1">CR</option>
+                                    <option value="2">DR</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5" style="padding-top:25px;">
+                                <button class="btn btn-primary btn-flat btn-sm" ng-click="SearchData()"><i class="fa fa-search"></i> Search</button>
+                                <button class="btn btn-default btn-flat btn-sm" ng-click="SearchClearData()"><i class="fa fa-refresh"></i> Clear</button>
+
+                            </div>
+                        </div>
+                        <div class="col-md-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblTransaction" class="table table-bordered" role="grid" style="width:100%;" ng-show="show==1">
+                                    <thead>
+                                        <tr role="row" class="align-center">
+                                            <th>Date</th>
+                                            <th>WithDrawal</th>
+                                            <th>Deposit</th>
+                                            <th>Balance</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if ((charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+</script>

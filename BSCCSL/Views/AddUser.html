@@ -1,0 +1,180 @@
+﻿<div class="modal fade" id="User" role="dialog" ng-controller="UserController">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add New User</h4>
+            </div>
+            <div class="modal-body">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active" id="tabuser"><a id="btntabuser" data-target="#tab_user" data-toggle="tab" class="cursor">User</a></li>
+                        <li id="tabagentcmsn" ng-show="User.UserId != '00000000-0000-0000-0000-000000000000' && User.UserId!= undefined && User.Role == 4"><a id="btnagentcmsn" data-target="#tab_agnetcmsn" data-toggle="tab" class="cursor">Agent Commission</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_user">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">First Name</label>
+                                        <input type="text" class="form-control input-sm" id="txtFirstName" placeholder="First Name" ng-model="User.FirstName" ng-disabled="CustomerId != null" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Last Name</label>
+                                        <input type="text" class="form-control input-sm" id="txtLastName" placeholder="Last Name" ng-model="User.LastName" ng-disabled="CustomerId != null" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">User Code</label>
+                                        <input id="txtUserCode" class="form-control input-sm" type="text" placeholder="User Code" ng-model="User.UserCode" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Phone Number</label>
+                                        <input id="txtPhonenNo" class="form-control input-sm" type="text" placeholder="Phone Number" ng-model="User.PhoneNumber" ng-disabled="CustomerId != null">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Role</label>
+                                        <select class="form-control input-sm" id="role" ng-model="User.Role" ng-disabled="CustomerId != null">
+                                            <option value="">Select</option>
+                                            <option value="1" ng-show="Role == 1">Admin</option>
+                                            <option value="2">Manager</option>
+                                            <option value="3">Cashier</option>
+                                            <option value="4">Agent</option>
+                                            <option value="5">Clerk</option>
+                                            <option value="6">Cashier + Clerk</option>
+                                            <option value="7">Scree-Sales</option>
+                                            <option value="8">Sales Manager</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Date Of Birth</label>
+                                        <input id="txtDOB" class="form-control input-sm" type="text" placeholder="DateOfBirth" ng-disabled="CustomerId != null">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Gender</label>
+                                        <div>
+                                            <label>
+                                                <input icheck type="radio" name="gender" value="male" id="RadioMale" ng-model="User.Gender" ng-disabled="CustomerId != null">&nbsp;&nbsp;Male
+                                            </label>
+                                            <label>
+                                                <input icheck type="radio" name="gender" value="female" id="RadioFemale" ng-model="User.Gender" ng-disabled="CustomerId != null">&nbsp;&nbsp;Female
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Branch</label>
+                                        <select id="ddlBranchId" class="form-control input-sm" ng-model="User.BranchId" ng-options="item.BranchId as item.BranchName for item in BranchList" ng-disabled="CustomerId != null">
+                                            <option value="">Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Address</label>
+                                        <textarea id="txtAddress" class="form-control input-sm" placeholder="Address" ng-model="User.Address" ng-disabled="CustomerId != null"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Email</label>
+                                        <input type="text" class="form-control input-sm" id="txtUserName" placeholder="Email" ng-model="User.UserName" ng-disabled="CustomerId != null" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4" ng-show="User.UserId == '00000000-0000-0000-0000-000000000000' || User.UserId== undefined || Role==1">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Password</label>
+                                        <input id="txtPassword" class="form-control input-sm" type="password" placeholder="Password" ng-model="User.Password">
+                                    </div>
+                                </div>
+                                <div class="col-md-4" ng-show="User.UserId == '00000000-0000-0000-0000-000000000000' || User.UserId== undefined || Role==1">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Confirm Password</label>
+                                        <input id="txtCnfPassword" class="form-control input-sm" type="password" placeholder="ConfirmPassword" ng-model="User.cnfpwd">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4" ng-show="User.Role == 4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Employee</label><!--item.ProductId as item.ProductName for item in Productlist-->
+                                        <select class="form-control input-sm" id="agent" ng-model="User.EmployeeId" ng-options="item.UserId as item.FirstName +' '+item.LastName for item in EmployeeData">
+                                            <option value="">Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" ng-show="User.Role == 4 && $state.current.name == 'App.User' && User.CustomerId == null">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Saving AccountNo</label><!--item.ProductId as item.ProductName for item in Productlist-->
+                                        <input type="text" id="txtSavingAccountNo" class="form-control input-sm" ng-model="User.SavingAccountNo" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Is Active</label>
+                                        <label>
+                                            <input icheck type="checkbox" name="IsActive" value="IsActive" id="chkActive" ng-model="User.IsActive">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4" ng-show="User.Role == 4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Is Executive</label>
+                                        <label>
+                                            <input icheck type="checkbox" name="IsExecutive" value="IsExecutive" id="chkIsExecutive" ng-model="User.IsExecutive">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3 pull-right">
+                                    <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveUser()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                    <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab_agnetcmsn" class="tab-pane" ng-show="User.UserId != '00000000-0000-0000-0000-000000000000' && User.UserId!= undefined && User.Role == 4">
+                            <div class="row">
+                                <div class="col-md-4" ng-repeat="rank in AgentRankData">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">{{rank.Rank}}</label>
+                                        <select class="form-control input-sm" id="ddlAgentRank{{$index}}" ng-model="rank.EmpAgentId" ng-options="item.AgentId as item.AgentName + '('+ item.AgentCode+')' for item in AgentList">
+                                            <option value="">Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 pull-right">
+                                    <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveAgentHierarchy()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                    <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

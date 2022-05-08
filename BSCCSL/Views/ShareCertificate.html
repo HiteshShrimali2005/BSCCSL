@@ -1,0 +1,125 @@
+﻿
+
+<style>
+    #printpaymentSingle .form-group {
+        margin-bottom: 0px;
+    }
+</style>
+
+<div class="modal fade" id="ShareCerty" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" style="width:750px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Share Certificate</h4>
+            </div>
+            <div class="modal-body" id="ShareCertificate" style="min-height:1000px;">
+                <div style="position: absolute;">
+                    <div style="position: absolute;top:248px;left:0;">
+                        <div style="position: absolute;top:0px;left:230px;">{{MembershipNo}}</div>
+                        <div style="position: absolute;top:0px;left:500px;">
+                            {{CertificateNumber}}
+                        </div>
+                        <div style="position: absolute;top:30px;left:230px;width:350px;">{{Customername}}</div>
+                        <div style="position: absolute;top:60px;left:230px;width:400px;line-height:15px;">
+                            {{Customeaddress}}
+                        </div>
+                        <div style="position: absolute;top:100px;left:230px;width:350px;">
+                            {{NomineeName}}
+                        </div>
+                        <div style="position: absolute;top:130px;left:230px;width:250px;">
+                            {{NumofShare}}
+                        </div>
+                        <div style="position: absolute;top:165px;left:240px;width:250px;">
+                            {{ShareFromNumber}}
+                        </div>
+                        <div style="position: absolute;top:165px;left:450px;width:250px;">
+                            {{ShareToNumber}}
+                        </div>
+                        <div style="position: absolute;top:200px;left:230px;width:250px;">
+                            {{TotalAmount}}
+                        </div>
+                    </div>
+
+                    <div style="position: absolute;top:745px;left:0;">
+                        <div style="position: absolute;top:0px;left:230px;">{{MembershipNo}}</div>
+                        <div style="position: absolute;top:0px;left:500px;">
+                            {{CertificateNumber}}
+                        </div>
+                        <div style="position: absolute;top:30px;left:230px;width:350px;">{{Customername}}</div>
+                        <div style="position: absolute;top:55px;left:230px;width:400px;line-height:15px;">
+                            {{Customeaddress}}
+                        </div>
+                        <div style="position: absolute;top:90px;left:230px;width:350px;">
+                            {{NomineeName}}
+                        </div>
+                        <div style="position: absolute;top:120px;left:230px;width:250px;">
+                            {{NumofShare}}
+                        </div>
+                        <div style="position: absolute;top:155px;left:230px;width:250px;">
+                            {{ShareFromNumber}}
+                        </div>
+                        <div style="position: absolute;top:155px;left:450px;width:250px;">
+                            {{ShareToNumber}}
+                        </div>
+                        <div style="position: absolute;top:190px;left:230px;width:250px;">
+                            {{TotalAmount}}
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div style="padding-top:258px">
+                    <table border="0" width="95%" height="22%" align="center">
+                        <tr>
+                            <td style="padding-left:160px;padding-bottom:5px">
+                                {{MembershipNo}}
+                            </td>
+                            <td style="padding-left:60px">
+                                {{CertificateNumber}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-left:200px;padding-bottom:0px;">
+                                {{Customername}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" width="10px" style="padding-left:200px;text-align:justify;padding-bottom:3px">
+                                {{Customeaddress}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-left:200px;padding-bottom:3px">
+                                {{NomineeName}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-left:200px">
+                                {{NumofShare}}
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td style="padding-left:225px;padding-top:5px;">
+                                {{ShareFromNumber}}
+                            </td>
+                            <td style="padding-left:0px;padding-top:5px;">
+                                {{ShareToNumber}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-left:200px">
+                                {{TotalAmount}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>-->
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="printPageArea('ShareCertificate')"><i class="glyphicon glyphicon-print"></i> Print</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Close</button>
+            </div>
+        </div>
+    </div>
+</div>

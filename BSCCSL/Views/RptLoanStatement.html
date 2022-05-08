@@ -1,0 +1,133 @@
+﻿<style>
+    .InstallmentTotal {
+        font-size: 20px;
+    }
+</style>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Loan Installment Details Report
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"> Loan Installment Details</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Customer Name</label>
+                                <input type="text" id="txtAccountlistsearch" class="form-control input-sm" placeholder="Customer Name" ng-model="CustomerName" />
+                            </div>
+                            <div class="col-md-2">
+                                <label>Acount Number</label>
+                                <input type="text" id="txtAccountNumbersearch" class="form-control input-sm" placeholder="Account Number" ng-model="AccountNumber" />
+                            </div>
+                            <div class="col-md-2">
+                                <label>&nbsp;</label><br />
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchLoanStatement()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                                <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblLoanStatement" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Client Id</th>
+                                            <th>Customer Name</th>
+                                            <th>Account Number</th>
+                                            <th>Total Loan Amount</th>
+                                            <th>Paid Amount</th>
+                                            <th>Pending Amount</th>
+                                            <th>Total Installment</th>
+                                            <th>Total Paid Installment</th>
+                                            <th>Total Unpaid Installment</th>
+                                            <th>Total Pending Installment</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+<div class="modal fade" id="MaturityTransactionDetails" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Maturity Transaction Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label for="focusedinput" class="control-label lablefont">Account Number</label>
+                            </div>
+                            <div class="col-md-6">
+                                <lable id="AccountNumber"></lable>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label for="focusedinput" class="control-label lablefont">Total Maturity Amount</label>
+                            </div>
+                            <div class="col-md-6">
+                                <lable id="TotalMaturityAmount"></lable>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label for="focusedinput" class="control-label lablefont">Total Paid Balance</label>
+                            </div>
+                            <div class="col-md-6">
+                                <lable id="TotalPaidBalance"></lable>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label for="focusedinput" class="control-label lablefont">Pending Amount</label>
+                            </div>
+                            <div class="col-md-6">
+                                <lable id="PendingAmount"></lable>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default btn-sm btn-flat" data-dismiss="modal"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>

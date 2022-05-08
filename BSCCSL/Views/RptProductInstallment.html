@@ -1,0 +1,137 @@
+﻿<style>
+    .InstallmentTotal {
+        font-size: 20px;
+    }
+</style>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Product Installments
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"> Product Installment List</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Customer Name</label>
+                                <input type="text" id="txtAccountlistsearch" class="form-control input-sm" placeholder="Customer Name" ng-model="CustomerName" />
+                            </div>
+                            <div class="col-md-2">
+                                <label>Product Name</label>
+                                <input type="text" id="txtProductName" class="form-control input-sm" placeholder="Product Name" ng-model="ProductName" />
+                            </div>
+                            <div class="col-md-2">
+                                <label>Installment Status</label>
+                                <select class="form-control input-sm" id="ddlsearchStatus">
+                                    <option value="">Select Status</option>
+                                    <option value="true">Paid</option>
+                                    <option value="false">Pending</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Product Status</label>
+                                <select class="form-control input-sm" id="ddlsearchProductStatus">
+                                    <option value="">Select Status</option>
+                                    <option value="2">Running</option>
+                                    <option value="5">Completed</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtStartDateforSearch" placeholder="Start Date" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>End Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtEndDateforSearch" placeholder="End Date" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="col-md-2">
+                            <label>&nbsp;</label><br />
+                            <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchPendingInstallmentList()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                            <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                        </div>-->
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Agent Name</label>
+                                <input type="text" id="txtAgentName" class="form-control input-sm" placeholder="Agent Name" ng-model="AgentName" />
+                            </div>
+                            <div class="col-md-2">
+                                <label>Payment Type</label>
+                                <select class="form-control input-sm" id="ddlPaymentType">
+                                    <option value="">Select</option>
+                                    <option value="1">Daily</option>
+                                    <option value="2">Monthly</option>
+                                    <option value="3">Quarterly</option>
+                                    <option value="4">Half-Yearly</option>
+                                    <option value="5">Yearly</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>&nbsp;</label><br />
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchPendingInstallmentList()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                                <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <span class="InstallmentTotal">Total Paid Installment Amount : <label class="label label-success">{{PaidTotal | currency:'₹ '}}</label></span>
+                            <span class="InstallmentTotal pull-right">Total Pending Installment Amount : <label class="label label-danger">{{PendingTotal | currency:'₹ '}}</label></span>
+                        </div>
+                        <div class="col-lg-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblProductInstallmentList" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Client ID</th>
+                                            <th>Account Number</th>
+                                            <th>Agent Name</th>
+                                            <th>Customer Name</th>
+                                            <th>MobileNo</th>
+                                            <th>Product Name</th>
+                                            <th>Opening Date</th>
+                                            <th>Installment Date</th>
+                                            <th>Amount</th>
+                                            <th>Installment Status</th>
+                                            <th>Product Current Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="8" style="text-align:right;font-weight:bold" id="labelTotal">Total</td>
+                                            <td id="lblTotalAmount" style="font-weight:bold"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

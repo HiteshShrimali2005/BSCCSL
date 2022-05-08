@@ -1,0 +1,89 @@
+﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            RD Due Installment
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">RD Due Installment List</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Agent Name</label>
+                                <input type="text" id="txtAccountlistsearch" class="form-control input-sm" placeholder="Agent Name" />
+                            </div>
+                            <div class="col-md-2">
+                                <label>Customer Name</label>
+                                <input type="text" id="txtCustomerNameSearch" class="form-control input-sm" placeholder="Customer Name" />
+                            </div>
+                            <div class="col-md-2">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtStartDateforSearch" placeholder="Start Date" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>End Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtEndDateforSearch" placeholder="End Date" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>&nbsp;</label><br />
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchDueInstallmentList()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                                <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                            </div>
+                            <div class="col-md-1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblDueInstallmentList" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Agent Name</th>
+                                            <th>Agent MobileNo</th>
+                                            <th>Client ID</th>
+                                            <th>Account Number</th>
+                                            <th>Customer Name</th>
+                                            <th>Mobile No</th>
+                                            <th>Installment Date</th>
+                                            <th>Due Installment</th>
+                                            <th>Late Payment</th>
+                                            <th>Amount</th>
+                                            <th>Total Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td id="labelTotal" colspan="7" style="text-align:right;font-weight:bold">Total</td>
+                                            <td id="lblTotalDueInstallmentAmount" style="font-weight:bold"></td>
+                                            <td id="lblTotalLatePaymentAmount" style="font-weight:bold"></td>
+                                            <td id="lblAmount" style="font-weight:bold"></td>
+                                            <td id="lblTotalAmount" style="font-weight:bold"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

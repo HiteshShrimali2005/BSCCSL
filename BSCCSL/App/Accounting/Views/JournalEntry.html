@@ -1,0 +1,205 @@
+﻿<style>
+    th, td {
+        white-space: nowrap;
+    }
+
+    .first-col {
+        position: absolute;
+        /*width: 5em;*/
+        margin-left: -5em;
+    }
+
+    .table-wrapper {
+        overflow-x: scroll;
+        width: 85%;
+        margin: 0 auto;
+    }
+</style>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Journal Entry
+            <div class="pull-right">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="Add();" id="btnAddNew"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+                <button type="button" style="display:none" class="btn btn-sm btn-default btn-flat pull-right" id="btnBack"><i class="fa fa-backward fa-fw"></i> Back</button>
+            </div>
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Journal Entry List</h3>
+                    </div>
+                    <div class="col-lg-12" id="divSearching">
+                        <div class="col-lg-3">
+                            <label>Entry Type</label>
+                            <select class="form-control input-sm" id="ddlSearchEntryType">
+                                <option value="">Select</option>
+                                <option value="1">Journal Entry</option>
+                            </select>
+
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>From Date</label>
+                                <input type="text" class="form-control input-sm" id="txtFromPostingDate"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>To Date</label>
+                                <input type="text" class="form-control input-sm" id="txtToPostingDate" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-lg-2">
+                            <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                            <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                        </div>
+                        <div class="col-lg-1">
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive" id="divListing">
+                                <table id="tblJournalEntry" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Voucher No</th>
+                                            <th>Entry Type</th>
+                                            <th>Posting Date</th>
+                                            <th>Total Amount</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="divAddEdit" style="display:none">
+                            <div class="col-lg-12" style="padding:10px;border:1px solid silver">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group required">
+                                            <label for="focusedinput" class="control-label lablefont">Entry Type</label>
+                                            <select class="form-control input-sm" id="ddlEntryType" ng-model="JournalEntry.EntryType">
+                                                <option value="">Select</option>
+                                                <option value="1">Journal Entry</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group required">
+                                            <label for="focusedinput" class="control-label lablefont">Posting Date</label>
+                                            <input type="text" class="form-control input-sm" id="txtPostingDate" ng-model="JournalEntry.PostingDate" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="focusedinput" class="control-label lablefont">Reference Number</label>
+                                            <input type="text" class="form-control input-sm" id="txtReferenceNo" ng-model="JournalEntry.ReferenceNo" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="focusedinput" class="control-label lablefont">Reference Date</label>
+                                            <input type="text" class="form-control input-sm" id="txtReferenceDate" ng-model="JournalEntry.ReferenceDate" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="focusedinput" class="control-label lablefont">Description</label>
+                                            <textarea class="form-control input-sm" rows="3" id="txtDescription" placeholder="Description" ng-model="JournalEntry.Description"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-12" style="border:1px solid silver">
+                                    <div class="col-lg-12" style="border-bottom:1px solid silver">
+                                        <div class="col-lg-1">
+                                            <label class="control-label lablefont">#</label>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group required">
+                                                <label class="control-label lablefont required">Account</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label class="control-label lablefont">Party</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="form-group required">
+                                                <label class="control-label lablefont ">Debit</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="form-group required">
+                                                <label class="control-label lablefont required">Credit</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1">
+                                        </div>
+                                    </div>
+                                    <div ng-repeat="data in JournalEntry.EntryList track by ($index)" on-finish-render="ngRepeatFinished" class="col-lg-12">
+                                        <div class="col-lg-1">{{($index+1)}}</div>
+                                        <div class="col-lg-3 form-group" style="margin-bottom:5px !important;margin-top:5px;">
+
+                                            <!--<select class="form-control input-sm" id="ddlAccount_{{($index+1)}}" ng-model="data.AccountId">
+                                                <option value="">Select Account</option>
+                                                <option ng-repeat="account in AccountList" value="{{account.AccountId}}">{{account.Name}}</option>
+                                            </select>-->
+                                            <div ng-show="ISNew" ng-attr-id="{{'txtAccount_' +($index+1) }}" initial-value="" angucomplete-alt placeholder="Account" pause="100" local-data="AccountList" search-fields="Name" title-field="Name" selected-object="SelectedAccount" minlength="1" input-class="form-control form-control-small" match-class="highlight" ng-model="data.AccountId"></div>
+                                            <input ng-show="!ISNew" type="text" class="form-control input-sm" placeholder="Account" ng-model="data.Name" disabled />
+                                        </div>
+                                        <div class="col-lg-3 form-group" style="margin-bottom:5px !important;margin-top:5px;">
+                                            <input type="text" class="form-control input-sm" placeholder="Party" ng-model="data.Party" />
+                                        </div>
+                                        <div class="col-lg-2 form-group" style="margin-bottom:5px !important;margin-top:5px;">
+                                            <input type="text" class="form-control input-sm" ng-change="checkCreditDebitAmount(($index+1))" id="txtDebitAmount_{{($index+1)}}" placeholder="Debit Amount" valid-number ng-model="data.Debit" />
+                                        </div>
+                                        <div class="col-lg-2 form-group" style="margin-bottom:5px !important;margin-top:5px;">
+                                            <input type="text" class="form-control input-sm" ng-change="checkCreditDebitAmount(($index+1))" id="txtCreditAmount_{{($index+1)}}" placeholder="Credit Amount" valid-number ng-model="data.Credit" />
+                                        </div>
+                                        <div class="col-lg-1" style="margin-bottom:5px !important;margin-top:5px;">
+                                            <i class="fa fa-times" style="cursor:pointer" title="Delete" ng-click="RemoveEntry(($index+1))"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 form-control" style="border:1px solid silver">
+                                    <div class="col-lg-6">
+                                        <span style="cursor:pointer" class="btn btn-primary btn-xs" ng-click="AddRow()" id="AddRow">Add Row</span>
+                                    </div>
+                                    <div class="col-lg-3"></div>
+                                    <div class="col-lg-3" ng-show="!ISNew">
+                                        <label>Total Difference Amount: </label>
+                                         <label>₹ 0.00</label>
+                                    </div>
+                                </div>
+                            </div>
+                            &nbsp;
+                            <div class="row">
+                                <div class="col-lg-12 right">
+                                    <button type="button" class="btn btn-primary btn-sm btn-flat" id="btnSaveJournal" ng-click="SaveJournalEntry()"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+

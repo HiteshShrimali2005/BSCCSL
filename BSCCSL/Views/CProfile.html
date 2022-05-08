@@ -1,0 +1,126 @@
+﻿
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Change Profile
+        </h3>
+        <section class="content ng-scope">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="col-xs-12">
+                            <div class="col-md-1">
+                            </div>
+                        </div>
+                        <div class="modal-content">
+                            <div class="modal-body">
+
+                                <div class="row">
+                                    <!--<div class="col-md-4">
+            <div class="form-group">
+                <label>Profile Photo</label>
+                <img id="uploadedimage" class="form-control"  alt="your image" style="height: 150px;width : 150px" />
+            </div>
+            <div class="form-group">
+                <input type="file" class="form-control input-sm" ng-model="User.photo" id="photo" accept="image/jpg, image/jpeg, image/png" />
+            </div>
+        </div>-->
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="focusedinput" class="control-label lablefont">First Name</label>
+                                            <div>
+                                                <input type="text" class="form-control input-sm" id="txtFirstName" placeholder="First Name" ng-model="User.FirstName" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="focusedinput" class="control-label lablefont">Last Name</label>
+                                            <div>
+                                                <input type="text" class="form-control input-sm" id="txtLastName" placeholder="Last Name" ng-model="User.LastName" />
+                                            </div>
+                                        </div>
+                                    </div>   
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="focusedinput" class="control-label lablefont">Phone Number</label>
+                                            <div>
+                                                <input id="txtPhonenNo" class="form-control input-sm" type="text" placeholder="Phone Number" ng-model="User.PhoneNumber">
+                                            </div>
+                                        </div>
+                                    </div>                                     
+                                </div>
+                                <div class="row">
+                                                                   
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="focusedinput" class="control-label lablefont">Date Of Birth</label>
+                                            <div>
+                                                <input id="txtDOB" class="form-control input-sm" type="text" placeholder="DateOfBirth">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="focusedinput" class="control-label lablefont">Gender</label>
+                                            <div>
+                                                <input type="radio" name="gender" value="male" id="RadioMale" ng-model="User.Gender">Male&nbsp;&nbsp;
+                                                <input type="radio" name="gender" value="female" id="RadioFemale" ng-model="User.Gender">Female
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="focusedinput" class="control-label lablefont">Branch</label>
+                                            <div>
+                                                {{BranchName}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="focusedinput" class="control-label lablefont">Email</label>
+                                            <div>
+                                                <input type="text" class="form-control input-sm" id="txtUserName" placeholder="Email" ng-model="User.UserName" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="focusedinput" class="control-label lablefont">Address</label>
+                                            <div>
+                                                <textarea id="txtAddress" class="form-control input-sm" placeholder="Address" ng-model="User.Address"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                               <!-- <div class="row">
+                                    <div class="col-md-4" ng-show="User.Role == 4">
+                                        <div class="form-group">
+                                            <label for="focusedinput" class="control-label lablefont">Agent</label>
+                                            <div>
+                                                <select class="form-control input-sm" id="agent" ng-model="User.EmployeeId" ng-options="item.UserId as item.FirstName +' '+item.LastName for item in EmployeeData">
+                                                    <option value="">Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>-->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveUser()"><i class="fa fa-check"></i>Save</button>                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+

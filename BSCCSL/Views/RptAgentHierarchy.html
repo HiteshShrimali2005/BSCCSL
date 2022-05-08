@@ -1,0 +1,51 @@
+﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Agent Hierarchy
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Agent Hierarchy </h3>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <input type="text" id="txtAgentName" class="form-control input-sm" placeholder="Agent Name" ng-model="AgentName" />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchAgentList()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                                <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                            </div>
+                            <div class="col-md-1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblAgentHierarchyList" class="table table-bordered" role="grid" style="width:100%;">
+                                    <!--<thead>
+                                        <tr role="row">
+                                            <th>Agent Name</th>
+                                            <th>PhoneNo</th>
+                                            <th>Agent</th>
+                                            <th>Customer Name</th>
+                                            <th>Address</th>
+                                            <th>Mobile No</th>
+                                        </tr>
+                                    </thead>-->
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

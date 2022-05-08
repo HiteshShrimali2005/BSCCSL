@@ -1,0 +1,67 @@
+﻿<div class="content-wrapper">
+    <section class="content-header">
+        <h3>
+            Loan
+            <!--<div class="pull-right">
+                <a class="btn btn-primary btn-sm btn-flat" ui-sref="App.GroupLoan"><i class="glyphicon glyphicon-plus"></i> Add Group Loan</a>
+            </div>-->
+        </h3>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Loan List</h3>
+                    </div><br />
+                    <div class="col-md-3">
+                        <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Account Number Or Loan Type" />
+                    </div>
+                    <div class="col-md-2">
+                        <select id="ddlLoanStatus" class="form-control input-sm center-block" ng-model="UpdateStatus.LoanStatus" ng-change="UpdateStatus.Comment = null">
+                            <option value="">Select Loan Status</option>
+                            <option value="1">Draft</option>
+                            <option value="2">Submit</option>
+                            <option value="3">InProcess</option>
+                            <option value="4">Approved</option>
+                            <option value="7">Disbursed</option>
+                            <option value="5">Reject</option>
+                            <option value="6">Cancel</option>
+                            <option value="8">Completed</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="txtConsumerProductName" class="form-control input-sm" placeholder="Consumer Product Name" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                        <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblLoan" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Account Number </th>
+                                            <th>Customer Name</th>
+                                            <th>Group Number </th>
+                                            <th>Product Name</th>
+                                            <th>Loan Type</th>
+                                            <th>Loan Amount</th>
+                                            <th>Interest Rate</th>
+                                            <th>Loan Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

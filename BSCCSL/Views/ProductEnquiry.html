@@ -1,0 +1,148 @@
+﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Product Enquiry
+            <div class="pull-right">
+                <button type="button" name="Product" data-toggle="modal" data-target="#ProductEnquiry" class="btn btn-primary btn-sm btn-flat" ng-click="Add()"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+            </div>
+        </h3>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Product Enquiry List</h3>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="col-md-2">
+                            <label>Search</label>
+                            <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Search" />
+                        </div>
+                        <div class="col-md-2">
+                            <label>Start Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" id="txtStartDateforSearch" placeholder="Start Date" />
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label>End Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" id="txtEndDateforSearch" placeholder="End Date" />
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="padding-top:25px;">
+                            <button class="btn btn-primary btn-sm btn-flat" ng-click="Search()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                            <button class="btn btn-default btn-sm btn-flat" ng-click="ClearSearch()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                        </div>
+                        <div class="col-md-1">
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblProductEnquiry" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Contact No</th>
+                                            <th>Product Type</th>
+                                            <!--<th>Comments</th>-->
+                                            <th>EnquiryBy</th>
+                                            <th>Enquiry Source</th>
+                                            <th>Enquiry Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<div class="modal fade" id="ProductEnquiry" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="ClearForm()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Product Enquiry</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">First Name</label> <!--ng-model="ProductTypelist-->
+                            <input type="text" class="form-control input-sm" id="txtFirstName" placeholder="First Name" ng-model="Enquiry.FirstName" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Last Name</label> <!--ng-model="ProductNamelist"-->
+                            <input type="text" class="form-control input-sm" id="txtLastName" placeholder="Last Name" ng-model="Enquiry.LastName" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Contact No</label><br />
+                            <input type="text" class="form-control input-sm" id="txtContactNo" placeholder="Last Name" ng-model="Enquiry.ContactNumber" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Product Type</label>
+                            <select class="form-control input-sm" id="ddlProductTypelist" ng-model="Enquiry.ProductType">
+                                <option value="">Select</option>
+                                <option value="1">Saving Account</option>
+                                <option value="2">Current Account</option>
+                                <option value="3">Fixed Deposit</option>
+                                <option value="4">Recurring Deposit</option>
+                                <option value="5">Loan</option>
+                                <option value="6">Regular Income Planner</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Comment</label><br />
+                            <textarea class="form-control input-sm" rows="4" id="txtComment" placeholder="Comment" ng-model="Enquiry.Comments"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6" ng-show="Enquiry.ProductEnquiryId != null && Enquiry.ProductEnquiryId != undefined && Enquiry.ProductEnquiryId  !=''">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Status</label>
+                            <select class="form-control input-sm" id="ddlStatus" ng-model="Enquiry.Status">
+                                <option value="">Select</option>
+                                <option value="1">New</option>
+                                <option value="2">InProcess</option>
+                                <option value="3">Assigned</option>
+                                <option value="4">Completed</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveProductEnquiry()"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>

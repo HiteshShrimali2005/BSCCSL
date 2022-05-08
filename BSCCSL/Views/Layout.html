@@ -1,0 +1,173 @@
+﻿<div class="wrapper">
+    <header class="main-header">
+        <!-- Logo -->
+        <a ui-sref="App.Dashboard" class="logo">
+            <span class="logo-lg"><b>Bapa</b> Sitaram</span>
+            <!--<img src="../dist/img/bslogo.png" width="115" alt="logo" />-->
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <a class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a class="dropdown-toggle cursor" data-toggle="dropdown">
+                            <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <span class="hidden-xs">{{UserName}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" ui-sref="App.CProfile" style="cursor:pointer">
+                                <p ui-sref="App.CProfile" style="cursor:pointer">
+                                    {{UserName}}
+                                </p>
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a class="btn btn-default btn-flat" ui-sref="App.Profile">Change Password</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a class="btn btn-default btn-flat" ng-click="Logout()">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-custom-menu">
+                <div class="form-group " style="margin-top:7px">
+                    <div>
+                        <!--<button ng-click="refreshToken()">Test</button>-->
+                        <select id="ddlBranch" class="form-control input-sm center-block" ng-disabled="!UserBranch.Enabled" ng-show="UserBranch.ShowBranch" ng-change="ChangeBranch()" ng-model="UserBranch.BranchId" ng-options="item.BranchId as item.BranchName for item in BranchList"></select>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="header">MAIN NAVIGATION</li>
+                <li ui-sref-active="active" ng-hide="(Role == 3 || Role == 4 || Role == 7  || Role == 8)">
+                    <a ui-sref="App.CustomerList">
+                        <i class="fa fa-users"></i>  <span>Customer</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" ng-hide="Role == 4 || Role == 7 || Role == 8">
+                    <a ui-sref="App.Transaction">
+                        <i class="fa fa-money"></i><span>Transaction</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" class="treeview cursor" ng-hide="Role == 3 || Role == 4 || Role == 5 || Role == 7 || Role == 8">
+                    <a>
+                        <i class="fa fa-list-alt"></i>
+                        <span>Cheque List</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a ui-sref="App.UnclearChequeList"><i class="fa fa-list-alt"></i><span>Unclear Cheque</span></a></li>
+                        <li><a ui-sref="App.ClearChequeList"><i class="fa fa-list-alt"></i><span>Clear Cheque</span></a></li>
+                    </ul>
+                </li>
+                <li class="treeview cursor" ng-hide="Role == 3 || Role == 4 || Role == 5 || Role == 7 || Role == 8">
+                    <a>
+                        <i class="fa fa-bank"></i>
+                        <span>Loan</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu" ng-show="Role == 1 || Role == 2 || Role == 6">
+                        <li><a ui-sref="App.LoanList"><i class="fa fa-list-ol"></i>Loan List</a></li>
+                        <li><a ui-sref="App.GroupLoanList"><i class="fa fa-list-ol"></i>Group Loan List</a></li>
+                        <!--<li ng-show="Role == 1"><a ui-sref="App.LoanApproval"><i class="fa fa-code-fork"></i> Loan Approval</a></li>-->
+                    </ul>
+                </li>
+                <li ui-sref-active="active" ng-hide="Role == 4 || Role == 7 || Role == 8">
+                    <a ui-sref="App.PassbookPrint">
+                        <i class="fa fa-print"></i><span> Passbook Print</span>
+                    </a>
+                </li>
+                <li class="treeview cursor" ng-hide="Role == 3 || Role == 4 || Role == 5 || Role == 6 || Role == 7 || Role == 8">
+                    <a>
+                        <i class="fa fa-cogs"></i>
+                        <span>Setting</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu" ng-hide="Role == 4|| Role == 7 || Role == 8">
+                        <li ui-sref-active="active" ng-show="Role == 1 || Role == 2"><a ui-sref="App.User"><i class="fa fa-user"></i>User</a></li>
+                        <li ui-sref-active="active" ng-show="Role == 1"><a ui-sref="App.Branch"><i class="fa fa-code-fork"></i>Branch</a></li>
+                        <li ui-sref-active="active" ng-show="Role == 1"><a ui-sref="App.Product"><i class="fa fa-dropbox"></i> Product</a></li>
+                        <li ui-sref-active="active" ng-show="Role == 1 || Role == 2"><a ui-sref="App.BankMaster"><i class="fa fa-id-card-o"></i>Bank Master</a></li>
+                        <li ui-sref-active="active" ng-show="Role == 1 || Role == 2"><a ui-sref="App.AccountsHead"><i class="fa fa-money"></i>Accounts Head</a></li>
+                        <li ui-sref-active="active" ng-show="Role == 1 || Role == 2"><a ui-sref="App.Expense"><i class="fa fa-money"></i>Expense</a></li>
+                        <li ui-sref-active="active" ng-show="Role == 1 || Role == 2"><a ui-sref="App.Income"><i class="fa fa-money"></i>Income</a></li>
+                        <li ui-sref-active="active" ng-show="Role == 1 || Role == 2"><a ui-sref="App.CommissionPayment"><i class="fa fa-credit-card-alt"></i>Agent Commission Payment</a></li>
+                        <li ui-sref-active="active" ng-show="Role == 1 || Role == 2"><a ui-sref="App.AgentHierarchyCommissionPayment"><i class="fa fa-credit-card-alt"></i>Agent Rank Commission Payment</a></li>
+                        <li ui-sref-active="active" ng-show="Role == 1 || Role == 2"><a ui-sref="App.JournalVoucher"><i class="fa fa-money"></i>Journal Voucher</a></li>
+                        <li ui-sref-active="active" ng-show="Role == 1 || Role == 2"><a ui-sref="App.DDSPayment"><i class="fa fa-money"></i>DDS Payment</a></li>
+                        <li ui-sref-active="active" ng-show="Role == 1 || Role == 2"><a ui-sref="App.ActivateRD"><i class="fa fa-money"></i>Activate RD</a></li>
+                    </ul>
+                </li>
+                <!--<li class="treeview cursor" ng-hide="Role == 3 || Role == 4 || Role == 5 || Role == 6 || Role == 7 || Role == 8">
+                    <a>
+                        <i class="fa fa-bank"></i>
+                        <span>Accounting</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu" ng-hide="Role == 4|| Role == 7 || Role == 8">
+                        <li ui-sref-active="active"><a ui-sref="App.JournalEntry"><i class="fa fa-list-ul"></i>Journal Entry</a></li>
+                        <li ui-sref-active="active"><a ui-sref="App.ChartsofAccounts"><i class="fa fa-list-ul"></i>Chart of Accounts</a></li>
+                        <li ui-sref-active="active">
+                            <a>
+                                <i class="fa fa-list-ul"></i> General Ledger
+                            </a>
+                        </li>
+                    </ul>
+                </li>-->
+                <li ui-sref-active="active">
+                    <a ui-sref="App.Accounts">
+                        <i class="fa fa-bank"></i><span> Accounting</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" ng-hide="Role == 4|| Role == 7 || Role == 8">
+                    <a ui-sref="App.ProductEnquiry">
+                        <i class="fa fa-print"></i><span> Product Enquiry</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" ng-hide="Role == 4">
+                    <a ui-sref="App.Reports">
+                        <i class="fa fa-print"></i><span> Reports</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" ng-hide="Role == 7 ||Role == 4 || Role == 8">
+                    <a ui-sref="App.Calculator">
+                        <i class="fa fa-calculator"></i><span> Calculator </span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+    <ui-view></ui-view>
+
+    <footer class="main-footer" style="margin-bottom:0">
+        <!--<strong>Copyright &copy; 2018 ScrumBees Technologies. </strong> All rights reserved.-->
+
+        <!--<strong>Powered By: <a href="http://www.scrumbees.com/" target="_blank">ScrumBees Technologies</a></strong>-->
+        <strong> Copyright &copy; {{CurrentDate| date:'yyyy'}}   Bapa Sitaram Co-Operative Credit Society Ltd.    </strong> All rights reserved.
+    </footer>
+</div>

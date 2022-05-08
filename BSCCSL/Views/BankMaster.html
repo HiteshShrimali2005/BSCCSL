@@ -1,0 +1,134 @@
+﻿
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Bank Master
+            <div class="pull-right">
+                <button type="button" name="User" data-toggle="modal" data-target="#BankMasterModal" class="btn btn-primary btn-sm btn-flat" ng-click="Add()"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+            </div>
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Bank List</h3>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="col-md-3">
+                            <input type="text" id="txtAccountSearch" class="form-control input-sm" ng-model="AccountNum" placeholder="Bank Name Or Account Number" />
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                            <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12">&nbsp;</div>
+                    <div class="box-body">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblBankMasterList" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Account Number</th>
+                                            <th>Bank Name</th>
+                                            <th>Account Type</th>
+                                            <th>Balance</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal fade" id="BankMasterModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="ClearForm()">&times;</button>
+                <h4 class="modal-title">Add/Edit Bank Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Bank Name</label>
+                            <input type="text" class="form-control input-sm" id="txtBankName" placeholder="Bank Name" ng-model="bank.BankName" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Account Number</label>
+                            <div>
+                                <input type="text" class="form-control input-sm" id="txtAccountNumber" placeholder="Account Number" ng-model="bank.AccountNumber" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Account Type</label>
+                            <select class="form-control input-sm" id="ddlAccountType" ng-model="bank.AccountType" to-string>
+                                <option value="">Select</option>
+                                <option value="1">Saving Account</option>
+                                <option value="2">Current Account</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Address</label>
+                            <div>
+                                <textarea id="txtAddress" class="form-control input-sm" placeholder="Address" ng-model="bank.Address"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Balance</label>
+                            <input id="txtbalance" class="form-control input-sm" type="text" placeholder="Balance" ng-model="bank.Balance" valida-Number ng-disabled="bank.TransactionCount > 0">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Branch</label>
+                            <div id="ModeDiv">
+                                <select id="ddlBranchList" class="form-control input-sm" multiple="multiple">
+                                    <option ng-repeat="b in BranchList" value="{{b.BranchId}}" ng-disabled="b.IsHO == true" ng-selected="b.IsHO == true ? true : false" on-finish-render="ngRepeatFinished">{{b.BranchName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Is Active</label>
+                            <div>
+                                <label>
+                                    <input icheck type="checkbox" name="IsActive" value="IsActive" id="chkActive" ng-model="bank.IsActive">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveBankDetails()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>

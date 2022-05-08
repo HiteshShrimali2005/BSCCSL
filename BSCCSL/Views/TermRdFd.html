@@ -1,0 +1,108 @@
+﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            TERM
+            <div class="pull-right">
+                <button type="button" name="User" data-toggle="modal" data-target="#Term" class="btn btn-primary btn-sm btn-flat" ng-click="Add()"><i class="glyphicon glyphicon-plus"></i>Add New</button>
+            </div>
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Term List</h3>
+                    </div>
+                    <div class="col-xs-12">
+
+                        <div class="col-md-2">
+                            <input type="text" id="txtSearch" class="form-control input-sm" />
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                            <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+
+                        </div>
+                        <div class="col-md-1">
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblterm" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Time Period</th>
+                                            <th>Interest Rate</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="modal fade" id="Term" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add New Term</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">From</label>
+                            <div>
+                                <input type="text" class="form-control input-sm" id="txtfrom" placeholder="From" ng-model="Term.From"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">To</label>
+                            <div>
+                                <input type="text" class="form-control input-sm" id="txtTo" placeholder="To" ng-model="Term.To"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label lablefont">Time Period </label><!--ng-change="ddlTimePeriod()"-->
+                            <div>
+                                <select class="form-control input-sm" id="ddlTimePeriod" ng-model="Term.TimePeriod">
+                                    <option value="">Select</option>
+                                    <option value="1">Months</option>
+                                    <option value="2">Years</option>
+                                    <option value="3">Days</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Interest Rate(%)</label>
+                            <div>
+                                <input type="text" class="form-control input-sm" id="txtInterestRate" placeholder="InterestRate" ng-model="Term.InterestRate" />
+                            </div>
+                        </div>
+                    </div>
+                </div>        
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveTerm()"><i class="fa fa-check"></i>Save</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearTerm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

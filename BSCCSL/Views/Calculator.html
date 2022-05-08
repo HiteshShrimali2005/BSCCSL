@@ -1,0 +1,324 @@
+﻿<div class="content-wrapper">
+    <section class="content-header">
+        <h3>
+            Calculator
+        </h3>
+    </section>
+    <section class="content">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active" id="tab1"><a id="btntab1" data-target="#tab_1" data-toggle="tab" class="cursor">FD/RD/RIP</a></li>
+                <li id="tab2"><a id="btntab2" data-target="#tab_2" data-toggle="tab" class="cursor">Loan</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Customer Name</label>
+                                <input type="text" class="form-control input-sm" name="Customer Name" id="txt" ng-model="Calculator.CustomerName" placeholder="Customer Name">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Product Type</label>
+                                <select class="form-control input-sm" id="ddlProductTypelist" ng-model="Calculator.ProductType" ng-change="GetProductListByType(Calculator.ProductType)">
+                                    <option value="">Select</option>
+                                    <option value="3">Fixed Deposit</option>
+                                    <option value="4">Recurring Deposit</option>
+                                    <option value="6">Regular Income Planner</option>
+                                    <option value="7">Monthly Income Scheme</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Product Name</label>
+                                <select class="form-control input-sm" id="ddlProductNamelist" ng-change="GetProductDetailsAsSelectedName(Calculator.ProductId)" ng-model="Calculator.ProductId">
+                                    <option value="">Select</option>
+                                    <option ng-repeat="item in Productlist" value="{{item.ProductId}}">{{item.ProductName }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Opening Date</label>
+                                <input type="text" id="txtOpeningDateCP" class="form-control input-sm datepicker" placeholder="opening date">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Amount</label>
+                                <input id="txtAmount" class="form-control input-sm" placeholder="Amount" ng-model="Calculator.Amount" valid-number ng-change="CalculateMaturityAmount()">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Time Period</label>
+                                <select class="form-control input-sm" id="ddlTimePeriod" ng-model="Calculator.TimePeriod" ng-change="TimePeriodChange();CheckInterstrateinTerm();">
+                                    <option value="">Select</option>
+                                    <option value="1">Months</option>
+                                    <option value="2">Years</option>
+                                    <option value="3">Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="Calculator.ProductType != 5">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Month/Year/Day</label>
+                                <input type="text" class="form-control input-sm" name="NoOfMonthsORYears" id="txtNoOfMonthsORYears" ng-model="Calculator.NoOfMonthsORYears" placeholder="No of MonthsOrYears" valid-number ng-change="TimePeriodChange();CheckInterstrateinTerm();">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Interest Rate(%)</label>
+                                <input id="txtInterestRateCP" class="form-control input-sm" type="text" ng-model="Calculator.InterestRate" ng-change="CalculateMaturityAmount()" valid-number percentage-field />
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="Calculator.ProductType != 3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Payment Type</label>
+                                <select class="form-control input-sm" id="ddlPaymentTypeCP" ng-model="Calculator.PaymentType" ng-change="CalculateMaturityAmount()">
+                                    <option value="">Select</option>
+                                    <option value="1" ng-hide="Calculator.ProductType == 6">Daily</option>
+                                    <option value="2">Monthly</option>
+                                    <option value="3">Quarterly</option>
+                                    <option value="4">Half-Yearly</option>
+                                    <option value="5">Yearly</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="Calculator.ProductType != 3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Installment Date</label>
+                                <input id="txtDueDate" class="form-control input-sm datepicker" type="text" placeholder="Installment Date">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Maturity Date</label>
+                                <input type="text" class="form-control input-sm datepicker" name="Premium" id="txtMaturityDate" placeholder="Maturity Date" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label lablefont">Maturity Amount</label>
+                                <input type="text" class="form-control input-sm" name="Maturity Amount" id="txtMaturityAmount" ng-model="Calculator.MaturityAmount" placeholder="Maturity Amount" disabled="disabled" valid-number>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 pull-right">
+                            <button class="btn btn-sm btn-flat btn-primary" id="btnCalculateRDFDRIP" ng-click="Calculate()"> <i class="fa fa-calculator"></i> Calculate </button>
+                            <button class="btn btn-sm btn-flat btn-default" id="btnClearRDFDRIP" ng-click="ClearCalculateForm()"> <i class="fa fa-refresh"></i> Clear </button>
+                            <button class="btn btn-sm btn-flat btn-primary" id="printRDFDRIP" ng-click="OpenPrintModal()"> <i class="fa fa-print"></i> Print </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_2">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Customer Name</label>
+                                <input type="text" class="form-control input-sm" name="Customer Name" id="txt" ng-model="LoanCalculator.CustomerName" placeholder="Customer Name">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Product Name</label>
+                                <select class="form-control input-sm" id="ddlLoanProductNamelist" ng-change="GetLoanDetailsAsSelectedName(LoanCalculator.ProductId)" ng-model="LoanCalculator.ProductId">
+                                    <option value="">Select</option>
+                                    <option ng-repeat="item in LoanProductlist" value="{{item.ProductId}}">{{item.ProductName }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Amount</label>
+                                <input id="txLoantAmount" class="form-control input-sm" placeholder="Amount" ng-model="LoanCalculator.PrincipalAmount" valid-number>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">InterestRate</label>
+                                <input id="txtLoanInterestRate" class="form-control input-sm" placeholder="Amount" ng-model="LoanCalculator.LoanIntrestRate" percentage-Field>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Term (In Months)</label>
+                                <input id="txLoanAmount" class="form-control input-sm" placeholder="Term" ng-model="LoanCalculator.Term" valid-number>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="focusedinput" class="control-label lablefont">Installment Date</label>
+                                <input id="txtLoanInstallmentDate" class="form-control input-sm datepicker" type="text" placeholder="Installment Date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 pull-right">
+                            <button class="btn btn-sm btn-flat btn-primary" id="btnCalculateLoan" ng-click="CalculateLoanAmountisation()"> <i class="fa fa-calculator"></i> Calculate </button>
+                            <button class="btn btn-sm btn-flat btn-default" id="btnClearLoan" ng-click="ClearLoanCalculateForm()"> <i class="fa fa-refresh"></i> Clear </button>
+                            <button class="btn btn-sm btn-flat btn-primary" id="AmountisationPrint" ng-click="PrintAmountisation()"> <i class="fa fa-print"></i> Print </button>
+                        </div>
+                    </div>
+                    <div class="row" id="printAmountisation">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table style="width:100%" cellspacing="5">
+                                    <tr>
+                                        <td style="font-weight:bold"> Customer Name: </td>
+                                        <td colspan="5"> {{LoanCalculator.CustomerName}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight:bold"> Amount : </td>
+                                        <td style="text-align:left"> {{LoanCalculator.PrincipalAmount  | number : 2}}</td>
+                                        <td style="font-weight:bold"> Interest Rate : </td>
+                                        <td style="text-align:left"> {{LoanCalculator.LoanIntrestRate  | number : 2}}</td>
+                                        <td style="font-weight:bold"> Terms :</td>
+                                        <td style="text-align:left"> {{LoanCalculator.Term}} Months</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+
+                            <div class="table-responsive">
+                                <div class="table-responsive" style="padding-top:25px;">
+                                    <table class="table table-bordered" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr No. </th>
+                                                <th style="text-align:right">Installment Date</th>
+                                                <th style="text-align:right">MonthlyEMI</th>
+                                                <th style="text-align:right">Principal Amount</th>
+                                                <th style="text-align:right">Interest Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="amt in LoanAmountisation">
+                                                <td>{{$index + 1}}</td>
+                                                <td style="text-align:right">{{amt.Installmentdate | date  : 'dd/MM/yyyy'}}</td>
+                                                <td style="text-align:right">{{amt.MonthlyEMI  | number : 2}}</td>
+                                                <td style="text-align:right">{{amt.PrincipalAmt | number : 2}}</td>
+                                                <td style="text-align:right">{{amt.Interest | number : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td ng-if="LoanAmountisation.length == 0">
+                                                    No data found.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal fade" id="PrintModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Print {{ProductName}}</h4>
+            </div>
+            <div class="modal-body" id="printProduct">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table style="width:100%" cellspacing="5">
+                                <tr>
+                                    <td style="font-weight:bold"> Customer Name: </td>
+                                    <td colspan="5" style="text-align:left"> {{Calculator.CustomerName}} </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;width:115px;"> Amount : </td>
+                                    <td style="text-align:left"> {{Calculator.Amount  | number : 2}}</td>
+                                    <td style="font-weight:bold;width:115px;"> Opening Date : </td>
+                                    <td style="text-align:left"> {{Calculator.OpeningDate  | date : 'dd/MM/yyyy'}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;width:115px;"> Interest Rate : </td>
+                                    <td style="text-align:left"> {{Calculator.InterestRate  | number}} %</td>
+                                    <td style="font-weight:bold;width:115px;"> Terms :</td>
+                                    <td style="text-align:left"> {{Calculator.NoOfMonthsORYears}} {{Calculator.TimePeriodName}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;width:115px;" ng-show="Calculator.ProductType != 3"> Payment Frequency : </td>
+                                    <td style="text-align:left" ng-show="Calculator.ProductType != 3"> {{Calculator.PaymentTypeName}}</td>
+                                    <td style="font-weight:bold;width:115px;" ng-show="Calculator.ProductType != 6"> Maturity Date : </td>
+                                    <td style="text-align:left" ng-show="Calculator.ProductType != 6"> {{Calculator.MaturityDate}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;width:115px;" ng-show="Calculator.ProductType != 6"> Maturity Amount : </td>
+                                    <td style="text-align:left" ng-show="Calculator.ProductType != 6"> {{Calculator.MaturityAmount}}</td>
+                                </tr>
+                            </table>
+                            <div class="table-responsive" style="padding-top:25px;" ng-show="Calculator.ProductType == 6 || Calculator.ProductType == 7">
+                                <table class="table table-bordered" style="width:100%;" id="PlannerTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Sr No. </th>
+                                            <th class="text-center">Installment Date</th>
+                                            <th class="text-right">Amount</th>
+                                            <th class="text-center" ng-if="Calculator.ProductType == 6">Maturity Date</th>
+                                            <th class="text-right" ng-if="Calculator.ProductType == 6">Maturity Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="amt in RIPList">
+                                            <td class="text-center">{{$index + 1}}</td>
+                                            <td class="text-center">{{amt.InstallmentDate | date  : 'dd/MM/yyyy'}}</td>
+                                            <td class="text-right">{{amt.Amount  | number : 2}}</td>
+                                            <td class="text-center" ng-if="Calculator.ProductType == 6">&nbsp;</td>
+                                            <td class="text-right" ng-if="Calculator.ProductType == 6">&nbsp;</td>
+                                        </tr>
+                                        <tr ng-repeat="amt in RIPList" ng-if="Calculator.ProductType == 6">
+                                            <td class="text-center">{{RIPList.length + $index + 1}}</td>
+                                            <td class="text-center">&nbsp;</td>
+                                            <td class="text-right">&nbsp;</td>
+                                            <td class="text-center">{{amt.MaturityDate | date  : 'dd/MM/yyyy'}}</td>
+                                            <td class="text-right">{{amt.MaturityAmount | number : 2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="text-right text-bold">TOTAL AMOUNT</td>
+                                            <td class="text-right text-bold">{{RIPList | sumByKey : 'Amount' | currency:''}}</td>
+                                            <td class="text-right text-bold" ng-if="Calculator.ProductType == 6">MATURITY BENEFIT</td>
+                                            <td class="text-right text-bold" ng-if="Calculator.ProductType == 6">{{RIPList | sumByKey : 'MaturityAmount' | currency:''}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-if="RegularIncomeList.length == 0">
+                                                No data found.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary  btn-sm btn-flat" ng-click="PrintRIP()"><i class="fa fa-print"></i> Print</button>
+                <button type="button" class="btn btn-default  btn-sm btn-flat" data-dismiss="modal"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>

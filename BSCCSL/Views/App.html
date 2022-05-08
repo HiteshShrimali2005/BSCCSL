@@ -1,0 +1,91 @@
+﻿
+<div class="overlay"></div>
+<!-- Top Bar -->
+<nav class="navbar">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="bars"></a>
+            <a class="navbar-brand">
+                <span class="logo-lg">
+                    <img src="/Images/ScrumLogo.png" />
+                </span>
+            </a>
+        </div>
+    </div>
+</nav>
+<!-- #Top Bar -->
+<section>
+    <!-- Left Sidebar -->
+    <aside id="leftsidebar" class="sidebar">
+
+        <!-- User Info -->
+        <!--<div class="user-info">
+            <div class="image">
+                <img src="images/user.png" width="48" height="48" alt="User" />
+            </div>  
+        </div>-->
+        <!-- #User Info -->
+        <!-- Menu -->
+        <div class="menu">
+            <ul class="list">
+                <li class="header">MAIN NAVIGATION</li>
+                <li ui-sref-active="active">
+                    <a ui-sref="App.Dashboard">
+                        <i class="material-icons">home</i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="App.User">
+                        <i class="material-icons">text_fields</i>
+                        <span>User</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="App.Client">
+                        <i class="material-icons">layers</i>
+                        <span>Clients</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="material-icons">widgets</i>
+                        <span>Settings</span>
+                    </a>
+                    <ul class="ml-menu">
+                        <li ui-sref-active="active">
+                            <a ui-sref="App.DPR">Basic</a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="App.DPR">Colored</a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="App.DPR">No Header</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- #Menu -->
+        <!-- Footer -->
+        <div class="legal">
+            <div class="copyright">
+                &copy; 2016 <a href="javascript:void(0);">AdminBSB - Material Design</a>.
+            </div>
+            <div class="version">
+                <b>Version: </b> 1.0.3
+            </div>
+        </div>
+        <!-- #Footer -->
+    </aside>
+
+    <!-- #END# Left Sidebar -->
+    <div ui-view class="container-fluid">
+
+    </div>
+
+</section>
+<!-- Custom Js -->
+
+<script src="/Theme/admin.js"></script>

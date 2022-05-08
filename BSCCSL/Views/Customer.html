@@ -1,0 +1,1110 @@
+﻿<div class="content-wrapper">
+    <section class="content-header">
+        <h3>
+            Customer
+        </h3>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active" id="tab1"><a id="btntab1" data-target="#tab_1" data-toggle="tab" class="cursor">Agent Details</a></li>
+                        <li id="tab2"><a id="btntab2" data-target="#tab_2" data-toggle="tab" class="cursor">Customer Details</a></li>
+                        <li id="tab4" ng-class="{disabled : (CustomerDetails.Customer.CustomerId == undefined || CustomerId == '00000000-0000-0000-0000-000000000000')}"><a id="btntab4" data-target="#tab_4" data-toggle="tab" class="cursor">Nominee Details</a></li>
+                        <li id="tab5" ng-class="{disabled : (CustomerDetails.Customer.CustomerId == undefined || CustomerId == '00000000-0000-0000-0000-000000000000')}"><a id="btntab5" data-target="#tab_5" data-toggle="tab" class="cursor">Photograph</a></li>
+                        <li id="tab3" ng-class="{disabled : (CustomerDetails.Customer.CustomerId == undefined || CustomerId == '00000000-0000-0000-0000-000000000000')}"><a id="btntab3" data-target="#tab_3" data-toggle="tab" class="cursor">Customer Share</a></li>
+                        <li id="tab6" ng-class="{disabled : (CustomerDetails.Customer.CustomerId == undefined || CustomerId == '00000000-0000-0000-0000-000000000000')}"><a id="btntab6" data-target="#tab_6" data-toggle="tab" class="cursor">Upload Documents</a></li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <div class="panel-body">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Agent Details</legend>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="control-label lablefont">Application No.</label>
+                                                <input type="text" class="form-control input-sm" id="txtapplicationNo" placeholder="Application No." ng-model="CustomerDetails.Customer.ApplicationNo" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="control-label lablefont">Agent Name</label><br />
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control input-sm" id="txtagentname" placeholder="Agent Name" ng-model="CustomerDetails.Customer.AgentName" readonly="readonly" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" name="Agent" id="btnagent" data-toggle="modal" data-target="#Agent" class="btn btn-primary btn-sm btn-flat" ng-click="Agent=true"><i class="fa fa-search"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="control-label lablefont">Agent Code</label>
+                                                <input type="text" class="form-control input-sm" id="txtagentcode" placeholder="Agent Code" ng-model="CustomerDetails.Customer.AgentCode" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="control-label lablefont">Branch Code</label><!--item.BranchId as item.BranchCode for item in BranchCode-->
+                                                <input type="text" class="form-control input-sm" id="txtbranchcode" placeholder="Branch Code" ng-model="BranchCode" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="control-label lablefont">Sector</label>
+                                                <div>
+                                                    <label class="labelradiocheckbox">
+                                                        <input icheck type="radio" name="sector" value="Urban" id="Radiourban_" ng-model="CustomerDetails.Customer.Sector">&nbsp;&nbsp;Urban
+                                                    </label>
+                                                    <label class="labelradiocheckbox">
+                                                        <input icheck type="radio" name="sector" value="Rural" id="Radiorural_" ng-model="CustomerDetails.Customer.Sector">&nbsp;&nbsp;Rural
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="control-label lablefont">Form Type</label>
+                                                <div>
+                                                    <label class="labelradiocheckbox">
+                                                        <input icheck type="radio" name="Formtype" value="G" id="RadioG_" ng-model="CustomerDetails.Customer.FormType">&nbsp;&nbsp; G &nbsp;&nbsp;
+                                                    </label>
+                                                    <label class="labelradiocheckbox">
+                                                        <input icheck type="radio" name="Formtype" value="H" id="RadioH_" ng-model="CustomerDetails.Customer.FormType">&nbsp;&nbsp;  H
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="control-label lablefont">Employee Name</label><br />
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control input-sm" id="txtempname" placeholder="Employee Name" ng-model="CustomerDetails.Customer.EmpName" readonly="readonly" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" name="Employee" id="btnemployee" data-toggle="modal" data-target="#Employee" class="btn btn-primary btn-sm btn-flat" ng-click="Agent=false"><i class="fa fa-search"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="control-label lablefont">Employee Code</label>
+                                                <input type="text" class="form-control input-sm" id="txtempcode" placeholder="Employee Code" ng-model="CustomerDetails.Customer.EmpCode" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="control-label lablefont">Old ClientId</label>
+                                                <input type="text" class="form-control input-sm" id="txtOldClientId" placeholder="Old ClientId" ng-model="CustomerDetails.Customer.OldClientId" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-1 pull-right">
+                                        <button type="button" class="btn btn-info btn-sm btn-flat" ng-click="Changetab()"><i class="fa fa-arrow-right"></i> Next</button>
+                                    </div>
+                                    <div class="col-md-1 pull-left" ng-hide="CustomerDetails.Customer.CustomerId == null || CustomerDetails.Customer.UserAgent != null">
+                                        <button type="button" class="btn btn-primary btn-sm btn-flat" data-toggle="modal" data-target="#User" ng-click="CreateAgent()"><i class="fa fa-plus"></i> Create Agent</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_2">
+                            <div ng-repeat="Customer in Customers | limitTo:limit1 |limitTo:limit2" on-finish-render="ngRepeatFinished" id="custdiv">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        Account Holder {{Customer.id}}
+                                    </div>
+                                    <div class="panel-body">
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Personal Details</legend>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">First Name</label>
+                                                        <input type="text" class="form-control input-sm" id="txtFirstName_{{$index}}" placeholder="First Name" ng-model="Customer.Personal.FirstName" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">Middle Name</label>
+                                                        <input type="text" class="form-control input-sm" id="txtmidlname_{{$index}}" placeholder="Middle Name" ng-model="Customer.Personal.MiddleName" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">Last Name</label>
+                                                        <input type="text" class="form-control input-sm" id="txtLastName_{{$index}}" placeholder="Last Name" ng-model="Customer.Personal.LastName" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Father Or Spouse Name</label>
+                                                        <input id="txtfatherSpousename" class="form-control input-sm" type="text" placeholder="FatherOrSpouse Name" ng-model="Customer.Personal.FatherorSpouseName">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Mother Name</label>
+                                                        <input id="txtmothername_{{$index}}" class="form-control input-sm" type="text" placeholder="Mother Name" ng-model="Customer.Personal.MotherName">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">Date Of Birth</label>
+                                                        <input id="txtDOB_{{$index}}" index="{{$index}}" class="form-control input-sm datepicker" type="text" placeholder="Date Of Birth">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Nationality</label>
+                                                        <input id="txtnationality_{{$index}}" class="form-control input-sm" type="text" placeholder="Nationality" ng-model="Customer.Personal.Nationality">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Gender</label>
+                                                        <div>
+                                                            <label>
+                                                                <input icheck type="radio" name="gender_{{$index}}" value="Male" checked="checked" id="RadioMale_{{$index}}" ng-model="Customer.Personal.Sex">&nbsp;&nbsp;Male
+                                                            </label>
+                                                            <label>
+                                                                <input icheck type="radio" name="gender_{{$index}}" value="Female" id="RadioFemale_{{$index}}" ng-model="Customer.Personal.Sex">&nbsp;&nbsp;Female
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Age</label>
+                                                        <input id="txtage" class="form-control input-sm" type="text" disabled="disabled" placeholder="Age" ng-model="Customer.Personal.Age" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Place Of Birth</label>
+                                                        <input id="txtbirthplace" class="form-control input-sm" type="text" placeholder="Place Of Birth" ng-model="Customer.Personal.PlaceOfBirth">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Occupation</label>
+                                                        <input id="txtoccupation" class="form-control input-sm" type="text" placeholder="Occupation" ng-model="Customer.Personal.Occupation">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Birth Certificate</label>
+                                                        <br />
+                                                        <div class="col-md-1">
+                                                            <label>
+                                                                <input icheck type="checkbox" name="BirthCertificate" value="BirthCertificate" id="chkBirthCertificate_{{$index}}" ng-model="Customer.Personal.BirthCertificate1" ng-change="RemoveErrorMsg($index,'BirthCertificate')">
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <!--<input id="txtbirthcerty_{{$index}}" class="form-control input-sm" type="text" placeholder="Birthcertificate" ng-model="Customer.Personal.BirthCertificate" ng-show="Customer.Personal.BirthCertificate1" />-->
+                                                            <input id="txtBirthCertificate_{{$index}}" class="form-control input-sm" type="text" placeholder="Birthcertificate" ng-model="Customer.Personal.BirthCertificate" ng-show="Customer.Personal.BirthCertificate1" />
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div ng-show="Customer.Personal.BirthCertificate1">
+                                                                <!--<i class="fa fa-paperclip"></i> Attachment-->
+                                                                <input type="file" accept="image/*" name="BirthCertificate" value="BirthCertificate" id="birthdocument_{{$index}}" ng-files="getTheFiles($files,1,Customer.id)"><br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Adhar Card</label>
+                                                        <br />
+                                                        <div class="col-md-1">
+                                                            <label>
+                                                                <input icheck type="checkbox" name="Adharcard" value="Adharcard" id="chkAdharcard_{{$index}}" ng-model="Customer.Personal.Adharcard1" ng-change="RemoveErrorMsg($index,'Adharcard')">
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <input id="txtAdharcard_{{$index}}" class="form-control input-sm" type="text" placeholder="Adharcard" ng-model="Customer.Personal.Adharcard" ng-show="Customer.Personal.Adharcard1" />
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div ng-show="Customer.Personal.Adharcard1">
+                                                                <!--<i class="fa fa-paperclip"></i> Attachment-->
+                                                                <input type="file" accept="image/*" name="Adharcard" value="Adharcard" id="adhar_{{$index}}" ng-files="getTheFiles($files,8,Customer.id)"><br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Driving Licence</label>
+                                                        <br />
+                                                        <div class="col-md-1">
+                                                            <label>
+                                                                <input icheck type="checkbox" name="DrivingLicence" value="DrivingLicence" id="chkDrivingLicence_{{$index}}" ng-model="Customer.Personal.DrivingLicence1" ng-change="RemoveErrorMsg($index,'DrivingLicence')">
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <input id="txtDrivingLicence_{{$index}}" class="form-control input-sm" type="text" placeholder="DrivingLicence" ng-model="Customer.Personal.DrivingLicence" ng-show="Customer.Personal.DrivingLicence1" />
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div ng-show="Customer.Personal.DrivingLicence1">
+                                                                <!--class="btn btn-sm btn-default btn-file"-->
+                                                                <!--<i class="fa fa-paperclip"></i> Attachment-->
+                                                                <input type="file" accept="image/*" name="DrivingLicence" value="DrivingLicence" id="drivinglicencefile_{{$index}}" ng-files="getTheFiles($files,2,Customer.id)">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Passport</label>
+                                                        <br />
+                                                        <div class="col-md-1">
+                                                            <label>
+                                                                <input icheck type="checkbox" name="Passport" value="Passport" id="chkPassport_{{$index}}" ng-model="Customer.Personal.Passport1" ng-change="RemoveErrorMsg($index,'Passport')">
+                                                            </label>
+
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <input id="txtPassport_{{$index}}" class="form-control input-sm" type="text" placeholder="Passport" ng-model="Customer.Personal.Passport" ng-show="Customer.Personal.Passport1" />
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div ng-show="Customer.Personal.Passport1">
+                                                                <!--<i class="fa fa-paperclip"></i> Attachment-->
+                                                                <input type="file" accept="image/*" name="Passport" value="Passport" id="passportfile_{{$index}}" ng-files="getTheFiles($files,3,Customer.id)">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">PanCard</label>
+                                                        <br />
+                                                        <div class="col-md-1">
+                                                            <label>
+                                                                <input icheck type="checkbox" name="Pancard" value="Pancard" id="chkPancard_{{$index}}" ng-model="Customer.Personal.Pancard1" ng-change="RemoveErrorMsg($index,'Pancard')">
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control input-sm" id="txtPancard_{{$index}}" placeholder="Pancard" ng-model="Customer.Personal.PanCard" ng-show="Customer.Personal.Pancard1" />
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div ng-show="Customer.Personal.Pancard1">
+                                                                <!--<i class="fa fa-paperclip"></i> Attachment-->
+                                                                <input type="file" accept="image/*" name="Pancard" value="Pancard" id="pancard_{{$index}}" ng-files="getTheFiles($files,4,Customer.id)"><br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Other</label>
+                                                        <br />
+                                                        <div class="col-md-1">
+                                                            <label>
+                                                                <input icheck type="checkbox" name="Other" value="Other" id="chkOther_{{$index}}" ng-model="Customer.Personal.Other1" ng-change="RemoveErrorMsg($index,'Other')">
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control input-sm" id="txtOther_{{$index}}" placeholder="Other" ng-model="Customer.Personal.Other" ng-show="Customer.Personal.Other1" />
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div ng-show="Customer.Personal.Other1">
+                                                                <!--<i class="fa fa-paperclip"></i> Attachment-->
+                                                                <input type="file" accept="image/*" name="Other" value="Other" id="OtherFile_{{$index}}" ng-files="getTheFiles($files,5,Customer.id)"><br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Identity Proof</label>
+                                                        <br />
+                                                        <div class="col-md-1">
+                                                            <label>
+                                                                <input icheck type="checkbox" name="identityproof" value="identityproof" id="chkidentityproof_{{$index}}_6" ng-model="Customer.Personal.IdentityProof1" ng-change="RemoveErrorMsg($index,'identityproof')">
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control input-sm" id="txtidentityproof_{{$index}}" placeholder="IdentityProof" ng-model="Customer.Personal.IdentityProof" ng-show="Customer.Personal.IdentityProof1" />
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div ng-show="Customer.Personal.IdentityProof1">
+                                                                <!--<i class="fa fa-paperclip"></i> Attachment-->
+                                                                <input type="file" accept="image/*" name="IdentityProof" value="IdentityProof" id="IdentityProof_{{$index}}" ng-files="getTheFiles($files,6,Customer.id)"><br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-control" style="border-color:white;">
+                                                <div ng-repeat="Doc in Customer.Document">
+                                                    <div ng-if="$index % 4 == 0" class="clearfix"></div>
+                                                    <div class="col-md-3">
+                                                        <b>{{Doc.documenttype}}</b><br /><br />
+                                                        <!--<a class="zoom_img" >
+                                                            <img class="img img-responsive" id="customerdoc_{{$index}}" src="../Documents/{{Doc.Path}}" style="height:100px;width:100px;"><br />
+                                                        </a>-->
+                                                        <!--<a class="example-image-link lb-close" href="../Documents/{{Doc.Path}}" data-lightbox="example-set" data-title="Click the right half of the image to move forward.">
+                                                            <img class="example-image lb-close" src="../Documents/{{Doc.Path}}" style="width:100px;height:100px;">
+                                                        </a>-->
+                                                        <a>
+                                                            <img id="imgproof_{{$index}}" height="100" width="80" data-toggle="modal" data-target="#myModal" src="../Documents/{{Doc.Path}}" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <br />
+                                        <div class="clear"></div>
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Mailing Address</legend>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Door No.</label>
+                                                        <input type="text" class="form-control input-sm" id="txtDoorno" placeholder="Door No." ng-model="Customer.Address.DoorNo" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Building Name</label>
+                                                        <input type="text" class="form-control input-sm" id="txtBuildingName" placeholder="Middle Name" ng-model="Customer.Address.BuildingName" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">PlotNo./Street</label>
+                                                        <input type="text" class="form-control input-sm" id="txtplotnostreet_{{$index}}" placeholder="Plot No./Street" ng-model="Customer.Address.PlotNo_Street" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Name</label>
+                                                        <input type="text" class="form-control input-sm" id="txtCustomerName_{{$index}}" placeholder="CustomerName" ng-model="Customer.Address.CustomerName" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Landmark</label>
+                                                        <input type="text" class="form-control input-sm" id="txtLandmark_{{$index}}" placeholder="Landmark" ng-model="Customer.Address.Landmark" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">Area</label>
+                                                        <input type="text" class="form-control input-sm" id="txtArea_{{$index}}" placeholder="Area" ng-model="Customer.Address.Area" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">District</label>
+                                                        <input type="text" class="form-control input-sm" id="txtDistrict_{{$index}}" placeholder="District" ng-model="Customer.Address.District" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Place</label>
+                                                        <input type="text" class="form-control input-sm" id="txtPlace" placeholder="Place" ng-model="Customer.Address.Place" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">City</label>
+                                                        <input type="text" class="form-control input-sm" id="txtCity" placeholder="City" ng-model="Customer.Address.City" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">Pin Code</label>
+                                                        <input type="text" class="form-control input-sm" id="txtPinCode_{{$index}}" placeholder="PinCode" ng-model="Customer.Address.Pincode" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">State</label>
+                                                        <input type="text" class="form-control input-sm" id="txtState" placeholder="State" ng-model="Customer.Address.State" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Telephone No.</label>
+                                                        <input type="text" class="form-control input-sm" id="txtTelephoneNumber" placeholder="TelephoneNumber" ng-model="Customer.Address.TelephoneNo" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">Mobile No.</label>
+                                                        <input type="text" class="form-control input-sm" id="txtMobileNo_{{$index}}" placeholder="MobileNumber" ng-model="Customer.Address.MobileNo" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Email</label>
+                                                        <input type="text" class="form-control input-sm" id="txtEmail" placeholder="Email" ng-model="Customer.Address.Email" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Address Proof</label>
+                                                        <br />
+                                                        <div class="col-md-1">
+                                                            <label>
+                                                                <input icheck type="checkbox" name="AddressProof" value="AddressProof" id="chkaddressproof_{{$index}}" ng-model="Customer.Address.AddressProof1" ng-change="RemoveErrorMsg($index,'addressproof')">
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control input-sm" id="txtaddressproof_{{$index}}" placeholder="AddressProof" ng-model="Customer.Address.AddressProof" ng-show="Customer.Address.AddressProof1" />
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div ng-show="Customer.Address.AddressProof1">
+                                                                <!--<i class="fa fa-paperclip"></i> Attachment-->
+                                                                <input type="file" accept="image/*" class="inputfile" name="AddressProof" value="AddressProof" id="addressProof_{{$index}}" ng-files="getTheFiles($files,7,Customer.id)"><br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <br />
+                                        <div class="clear"></div>
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Permanent Mailing Address</legend>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Permanent Mailing Address Same as Mailing Address&nbsp;</label>
+                                                        <input icheck type="checkbox" name="SameAs" value="SameAs" id="sameas_{{$index}}" ng-model="Customer.Address.SameAddress" ng-change="CopyAddress(Customer.Address.SameAddress,$index)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Door No.</label>
+                                                        <input type="text" class="form-control input-sm" id="txtperDoorno_{{$index}}" placeholder="Door No." ng-model="Customer.Address.PerDoorNo" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Building Name</label>
+                                                        <input type="text" class="form-control input-sm" id="txtperBuildingName_{{$index}}" placeholder="Building Name" ng-model="Customer.Address.PerBuildingName" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">PlotNo./Street</label>
+                                                        <input type="text" class="form-control input-sm" id="txtperplotnostreet_{{$index}}" placeholder="Plot No./Street" ng-model="Customer.Address.PerPlotNo_Street" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Name</label>
+                                                        <input type="text" class="form-control input-sm" id="txtperCustomerName_{{$index}}" placeholder="CustomerName" ng-model="Customer.Address.PerCustomerName" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Landmark</label>
+                                                        <input type="text" class="form-control input-sm" id="txtPerLandmark_{{$index}}" placeholder="Landmark" ng-model="Customer.Address.PerLandmark" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">Area</label>
+                                                        <input type="text" class="form-control input-sm" id="txtperArea_{{$index}}" placeholder="Area" ng-model="Customer.Address.PerArea" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">District</label>
+                                                        <input type="text" class="form-control input-sm" id="txtperDistrict_{{$index}}" placeholder="District" ng-model="Customer.Address.PerDistrict" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Place</label>
+                                                        <input type="text" class="form-control input-sm" id="txtperPlace_{{$index}}" placeholder="Place" ng-model="Customer.Address.PerPlace" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">City</label>
+                                                        <input type="text" class="form-control input-sm" id="txtperCity{{$index}}" placeholder="City" ng-model="Customer.Address.PerCity" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">Pin Code</label>
+                                                        <input type="text" class="form-control input-sm" id="txtperPinCode_{{$index}}" placeholder="PinCode" ng-model="Customer.Address.PerPincode" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">State</label>
+                                                        <input type="text" class="form-control input-sm" id="txtperState{{$index}}" placeholder="State" ng-model="Customer.Address.PerState" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Telephone No.</label>
+                                                        <input type="text" class="form-control input-sm" id="txtperTelephoneNumber_{{$index}}" placeholder="TelephoneNumber" ng-model="Customer.Address.PerTelephoneNo" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group required">
+                                                        <label for="focusedinput" class="control-label lablefont">Mobile No.</label>
+                                                        <input type="text" class="form-control input-sm" id="txtPerMobileNo_{{$index}}" placeholder="MobileNumber" ng-model="Customer.Address.PerMobileNo" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Email</label>
+                                                        <input type="text" class="form-control input-sm" id="txtperEmail_{{$index}}" placeholder="Email" ng-model="Customer.Address.PerEmail" ng-disabled="Customer.Address.SameAddress" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="focusedinput" class="control-label lablefont">Address Proof</label>
+                                                        <br />
+                                                        <div class="col-md-1">
+                                                            <label>
+                                                                <input icheck type="checkbox" name="AddressProof" value="AddressProof" id="chkperaddressproof_{{$index}}" ng-model="Customer.Address.PerAddressProof1" ng-change="RemoveErrorMsg($index,'peraddressproof')">
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control input-sm" id="txtperaddressproof_{{$index}}" placeholder="AddressProof" ng-model="Customer.Address.PerAddressProof" ng-show="Customer.Address.PerAddressProof1" ng-disabled="Customer.Address.SameAddress" />
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div ng-show="Customer.Address.PerAddressProof1">
+                                                                <!--<i class="fa fa-paperclip"></i> Attachment-->
+                                                                <input type="file" accept="image/*" class="inputfile" name="AddressProof" value="AddressProof" id="peraddressProof_{{$index}}" ng-files="getTheFiles($files,9,Customer.id)"><br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-left">
+                                        <button ng-click="addNewChoice(3)" ng-disabled="(Customers.length>=3)" class="btn btn-success btn-xs btn-flat"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add New Holder</button>
+                                        <button ng-click="removeNewChoice(1)" ng-disabled="(Customers.length<=1)" class="btn btn-danger btn-xs  btn-flat"><i class="glyphicon glyphicon-minus"></i>&nbsp;Remove Holder</button>
+                                    </div>
+                                    <div class="pull-right">
+                                        <butoon class="btn btn-info btn-sm  btn-flat" ng-click="SaveCustomer(true)"><i class="fa fa-arrow-right"></i> Save & Next </butoon>
+                                        <butoon class="btn btn-primary btn-sm  btn-flat" ng-click="SaveCustomer()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</butoon>
+                                        <butoon class="btn btn-default btn-sm  btn-flat" ng-click="ClearForm()"><i class="glyphicon glyphicon-remove"></i> Clear</butoon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_3">
+                            <div class="row">
+                                <div class="pull-right">
+                                    <button type="button" name="User" data-toggle="modal" data-target="#Share" class="btn btn-primary btn-sm btn-flat" style="margin-right:16px;" ng-click="Add()"><i class="glyphicon glyphicon-plus"></i>Add  New Share</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border">Share List</legend>
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive">
+                                                <table id="tblCustomer" class="table table-bordered" role="grid" style="width:100%;">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th>Share</th>
+                                                            <th>Share Price</th>
+                                                            <th>Share Total</th>
+                                                            <th>Start Date</th>
+                                                            <th>Type</th>
+                                                            <th>From Number</th>
+                                                            <th>To Number</th>
+                                                            <th>Status</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <br />
+                                <div class="col-md-1 pull-right ">
+                                    <button type="button" class="btn btn-info btn-sm  btn-flat" onclick="$('#btntab6').click()"><i class="fa fa-arrow-right"></i> Next</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border">Nominee Details</legend>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Name & Surname</label>
+                                                    <input type="text" class="form-control input-sm" id="txtName" placeholder="Name & Surname" ng-model="Nominee.Name" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Place of Birth</label>
+                                                    <input type="text" class="form-control input-sm" id="txtbirth" placeholder="Place of Birth" ng-model="Nominee.PlaceofBirth" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Date of Birth</label>
+                                                    <input type="text" class="form-control input-sm" id="txtnomineedob" placeholder="Date of Birth" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Relationship to Accountholder</label>
+                                                    <input id="txtaccountholderrelation" class="form-control input-sm" type="text" placeholder="Relationship to Accountholder" ng-model="Nominee.RelationtoAccountholder" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3" id="minornominee">
+                                                <div class="form-group">
+                                                    <label>
+                                                        <input icheck type="checkbox" class="minimal" name="Minor" value="Minor" id="chkMinor" ng-model="Nominee.minornominee1">
+                                                    </label>
+                                                    &nbsp;&nbsp;&nbsp;<label for="focusedinput" class="control-label lablefont">Nominee is Minor</label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <br />
+                                    <div class="clear"></div>
+                                    <fieldset class="scheduler-border" ng-show="Nominee.minornominee1">
+                                        <legend class="scheduler-border">Appointee Details(If Nominee is a Minor)</legend>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Name & Surname</label>
+                                                    <input type="text" class="form-control input-sm" id="txtnamesurname" placeholder="Name & Surname" ng-model="Nominee.AppointeeName" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Place of Birth</label>
+                                                    <input type="text" class="form-control input-sm" id="txtbirthplaceappointee" placeholder="Place of Birth" ng-model="Nominee.AppointeePlaceofBirth" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Date of Birth</label>
+                                                    <input type="text" class="form-control input-sm" id="txtdobappointee" placeholder="Date of Birth" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Relationship to Accountholder</label>
+                                                    <input type="text" class="form-control input-sm" id="appointeerelation" placeholder="Relationship to Accountholder" ng-model="Nominee.AppointeeRelationtoAcholder" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="focusedinput" class="control-label lablefont">Relationship to Nominee</label>
+                                                    <input type="text" class="form-control input-sm" id="txtnomineerelation" placeholder="Relationship to Nominee" ng-model="Nominee.RelationtoNominee" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 pull-right">
+                                    <br />
+                                    <button class="btn btn-info btn-sm btn-flat" ng-click="SaveNominee(true)"><i class="glyphicon glyphicon-arrow-right"></i> Save and Next</button>
+                                    <button class="btn btn-primary btn-sm btn-flat" ng-click="SaveNominee()"><i class="glyphicon glyphicon-floppy-disk"></i> Save Nominee</button>
+                                    <button class="btn btn-default btn-sm btn-flat" ng-click="ClearFormNominee()"><i class="fa fa-remove"></i> Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_5">
+                            <div class="panel-body">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Photograph</legend>
+                                    <div class="row">
+                                        <div class="col-md-3" ng-repeat="pic in Photographs">
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="control-label lablefont">{{$index + 1}} Holder</label>
+                                            </div>
+                                            <div class="box box-default">
+                                                <div class="box-body box-profile">
+                                                    <!--<a class="zoom_img img">
+                                                        <img class="profile-user-img img-responsive" id="holderimage_{{$index}}" src="../Documents/{{pic.Document}}">
+                                                    </a>-->
+                                                    <!--{{pic.Document}}
+                                                    <a ng-click="openLightboxModalPhoto($index)">
+                                                        <img ng-src="../Documents/{{pic.Path}}" class="img-thumbnail" style="width:100px;height:100px;">
+                                                    </a>-->
+                                                    <!--<a class="example-image-link" href="../Documents/{{pic.Path}}" data-lightbox="example-set" data-title="Click the right half of the image to move forward.">
+                                                        <img class="example-image" src="../Documents/{{pic.Path}}" style="width:100px;height:100px;">
+                                                    </a>-->
+
+                                                    <a>
+                                                        <img id="imgphoto_{{$index}}" height="100" width="80" data-toggle="modal" data-target="#myModal" src="../Documents/{{pic.Path}}" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div align="center">
+                                                <!--<i class="fa fa-paperclip"></i>{{$index+1}} Holder Photo-->
+                                                <input type="file" name="Photo" value="HolderPhoto" id="firstholderphoto_{{$index}}" ng-files="getHolderphoto($files,$index + 1)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-action">
+                                                <button class="btn btn-primary btn-sm btn-flat" ng-click="SaveHolderphotograph()"><i class="glyphicon glyphicon-upload"></i> Upload</button>
+                                                <button class="btn btn-default btn-sm btn-flat"><i class="fa fa-remove"></i> Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <br />
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Signature</legend>
+                                    <div class="row">
+                                        <div class="col-md-3" ng-repeat="sign in Signatures">
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="control-label lablefont">{{$index + 1}} Holder</label>
+                                            </div>
+                                            <div class="box-default box">
+                                                <div class="box-body">
+                                                    <!--<a class="zoom_img img">
+                                                        <img class="profile-user-img img-responsive" src="../Documents/{{sign.Document}}">
+                                                    </a>-->
+                                                    <!--<a ng-click="openLightboxModalSign($index)">
+                                                        <img ng-src="../Documents/{{sign.Path}}" class="img-thumbnail" style="width:100px;height:100px;">
+                                                    </a>-->
+                                                    <a>
+                                                        <img id="imgSignature_{{$index}}" height="100" width="80" data-toggle="modal" data-target="#myModal" src="../Documents/{{sign.Path}}" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div align="center">
+                                                <!--<i class="fa fa-paperclip"></i>{{$index+1}} Holder Sign-->
+                                                <input type="file" name="Photo" value="HolderSign" id="firstholdersign_{{$index}}" ng-files="getHolderSign($files,$index + 1)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div>
+                                                    <button class="btn btn-primary btn-sm btn-flat" ng-click="SaveHolderSign()"><i class="glyphicon glyphicon-upload"></i> Upload</button>
+                                                    <button class="btn btn-default btn-sm btn-flat"><i class="fa fa-remove"></i> Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <br />
+                                        <div class="col-md-1 pull-right ">
+                                            <button type="button" class="btn btn-info btn-sm  btn-flat" onclick="$('#btntab3').click()"><i class="fa fa-arrow-right"></i> Next</button>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_6">
+                            <div class="panel-body">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Documents</legend>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="col-md-4">
+                                                <label for="focusedinput" class="control-label lablefont">Document Name</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control input-sm" ng-model="DocumentName" maxlength="200" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="file" name="Documents" value="CustomerDocuments" id="customerdocuments" ng-files="getCustomerDocument($files,$index + 1)">
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-3">
+                                                <div class="form-action">
+                                                    <button class="btn btn-primary btn-sm btn-flat" ng-click="SaveCustomerDocuments()"><i class="glyphicon glyphicon-upload"></i> Upload</button>
+                                                    <button class="btn btn-default btn-sm btn-flat"><i class="fa fa-remove"></i> Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-12" ng-show="CustomerDocumentData.length > 0">
+                                            <div class="col-md-6">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Document Name</th>
+                                                            <th>File</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="customerdocdata in CustomerDocumentData">
+                                                            <td id="tdCustomerDocument">
+                                                                {{customerdocdata.DocumentName}}
+                                                            </td>
+                                                            <td>
+                                                                <a target="_blank" alt="Customer Document" href="/Documents/{{customerdocdata.Path}}">Click Here</a>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-danger btn-xs btn-flat" ng-click="btnDeleteCustDocument(customerdocdata.DocumentId)" Id="{{customerdocdata.DocumentId}}" title="Delete Document"><span class="fa fa-trash"></span> Delete</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal fade" id="Share" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add New Share</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Share</label>
+                            <input type="number" min="0" class="form-control input-sm" id="txtshare" placeholder="Share" ng-model="customershare.Share" ng-change="updateTotal()" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Share Price</label>
+                            <input type="number" class="form-control input-sm" id="txtprice" placeholder="Share Price" ng-model="customershare.ShareAmount" ng-change="updateTotal()" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Share Total</label>
+                            <input type="number" class="form-control input-sm" id="txtTotal" placeholder="Share Price" ng-model="customershare.Total" ng-change="isTotalCalculated = false" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Start Date</label>
+                            <input id="txtstartdate" class="form-control input-sm" type="text" placeholder="Start Date" />
+                        </div>
+                    </div>
+                    <!--<div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">End Date</label>
+                            <input id="txtenddate" class="form-control input-sm" type="text" placeholder="End Date">
+                        </div>
+                    </div>-->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Type</label>
+                            <select class="form-control input-sm" id="maturity" ng-model="customershare.Maturity" ng-change="GetSharePrice()">
+                                <option value="">Select</option>
+                                <option value="1" ng-selected="selected">Nominal</option>
+                                <option value="2">Regular</option>
+                                <option value="3">Premium</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Certificate Number</label>
+                            <input id="txtcertynum" class="form-control input-sm" type="text" placeholder="Share Certificate Number" ng-model="customershare.CertificateNumber" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Account Number</label>
+                            <input id="txtAccnum" class="form-control input-sm" type="text" placeholder="Account Number" ng-model="AccountNumber" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">From Number</label>
+                            <input id="txtfromnum" class="form-control input-sm" type="text" placeholder="From Number" ng-model="customershare.FromNumber" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">To Number</label>
+                            <input id="txttonum" class="form-control input-sm" type="text" placeholder="To Number" ng-model="customershare.ToNumber" readonly />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Old From Number</label>
+                            <input id="txtOldfromnum" class="form-control input-sm" type="text" placeholder="From Number" ng-model="customershare.OldFromNumber" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Old To Number</label>
+                            <input id="txtOldtonum" class="form-control input-sm" type="text" placeholder="To Number" ng-model="customershare.OldToNumber" />
+                        </div>
+                    </div>
+                    <div class="col-md-4" id="DeductShareAmountDiv">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Deduct Amount</label>
+                            <br />
+                            <input icheck type="checkbox"  id="DeductShareAmountCheckBox" ng-model="customershare.DeductShareAmount">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4" id="DeductAdmissionFeeDiv">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Deduct Admission Fee</label>
+                            <br />
+                            <input icheck type="checkbox" ng-change="CheckIsDeductSahreAmountChecked()" id="DeductAdmissionFeeCheckBox" ng-model="customershare.DeductAdmissionFee">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-sm btn-flat" ng-click="SaveCustomerShare()"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Share</button>
+                <button class="btn btn-default btn-sm btn-flat" ng-click="ClearFormShare()" data-dismiss="modal"><i class="fa fa-remove"></i>&nbsp;Clear</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img class="img-responsive img" src="" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="modal fade" id="Employee" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Search</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Name</label>
+                            <input type="text" class="form-control input-sm" id="txtsearch" placeholder="Name" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <br />
+                            <button class="btn btn-primary btn-sm btn-flat" id="btnemployee" ng-click="SearchAllUser()"><i class="fa fa-search"></i>&nbsp;Search</button>
+                            <button class="btn btn-default btn-sm btn-flat" id="btnreset" ng-click="AllUserReset()"><i class="glyphicon glyphicon-refresh"></i>&nbsp;Reset</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table id="tblemployee" class="table table-bordered" role="grid" style="width:100%;">
+                                <thead>
+                                    <tr role="row">
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                        <th>Phone Number</th>
+                                        <th>DOB</th>
+                                        <th>Branch</th>
+                                        <th>User Code</th>
+                                        <th>Role</th>
+                                        <th>Select</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+<ng-include src="'Views/ShareCertificate.html'"></ng-include>
+<ng-include src="'Views/AgentList.html'"></ng-include>
+<ng-include src="'Views/EmployeeList.html'"></ng-include>
+<ng-include src="'Views/AddUser.html'"></ng-include>

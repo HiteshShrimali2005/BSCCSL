@@ -1,0 +1,240 @@
+﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Expense
+            <div class="pull-right">
+                <button type="button" name="Product" data-toggle="modal" data-target="#Expense" class="btn btn-primary btn-sm btn-flat" ng-click="AddExpense()"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+            </div>
+        </h3>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Expense List</h3>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="col-md-2">
+                            <label>Search</label>
+                            <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Search" />
+                        </div>
+                        <div class="col-md-2">
+                            <label>Start Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm datepicker" id="txtsearchStartDate" placeholder="Start Date" />
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label>End Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm datepicker" id="txtsearchEndDate" placeholder="End Date" />
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="padding-top:25px;">
+                            <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                            <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                        </div>
+                        <div class="col-md-1">
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblExpense" class="table table-bordered" role="grid" style="width:100%;">
+                                    <!--<thead>
+                                        <tr role="row">
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Amount</th>
+                                            <th>Accounts Head</th>
+                                            <th>Expense Date</th>
+                                            <th>Requested By</th>
+                                            <th>Approved Amount</th>
+                                            <th>Approved By</th>
+                                            <th>Approved Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>-->
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="ActionButtons" style="text-align:right;display:none">
+        </div>
+
+    </section>
+</div>
+
+
+<div class="modal fade" id="Expense" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="ClearForm()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Expense</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Expense Name</label> <!--ng-model="ProductTypelist-->
+                            <input type="text" class="form-control input-sm" id="txtExpenseName" ng-model="Expense.ExpenseName" ng-disabled="IsApprove == 1" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Amount</label> <!--ng-model="ProductNamelist"-->
+                            <input type="text" class="form-control input-sm" id="txtAmount" placeholder="Amount" ng-model="Expense.Amount" valid-number ng-disabled="IsApprove == 1" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Expense Date</label>
+                            <input type="text" class="form-control input-sm datepicker" id="txtExpenseDate" placeholder="Expense Date" ng-disabled="IsApprove == 1" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Accounts Head</label>
+                            <select class="form-control input-sm" id="dpdAccountHead" ng-model="Expense.AccountsHeadId" ng-options="head.AccountsHeadId as head.HeadName for head in AccountsHeadList" ng-disabled="IsApprove == 1">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Bill Date</label>
+                            <input type="text" class="form-control input-sm datepicker" id="txtBillDate" placeholder="Bill Date" ng-disabled="IsApprove == 1" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Upload Bill</label>
+                            <input type="file" id="fileUploadBill" placeholder="UploadFile" ng-files="getTheFiles($files)" />
+                            <label id="FileName" style="display:none"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Description</label><br />
+                            <textarea class="form-control input-sm" rows="3" id="txtDesc" placeholder="Description" ng-model="Expense.Description" ng-disabled="IsApprove == 1"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6" id="divTransactionMode" style="display:none">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Transaction Mode</label><br />
+                            <span for="focusedinput" id="lblTransactionModeData" class="control-label lablefont"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row" ng-show="IsApprove == 1">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Approve Amount</label>
+                            <input type="text" class="form-control input-sm" id="txtApproveAmount" placeholder="Amount" ng-model="Expense.ApprovedAmount" valid-number />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Approve Comment</label>
+                            <textarea class="form-control input-sm" rows="3" id="txtApproveComment" placeholder="Description" ng-model="Expense.ApproveComment"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Transaction Mode</label>
+                            <select class="form-control input-sm" id="TransactionMode" ng-model="Expense.TransactionMode">
+                                <option value="">Select</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Transfer">Transfer</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Reference Number</label>
+                            <input type="text" class="form-control input-sm" id="txtReferenceNumber" placeholder="Reference Number" ng-model="Expense.ReferenceNumber" valid-number />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveExpense()"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ExpensePaid" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="ClearForm()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Paid Expense Amount</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Expense Name</label> 
+                            <input type="text" class="form-control input-sm" id="txtExpenseName" ng-model="Expense.ExpenseName" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Amount</label> 
+                            <input type="text" class="form-control input-sm" id="txtAmount" placeholder="Amount" ng-model="Expense.ApprovedAmount" valid-number disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Customer Account Number</label>
+                            <input type="text" class="form-control input-sm" id="txtCustomerAccountNumber" ng-blur="GetCustomerDataFromAccountNumber(CustomerAccountNumber)" ng-model="CustomerAccountNumber" placeholder="Account Number" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Customer Name</label>
+                            <input type="text" class="form-control input-sm" id="txtCustomerName" ng-model="CustomerName" placeholder="Customer Name" disabled />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="PaidExpense()"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Paid</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

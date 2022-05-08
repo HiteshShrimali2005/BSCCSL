@@ -1,0 +1,107 @@
+﻿
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Transaction History
+        </h3>
+
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Transaction History</h3>
+                        </div>
+                        <div class="box-body">
+                            <div style="padding-bottom:10px">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-2">
+                                            <label>Account Number</label>
+                                            <div class="input-group">
+                                                <input type="text" id="txtAccnoTransactionRpt" class="form-control input-sm" ng-model="TransactionrptAccountNumber" placeholder="Account Number" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Start Date</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control input-sm" id="txtStartDateforSearch"  placeholder="Start Date"/>
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            <label>End Date</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control input-sm" id="txtEndDateforSearch" placeholder="End Date" />
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="col-md-2">
+                                            <label>Type</label>
+                                            <select class="form-control input-sm" id="ddltype" ng-model="Type">
+                                                <option value="">Select Type</option>.
+                                                <option value="1">CR</option>
+                                                <option value="2">DR</option>
+                                            </select>
+                                        </div>-->
+
+                                        <div class="col-md-3">
+                                            <div>
+                                                <label>&nbsp;</label>
+                                            </div>
+                                            <button type="button" data-toggle="modal" class="btn btn-primary btn-sm btn-flat" ng-click="SearchTransactionList()"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;Search</button>
+                                            <label>&nbsp;</label>
+                                            <button type="button" data-toggle="modal" class="btn btn-default btn-sm btn-flat" ng-click="Reset()"><i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Reset</button>
+                                        </div>
+                                        <!--<div class="col-md-2">
+                                            <label>&nbsp;</label>
+                                            <div>
+                                                <button type="button" data-toggle="modal" class="btn btn-primary btn-sm btn-flat" ng-click="SearchTransactionList()"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;Search</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>&nbsp;</label>
+                                            <div>
+                                                <button type="button" data-toggle="modal" class="btn btn-default btn-sm btn-flat" ng-click="Reset()"><i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Reset</button>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table id="tblTransaction" class="table table-bordered" role="grid" style="width:100%;">
+                                        <thead>
+                                            <tr role="row" class="align-center">
+                                                <th>Date</th>
+                                                <th>Cheque No</th>
+                                                <th>Deposit</th>
+                                                <th>Withdrawal</th>
+                                                <th>Balance</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,48 @@
+﻿<div class="content-wrapper">
+    <section class="content-header">
+        <h3>
+            Cheque
+        </h3>
+
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Clear Cheque List</h3>
+                    </div><br />
+                    <div class="col-md-2">
+                        <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Account Number" />
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchCheque()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                        <button class="btn btn-default btn-sm btn-flat" ng-click="ClearChequeData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblcheque" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Account No.</th>
+                                            <th>Name</th>
+                                            <th>Product</th>
+                                            <th>Balance</th>
+                                            <th>Transaction Date</th>
+                                            <th>Cheque Amount</th>
+                                            <th>Cheque No.</th>
+                                            <th>Cheque Date</th>
+                                            <th>Bank Name</th>
+                                            <th>Cheque Clear Date</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

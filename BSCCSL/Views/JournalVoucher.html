@@ -1,0 +1,241 @@
+﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Journal Voucher
+            <div class="pull-right">
+                <button type="button" name="AddJournalVoucher" data-toggle="modal" data-target="#JournalVoucher" class="btn btn-primary btn-sm btn-flat" ng-click="Add()"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+            </div>
+        </h3>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Journal Voucher Details</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblJournalVoucher" class="table table-bordered" role="grid" style="width:100%;"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<div class="modal fade" id="JournalVoucher" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="ClearForm()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Journal Voucher</h4>
+            </div>
+            <div class="modal-body">
+
+                <!--   <div class="row">
+                          <div class="col-md-12">
+                              <label style="font-size:medium">From</label>
+                          </div>
+                      </div>
+
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label for="focusedinput" class="control-label lablefont">Parent Head</label>
+                                  <select class="form-control input-sm" id="ddlFromAccountHead" ng-model="JournalVoucher.FromHeadType">
+                                      <option value="">Select</option>
+                                      <option value="1">Income</option>
+                                      <option value="2">Expense</option>
+                                      <option value="3">Assets</option>
+                                      <option value="4">Liability</option>
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label for="focusedinput" class="control-label lablefont">Sub Head</label>
+                                  <select class="form-control input-sm" id="ddlFromSubAccountHead" ng-model="JournalVoucher.FromAccountHead" ng-options="head.AccountsHeadId as head.HeadName for head in AccountsHeadList">
+                                      <option value="">Select</option>
+                                  </select>
+                              </div>
+                          </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Branch</label><br />
+                            <select class="form-control input-sm" id="ddlFromBranch" ng-model="JournalVoucher.FromBranchId" ng-options="branch.BranchId as branch.BranchName for branch in FromBranchList">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label style="font-size:medium">To</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Parent Head</label>
+                            <select class="form-control input-sm" id="ddlToAccountHead" ng-model="JournalVoucher.ToHeadType">
+                                <option value="">Select</option>
+                                <option value="1">Income</option>
+                                <option value="2">Expense</option>
+                                <option value="3">Assets</option>
+                                <option value="4">Liability</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Sub Head</label>
+                            <select class="form-control input-sm" id="ddlToSubAccountHead" ng-model="JournalVoucher.ToAccountHead" ng-options="head.AccountsHeadId as head.HeadName for head in ToAccountsHeadList">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Branch</label><br />
+                            <select class="form-control input-sm" id="ddlToBranch" ng-model="JournalVoucher.ToBranchId" ng-options="branch.BranchId as branch.BranchName for branch in ToBranchList">
+                                <option value="">Select</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Journal Voucher Name</label><br />
+                            <input type="text" class="form-control input-sm" id="txtJournalVoucherName" placeholder="Name" ng-model="JournalVoucher.JournalVoucherName" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Amount</label>
+                            <input type="text" class="form-control input-sm" id="txtAmount" placeholder="Amount" ng-model="JournalVoucher.Amount" valid-Number />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">JV Date</label>
+                            <input type="text" class="form-control input-sm datepicker" id="txtJVDate" placeholder="JV Date" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">JV Number</label>
+                            <input type="text" class="form-control input-sm" id="txtJVNumber" placeholder="JV Number" ng-model="JournalVoucher.JVNumber" valid-Number />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Description</label><br />
+                            <textarea class="form-control input-sm" rows="3" id="txtDesc" placeholder="Description" ng-model="JournalVoucher.Description"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Transaction Mode</label>
+                            <select class="form-control input-sm" id="ddlTransactionMode" ng-model="JournalVoucher.TransactionMode">
+                                <option value="">Select</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Cheque">Cheque</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Type</label><br />
+                            <select class="form-control input-sm" id="ddlType" ng-model="Type">
+                                <option value="">Select Type</option>.
+                                <option value="1">Credit</option>
+                                <option value="2">Debit</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Amount</label>
+                            <input type="text" class="form-control input-sm" id="txtAmount" placeholder="Amount" ng-model="JournalVoucher.Amount" valid-Number />
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Account Number</label><br />
+                            <input type="text" class="form-control input-sm" id="txtAccountNumber" ng-blur="GetCustomerDataFromAccountNumber(CustomerAccountNumber)" placeholder="Account Number" ng-model="CustomerAccountNumber" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Customer Name</label>
+                            <input type="text" class="form-control input-sm" id="txtCustomerName" placeholder="Customer Name" ng-model="CustomerName" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Product Type</label>
+                            <input type="text" class="form-control input-sm" id="txtProductType" placeholder="Product Type" ng-model="ProductType" disabled />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">JV Number</label>
+                            <input type="text" class="form-control input-sm" id="txtJVNumber" placeholder="JV Number" ng-model="JournalVoucher.JVNumber" valid-Number />
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">JV Date</label>
+                            <input type="text" class="form-control input-sm datepicker" id="txtJVDate" placeholder="JV Date" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Description</label><br />
+                            <textarea class="form-control input-sm" rows="3" id="txtDesc" placeholder="Description" ng-model="JournalVoucher.Description"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-show="JournalVoucher.JournalVoucherId == null" ng-click="SaveJournalVoucher()"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

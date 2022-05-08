@@ -1,0 +1,88 @@
+﻿<style>
+    td.details-control {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        cursor: pointer;
+        -moz-osx-font-smoothing: grayscale;
+        color: green;
+        font-size: 18px;
+    }
+
+        td.details-control:before {
+            content: "\f055";
+        }
+
+    tr.shown td.details-control {
+        color: red;
+    }
+
+        tr.shown td.details-control:before {
+            content: "\f056";
+        }
+</style>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Agent Rank Commission
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Agent Rank Commission List</h3>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="col-md-2">
+                            <label>Agent Name</label>
+                            <input type="text" id="txtAccountlistsearch" class="form-control input-sm" placeholder="Agent Name" />
+                        </div>
+                        <div class="col-md-2">
+                            <label>Month</label>
+                            <select id="ddlMonthSearch" class="form-control input-sm center-block">
+                                <option value="">Select</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label>Year</label>
+                            <ng-combo-date-picker ng-model="SearchYear" ng-min-date="{{min.toString() }}" ng-max-date="{{ max.toString() }}" ng-attrs-year='{"class": "form-control input-sm"}'></ng-combo-date-picker>
+                        </div>
+                        <div class="col-md-3">
+                            <label>&nbsp;</label><br />
+                            <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchAgentCommissionList()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                            <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <form>
+                            <div class="col-lg-12">&nbsp;</div>
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table id="tblAgentCommission" class="table table-bordered" role="grid" style="width:100%;"></table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

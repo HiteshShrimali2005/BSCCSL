@@ -1,0 +1,165 @@
+﻿
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Charts of Account
+            <div class="pull-right">
+                <button type="button" name="User" data-toggle="modal" data-target="#divChartofAccount" class="btn btn-primary btn-sm btn-flat" ng-click="Add();"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+                <button type="button" class="btn btn-sm btn-default btn-flat" ng-click="GoBack();"><i class="fa fa-backward fa-fw"></i>BACK</button>
+
+            </div>
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Account List</h3>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label>Search</label>
+                                <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Name" />
+                            </div>
+                            <div class="col-lg-2">
+                                <label>Root Account</label>
+                                <select class="form-control input-sm" id="ddlSearchRootAccount" ng-change="GetSubAccounts(RootId)" ng-model="RootId" ng-options="parentaccount.Id as parentaccount.Name for parentaccount in ParentAccountList">
+                                    <option value="">Select</option>
+                                </select>
+
+                            </div>
+                            <div class="col-lg-2">
+                                <label for="focusedinput" class="control-label lablefont">Sub Account</label>
+                                <select class="form-control input-sm" id="ddlSearchParentAccount" ng-model="ParentId" ng-options="subaccount.Id as subaccount.Name for subaccount in SubAccountList">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Account Type</label>
+                                <select class="form-control input-sm" id="ddlSearchAccountType">
+                                    <option value="">Select</option>
+                                    <option value="1">Accumulated</option>
+                                    <option value="2">Depreciation</option>
+                                    <option value="3">Bank</option>
+                                    <option value="4">Cash</option>
+                                    <option value="5">Chargeable</option>
+                                    <option value="6">Cost of Goods Sold</option>
+                                    <option value="7">Equity</option>
+                                    <option value="8">Expense Account</option>
+                                    <option value="9">Expenses Included In Valuation</option>
+                                    <option value="10">Fixed Asset</option>
+                                    <option value="11">Income Account</option>
+                                    <option value="12">Payable</option>
+                                    <option value="13">Receivable</option>
+                                    <option value="14">Round Off</option>
+                                    <option value="15">Stock</option>
+                                    <option value="16">Stock Adjustment</option>
+                                    <option value="17">Stock Received But Not Billed</option>
+                                    <option value="18">Tax</option>
+                                    <option value="19">Temporary</option>
+                                </select>
+                            </div>
+                            <br />
+                            <div class="col-lg-2">
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                                <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                            </div>
+                            <div class="col-lg-1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblChartofAccount" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Name</th>
+                                            <th>Parent Account</th>
+                                            <th>Account Type</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<div class="modal fade" id="divChartofAccount" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="ClearForm()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Account</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Name</label> <!--ng-model="ProductTypelist-->
+                            <input type="text" class="form-control input-sm" id="txtAccountName" ng-model="Accounts.Name" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Root Account</label> <!--ng-model="ProductNamelist"-->
+                            <select class="form-control input-sm" ng-model="Accounts.RootId" ng-change="GetSubAccounts(Accounts.RootId)" id="ddlRootAccount" ng-options="parentaccount.Id as parentaccount.Name for parentaccount in ParentAccountList">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Sub Account</label> <!--ng-model="ProductNamelist"-->
+                            <select class="form-control input-sm" ng-model="Accounts.ParentId" id="ddlSubAccount" ng-options="subaccount.Id as subaccount.Name for subaccount in SubAccountList">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Account Type</label>
+                        <select class="form-control input-sm" id="ddlAccountType">
+                            <option value="">Select</option>
+                            <option value="1">Accumulated</option>
+                            <option value="2">Depreciation</option>
+                            <option value="3">Bank</option>
+                            <option value="4">Cash</option>
+                            <option value="5">Chargeable</option>
+                            <option value="6">Cost of Goods Sold</option>
+                            <option value="7">Equity</option>
+                            <option value="8">Expense Account</option>
+                            <option value="9">Expenses Included In Valuation</option>
+                            <option value="10">Fixed Asset</option>
+                            <option value="11">Income Account</option>
+                            <option value="12">Payable</option>
+                            <option value="13">Receivable</option>
+                            <option value="14">Round Off</option>
+                            <option value="15">Stock</option>
+                            <option value="16">Stock Adjustment</option>
+                            <option value="17">Stock Received But Not Billed</option>
+                            <option value="18">Tax</option>
+                            <option value="19">Temporary</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveAccount()"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

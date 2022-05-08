@@ -1,0 +1,90 @@
+﻿
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            General Ledger Details
+            <button type="button" class="btn btn-sm btn-default btn-flat pull-right" ng-click="GoBack();"><i class="fa fa-backward fa-fw"></i>BACK</button>
+        </h3>
+    </section>
+    <section class="content ng-scope">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"></h3>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row">
+
+                            <div class="col-lg-2">
+                                <label>Select Account</label>
+                                <select class="form-control input-sm" id="ddlAccount" ng-model="data.AccountId">
+                                    <option value="">Select Account</option>
+                                    <option ng-repeat="account in AccountList" value="{{account.AccountId}}">{{account.Name}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <label>From Date</label>
+                                <input type="text" id="txtFromDate" class="form-control input-sm" placeholder="From Date" />
+                            </div>
+                            <div class="col-lg-2">
+                                <label>To Date</label>
+                                <input type="text" id="txtToDate" class="form-control input-sm" placeholder="From Date" />
+                            </div>
+                            <br />
+                            <div class="col-lg-2">
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="SearchData()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                                <button class="btn btn-default btn-sm btn-flat" ng-click="SearchClearData()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="tblGeneralLedger" class="table table-bordered" role="grid" style="width:100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Branch Name</th>
+                                            <th>Posting Date</th>
+                                            <th>Accounts</th>
+                                            <th>Entry Type</th>
+                                            <th>Voucher No</th>
+                                            <th class="right">Debit</th>
+                                            <th class="right">Credit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in GeneralLedgerList">
+                                            <td width="15%">{{data.BranchName}}</td>
+                                            <td width="15%">{{data.PostingDate}}</td>
+                                            <td width="15%">{{data.AccountName}}</td>
+                                            <td width="15%">{{data.EntryTypeName}}</td>
+                                            <td width="10%">{{data.VoucherNumber}}</td>
+                                            <td width="15%" class="right"> {{data.Debit | number : 2}}</td>
+                                            <td width="15%" class="right">{{data.Credit | number : 2}}</td>
+                                        </tr>
+                                        <tr ng-show="GeneralLedgerList.length > 0">
+                                            <td class="right" style="font-weight:bold" colspan="5">Total</td>
+                                            <td class="right" style="font-weight:bold">{{TotalDebitAmount | number : 2}}</td>
+                                            <td class="right" style="font-weight:bold">{{TotalCreditAmount | number : 2}}</td>
+                                        </tr>
+                                        <tr ng-hide="GeneralLedgerList.length > 0">
+                                            <td>No Records Found</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+

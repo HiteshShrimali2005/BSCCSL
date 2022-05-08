@@ -1,0 +1,96 @@
+﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h3>
+            Activate RD
+        </h3>
+    </section>
+    <section class="content">
+        <div class="row">
+            
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Freeze RD List</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="">
+                            <div class="col-md-2">
+                                <label>Customer Name</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtCustomerName" placeholder="Customer Name" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Account Number</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtAccountNumber" placeholder="Account Number" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>&nbsp;</label><br />
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="Search()"><i class="fa fa-search"></i>&nbsp; Search</button>
+                                <button class="btn btn-default btn-sm btn-flat" ng-click="ClearSearch()"><i class="fa fa-refresh"></i>&nbsp; Clear</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-12" style="margin-top:15px;">
+                            <div class="table-responsive">
+                                <table id="tblRDActivate" class="table table-bordered" role="grid" style="width:100%;"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<div class="modal fade" id="AddDDSPayment" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="ClearForm()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add DDS Payment</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+                            <label for="focusedinput" class="control-label lablefont">Saving Account Number</label><br />
+                            <input type="text" class="form-control input-sm" id="txtSavingAccountNumber" placeholder="Saving Account Number" ng-model="DDSPaymentListModel.SavingAccountNumber" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+                            <label for="focusedinput" class="control-label lablefont">Amount</label><br />
+                            <input type="text" class="form-control input-sm" id="txtAmount" placeholder="Amount" ng-model="DDSPaymentListModel.Amount" valid-Number />
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="focusedinput" class="control-label lablefont">Description</label><br />
+                            <textarea class="form-control input-sm" rows="3" id="txtDesc" placeholder="Description" ng-model="DDSPaymentListModel.Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="AddDDSPayment()"><i class="glyphicon glyphicon-ok"></i>&nbsp;Pay</button>
+                <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
