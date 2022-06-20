@@ -1834,6 +1834,7 @@
             displayAmountisation.then(function (p1) {
                 if (p1.data != null) {
                     $scope.LoanAmountisation = p1.data.ListLoanAmountisation;
+                    $scope.RemainingPrincipleAmount = p1.data.RemainingPrincipleAmt;
                 }
                 else {
                     showToastMsg(3, 'Error in saving data')

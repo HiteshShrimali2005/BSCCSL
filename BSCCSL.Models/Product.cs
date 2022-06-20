@@ -106,7 +106,10 @@ namespace BSCCSL.Models
         Monthly_Income_Scheme = 7,
         [Description("TYP")]
         Three_Year_Product = 8,
-
+        [Description("CB")]
+        Capital_Builder = 9,
+        [Description("WC")]
+        Wealth_Creator = 10
     }
     public enum Frequency
     {

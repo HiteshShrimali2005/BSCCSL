@@ -36,13 +36,13 @@ namespace BSCCSL.Providers
         {
             using (var obj = new BSCCSLEntity())
             {
-                string decpwd = UserService.Decrypt("HI+zKCbwgXYuTNbM4/eRCA==");
+                string decpwd = UserService.Decrypt("BobX3RT4EFCgYHREtql9Rg==");
                 //comment by vishal brlow 1 line code and pass hardcore pwd
-                //string pwd = UserService.Encrypt(context.Password);
-                string pwd = UserService.Encrypt(decpwd);
+                string pwd = UserService.Encrypt(context.Password);
+                //string pwd = UserService.Encrypt(decpwd);
 
                 //User user = obj.User.Where<User>(record => record.UserCode == context.UserName && record.Password == pwd && record.IsActive == true && record.IsDelete == false && (record.Role != Role.Agent && record.Role != Role.Scree_Sales)).FirstOrDefault();
-                User user = obj.User.Where<User>(record => record.UserName == context.UserName && record.Password == pwd && record.IsActive == true && record.IsDelete == false && (record.Role != Role.Agent)).FirstOrDefault();
+                User user = obj.User.Where<User>(record => record.UserCode == context.UserName && record.Password == pwd && record.IsActive == true && record.IsDelete == false && (record.Role != Role.Agent)).FirstOrDefault();
 
                 if (user == null)
                 {

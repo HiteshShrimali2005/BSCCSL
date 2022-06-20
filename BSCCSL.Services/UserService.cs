@@ -20,8 +20,7 @@ namespace BSCCSL.Services
                 string pwddec = Decrypt("HI+zKCbwgXYuTNbM4/eRCA==");
                 string pwd = Encrypt(pwddec);
                 pwd = "HI+zKCbwgXYuTNbM4/eRCA==";
-                //var user = db.User.Where(u => u.UserCode == "admin@bsccsl.com" && u.Password == "HI+zKCbwgXYuTNbM4/eRCA==").FirstOrDefault();
-                var user = db.User.FirstOrDefault();
+                var user = db.User.Where(u => u.UserCode == username && u.Password == pwd).FirstOrDefault();
                 if (user != null)
                 {
                     var data = new

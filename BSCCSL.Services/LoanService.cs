@@ -1945,6 +1945,7 @@ namespace BSCCSL.Services
                 Amountisation data = new Amountisation();
                 data.ListLoanAmountisation = listLoanAmountisation;
                 data.MonthlyInstallmentAmount = monthlyInstallment;
+                data.RemainingPrincipleAmt = listLoanAmountisation.Sum(a => a.PrincipalAmt);
 
 
                 sql.Close();
@@ -2097,6 +2098,7 @@ namespace BSCCSL.Services
 
 
                 decimal MonthlyInstallmentAmount = 0;
+                decimal RemainingPrincipleAmt = 0;
 
                 if (loanAmountisation.LoanStatus != LoanStatus.Completed && loanAmountisation.PrincipalAmount > 0)
                 {
@@ -2115,6 +2117,7 @@ namespace BSCCSL.Services
 
                     Installments = PaidInstallments.Union(EMIAmountisation).OrderBy(a => a.Installmentdate).ToList();
                     MonthlyInstallmentAmount = amountisation.MonthlyInstallmentAmount;
+                    RemainingPrincipleAmt = amountisation.RemainingPrincipleAmt;
                 }
                 else
                 {
@@ -2123,6 +2126,7 @@ namespace BSCCSL.Services
                 Amountisation data = new Amountisation();
                 data.ListLoanAmountisation = Installments;
                 data.MonthlyInstallmentAmount = MonthlyInstallmentAmount;
+                data.RemainingPrincipleAmt = RemainingPrincipleAmt;
                 return data;
             }
         }

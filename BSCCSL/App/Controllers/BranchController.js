@@ -17,7 +17,7 @@
         show: false,
         keyboard: false  // to prevent closing with Esc button (if you want this too)
     });
-   
+
     $rootScope.CountValue = 0;
 
     function GetBranchDataById(Id) {
@@ -50,7 +50,7 @@
             var checkHO = AppService.SaveData("Branch", "CheckHO", $scope.Branch);
             checkHO.then(function (p1) {
                 if (p1.data == true) {
-                    
+
                     var saveuser = AppService.SaveData("Branch", "BranchRegister", $scope.Branch)
                     saveuser.then(function (p1) {
                         if (p1.data != false) {
@@ -59,11 +59,11 @@
                             RefreshDataTablefnDestroy()
                             GetBranchList()
                             GetUserBranchList()
-                            
-                           
-                         
-                           // $('#tblBranch').dataTable().fnDraw();
-                               // $window.location.reload();
+
+
+
+                            $('#tblBranch').dataTable().fnDraw();
+                            $window.location.reload();
                             $state.go($state.current, {}, { reload: true });
                         }
                         else {
@@ -138,9 +138,9 @@
             "aoColumns": [{
                 "mDataProp": "BranchName",
             },
-             {
-                 "mDataProp": "BranchAddress",
-             },
+            {
+                "mDataProp": "BranchAddress",
+            },
             {
                 "mDataProp": "BranchCode",
             },
@@ -153,15 +153,13 @@
             {
                 "mDataProp": "IsHO",
                 "mRender": function (data, type, full) {
-                    if (full.IsHO == true)
-                    {
+                    if (full.IsHO == true) {
                         return '<span class="label" style="background-color:green">Active</span>';
                     }
-                    else
-                    {
+                    else {
                         return null;
                     }
-                  
+
                 }
             },
             {
@@ -213,8 +211,15 @@
                                     RefreshDataTablefnDestroy();
                                     toastr.remove();
                                     showToastMsg(1, "Branch Deleted Successfully");
+                                    RefreshDataTablefnDestroy();
+                                    GetBranchList();
+                                    GetUserBranchList();
+                                    //GetUserBranchList()
+                                   // $('#tblBranch').dataTable().fnDraw();
                                     $('#tblBranch').dataTable().fnDraw();
-                                    GetUserBranchList()
+                                    $window.location.reload();
+                                    $state.go($state.current, {}, { reload: true });
+                                    
                                 }
                                 else {
                                     showToastMsg(3, "Error Occured While Deleting");
@@ -237,7 +242,7 @@
         $("#tblBranch").dataTable().fnDestroy();
     }
     function ValidateUserForm() {
-        
+
         $(".help-block").remove();
         $('.form-group').removeClass('has-error');
         $('.form-group').removeClass('help-block-error');
@@ -248,7 +253,7 @@
         }
         if (!ValidateRequiredField($("#txtBranchPhone"), 'Branch Phone Number required', 'after')) {
             flag = false;
-        } 
+        }
         if (!CheckMobileNumandphnnum($("#txtBranchPhone"), 'Not a Valid Phone Number', 'after')) {
             flag = false;
         }

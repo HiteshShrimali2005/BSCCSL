@@ -129,7 +129,7 @@
 
         var request = $http.post(urlpath + Controller + "/" + Function, Documents, {
             transformRequest: angular.identity,
-            headers: { 'Content-Type': undefined },
+            headers: { 'Content-Type': undefined }
             //data: Data
         })
 

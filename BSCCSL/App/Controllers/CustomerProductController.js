@@ -181,6 +181,24 @@
                         $scope.CustomerProduct.PaymentType = 5 + "";
                         $("#ddlPaymentTypeCP").attr("disabled", "true");
                     }
+                    else if ($scope.CustomerProduct.ProductType == 9)
+                    {
+                        $scope.CustomerProduct.TimePeriod = 1 + "";
+                        $("#ddlPaymentTypeCP option[value='1']").remove();
+                        $("#ddlTimePeriod").attr("disabled", "true");
+                        if ($("#ddlProductNamelist").find(":selected").text() == "Capital Builder 60") {
+                            $("#txtNoOfMonthsORYears").attr("readonly", "true");
+                            $scope.CustomerProduct.NoOfMonthsORYears = 60;
+                        }
+                        if ($("#ddlProductNamelist").find(":selected").text() == "Capital Builder 72") {
+                            $("#txtNoOfMonthsORYears").attr("readonly", "true");
+                            $scope.CustomerProduct.NoOfMonthsORYears = 72;
+                        }
+                        if ($("#ddlProductNamelist").find(":selected").text() == "Capital Builder 84") {
+                            $("#txtNoOfMonthsORYears").attr("readonly", "true");
+                            $scope.CustomerProduct.NoOfMonthsORYears = 84;
+                        }
+                    }
                     else {
                         $scope.CustomerProduct.TimePeriod = "" + "";
                         $("#ddlTimePeriod").removeAttr("disabled");
@@ -359,7 +377,7 @@
                     }
                 }
                 else {
-                    $scope.CustomerProduct.InterestRate = "";
+                    //$scope.CustomerProduct.InterestRate = "";
                     showToastMsg(3, 'No Interest Rate Found For This Term');
                 }
             })
@@ -511,6 +529,14 @@
                     flag = false;
                 }
             }
+            if ($scope.CustomerProduct.ProductType == "9" || $scope.CustomerProduct.ProductType == "10") {
+                if (!ValidateRequiredField($("#ddlPaymentTypeCP"), 'Payment Type Required', 'after')) {
+                    flag = false;
+                }
+                if (!ValidateRequiredField($("#txtDueDate"), 'Next Installment Date Required', 'after')) {
+                    flag = false;
+                }
+            }
         }
         return flag;
     }
@@ -528,8 +554,8 @@
                 $scope.CustomerProduct.BranchId = $scope.CustomerData[0].BranchId;
                 $scope.CustomerProduct.CreatedBy = $cookies.getObject('User').UserId;
                 if ($scope.CustomerProduct.ProductType == "3" || $scope.CustomerProduct.ProductType == "4" || $scope.CustomerProduct.ProductType == "5" ||
-                    $scope.CustomerProduct.ProductType == "6" || $scope.CustomerProduct.ProductType == "7" || $scope.CustomerProduct.ProductType == "8" || $scope.CustomerProduct.ProductType == 3 || $scope.CustomerProduct.ProductType == 4 ||
-                    $scope.CustomerProduct.ProductType == 5 || $scope.CustomerProduct.ProductType == 6 || $scope.CustomerProduct.ProductType == 7 || $scope.CustomerProduct.ProductType == 8) {
+                    $scope.CustomerProduct.ProductType == "6" || $scope.CustomerProduct.ProductType == "7" || $scope.CustomerProduct.ProductType == "8" || $scope.CustomerProduct.ProductType == "9" || $scope.CustomerProduct.ProductType == "10" || $scope.CustomerProduct.ProductType == 3 || $scope.CustomerProduct.ProductType == 4 ||
+                    $scope.CustomerProduct.ProductType == 5 || $scope.CustomerProduct.ProductType == 6 || $scope.CustomerProduct.ProductType == 7 || $scope.CustomerProduct.ProductType == 8 || $scope.CustomerProduct.ProductType == 9 || $scope.CustomerProduct.ProductType == 10) {
                     $scope.CustomerProduct.Status = 1;
                 }
             }
@@ -571,10 +597,13 @@
                 $scope.CustomerProduct.LIType = 0;
 
             }
-            else if ($scope.CustomerProduct.ProductType == "4" || $scope.CustomerProduct.ProductType == "6" || $scope.CustomerProduct.ProductType == "7" || $scope.CustomerProduct.ProductType == "8") {
+            else if ($scope.CustomerProduct.ProductType == "4" || $scope.CustomerProduct.ProductType == "6" || $scope.CustomerProduct.ProductType == "7" || $scope.CustomerProduct.ProductType == "8" || $scope.CustomerProduct.ProductType == "9" || $scope.CustomerProduct.ProductType == "10") {
                 $scope.CustomerProduct.DueDate = moment(new Date($("#txtDueDate").data("DateTimePicker").date())).format('YYYY-MM-DD');
                 $scope.CustomerProduct.MaturityDate = moment(new Date($("#txtMaturityDate").data("DateTimePicker").date())).format('YYYY-MM-DD')
                 $scope.CustomerProduct.LIType = 0;
+                if ($scope.CustomerProduct.ProductType == "9" || $scope.CustomerProduct.ProductType == "10") {
+                    
+                }
             }
             else {
                 $scope.CustomerProduct.MaturityDate = null;
@@ -1166,12 +1195,15 @@
             $scope.CustomerProduct.Status = $scope.CustomerProduct.Status;
             $scope.CustomerProduct.CertificateNumber = $scope.CustomerProduct.CertificateNumber;
         }
-        if ($scope.CustomerProduct.ProductType == "4" || $scope.CustomerProduct.ProductType == "6" || $scope.CustomerProduct.ProductType == "7" || $scope.CustomerProduct.ProductType == "8") {
+        if ($scope.CustomerProduct.ProductType == "4" || $scope.CustomerProduct.ProductType == "6" || $scope.CustomerProduct.ProductType == "7" || $scope.CustomerProduct.ProductType == "8" || $scope.CustomerProduct.ProductType == "9" || $scope.CustomerProduct.ProductType == "10") {
             $scope.CustomerProduct.Amount = $scope.CustomerProduct.Amount;
             $scope.CustomerProduct.Status = $scope.CustomerProduct.Status;
             $("#txtDueDate").data("DateTimePicker").date($filter('date')($scope.CustomerProduct.DueDate, 'dd/MM/yyyy'))
             $("#txtMaturityDate").data("DateTimePicker").date($filter('date')($scope.CustomerProduct.MaturityDate, 'dd/MM/yyyy'))
             $scope.CustomerProduct.CertificateNumber = $scope.CustomerProduct.CertificateNumber;
+        }
+        if ($scope.CustomerProduct.ProductType == "9" || $scope.CustomerProduct.ProductType == "10") {
+            $("#ddlPaymentTypeCP option[value='1']").remove()
         }
 
         $scope.CustomerProduct.TimePeriod = "" + $scope.CustomerProduct.TimePeriod;

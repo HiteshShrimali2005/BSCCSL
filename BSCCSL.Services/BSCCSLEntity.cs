@@ -157,6 +157,8 @@ namespace BSCCSL.Services
 
         public DbSet<AccountingEntries> AccountingEntries { get; set; }
 
+        //public DbSet<DailyProcessConsoleDates> DailyProcessConsoleDates { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
@@ -193,4 +195,13 @@ namespace BSCCSL.Services
             context.SaveChanges();
         }
     }
+    public class DailyProcess
+    {
+        public int id { get; set; }
+        public string DailyProcessName { get; set; }
+        public string DailyProcessCode { get; set; }
+        public DateTime DailyProcessDate { get; set; }
+        public DateTime CreatedDateTime { get; set; }
+    }
+
 }

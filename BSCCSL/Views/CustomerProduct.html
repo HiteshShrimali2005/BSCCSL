@@ -123,6 +123,8 @@
                                 <option value="6">Regular Income Planner</option>
                                 <option value="7">Monthly Income Scheme</option>
                                 <option value="8">Dhan Vruddhi Yojana</option>
+                                <option value="9">Capital Builder</option>
+                                <option value="10">Wealth Creator</option>
                             </select>
                         </div>
                     </div>
@@ -232,7 +234,7 @@
                                 <input type="text" class="form-control input-sm datepicker" name="Premium" id="txtMaturityDate" placeholder="Maturity Date" disabled="disabled">
                             </div>
                         </div>
-                        <div class="col-md-3" ng-show="CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 6 || CustomerProduct.ProductType == 7 || CustomerProduct.ProductType == 8">
+                        <div class="col-md-3" ng-show="CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 6 || CustomerProduct.ProductType == 7 || CustomerProduct.ProductType == 8 || CustomerProduct.ProductType == 9 || CustomerProduct.ProductType == 10">
                             <div class="form-group">
                                 <label for="focusedinput" class="control-label lablefont">Installment Date</label>
                                 <input id="txtDueDate" class="form-control input-sm datepicker" type="text" placeholder="Installment Date">
@@ -251,7 +253,7 @@
                                 <input class="form-control input-sm" name="LatePaymentFees" id="txtLatePaymentFeesCP" ng-model="CustomerProduct.LatePaymentFees" placeholder="Late Payment Fees" valid-number percentage-field>
                             </div>
                         </div>
-                        <div class="col-md-3" ng-show="CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 6 || CustomerProduct.ProductType == 7 || CustomerProduct.ProductType == 8">
+                        <div class="col-md-3" ng-show="CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 6 || CustomerProduct.ProductType == 7 || CustomerProduct.ProductType == 8 || CustomerProduct.ProductType == 9 || CustomerProduct.ProductType == 10">
                             <div class="form-group">
                                 <label for="focusedinput" class="control-label lablefont">Payment Type</label>
                                 <select class="form-control input-sm" id="ddlPaymentTypeCP" ng-model="CustomerProduct.PaymentType" ng-change="CalculateMaturityAmount()">
@@ -372,8 +374,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SubmitCustomerProduct()" ng-show="(CustomerProduct.ProductType == 3 || CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 6 || CustomerProduct.ProductType == 7 || CustomerProduct.ProductType == 8) && (CustomerProduct.CustomerProductId != '0000000-0000-0000-0000-000000000000' && CustomerProduct.CustomerProductId != undefined && CustomerProduct.CustomerProductId != null && CustomerProduct.Status == 1)"><i class="fa fa-check"></i>Submit</button>
-                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveCustomerProduct()" ng-hide="(CustomerProduct.ProductType == 3 || CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 6 || CustomerProduct.ProductType == 7 || CustomerProduct.ProductType == 8) && (CustomerProduct.Status != 1 && CustomerProduct.Status != null)"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SubmitCustomerProduct()" ng-show="(CustomerProduct.ProductType == 3 || CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 6 || CustomerProduct.ProductType == 7 || CustomerProduct.ProductType == 8 || CustomerProduct.ProductType == 9 || CustomerProduct.ProductType == 10) && (CustomerProduct.CustomerProductId != '0000000-0000-0000-0000-000000000000' && CustomerProduct.CustomerProductId != undefined && CustomerProduct.CustomerProductId != null && CustomerProduct.Status == 1)"><i class="fa fa-check"></i>Submit</button>
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveCustomerProduct()" ng-hide="(CustomerProduct.ProductType == 3 || CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 6 || CustomerProduct.ProductType == 7 || CustomerProduct.ProductType == 8 || CustomerProduct.ProductType == 9 || CustomerProduct.ProductType == 10) && (CustomerProduct.Status != 1 && CustomerProduct.Status != null)"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
                 <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal" ng-click="ClearForm()"><i class="fa fa-remove"></i>&nbsp;Close</button>
             </div>
         </div>

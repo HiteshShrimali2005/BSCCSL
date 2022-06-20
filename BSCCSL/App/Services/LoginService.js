@@ -7,15 +7,12 @@
         obj.password = password
 
         var request = $http({
-            
+
             url: "/Token",
-            //url: "http://localhost:50032/api/user/Token",
             method: "POST",
-            //method: "GET",
             data: $.param({ grant_type: 'password', username: username, password: password }),
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            //url: urlpath + "user/Login?username=" + username + "&password=" + password
-            //url: "http://localhost:50032/api/user/logintest"
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            //url: urlpath + "Login?username=" + username + "&password=" + password
         });
 
         return request;

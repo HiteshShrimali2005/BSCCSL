@@ -133,11 +133,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BSCCSL.Models\BSCCSL.Models.csproj">
-      <Project>{6C029D90-40D3-411A-9296-DC49CBB36939}</Project>
+      <Project>{6c029d90-40d3-411a-9296-dc49cbb36939}</Project>
       <Name>BSCCSL.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

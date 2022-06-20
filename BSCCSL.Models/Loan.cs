@@ -260,6 +260,7 @@ namespace BSCCSL.Models
     {
         public List<ListLoanAmountisation> ListLoanAmountisation { get; set; }
         public decimal MonthlyInstallmentAmount { get; set; }
+        public decimal RemainingPrincipleAmt { get; set; }
     }
 
 }

@@ -20,21 +20,6 @@ namespace BSCCSL.Controllers
         }
 
         [HttpGet]
-        public HttpResponseMessage LoginTest()
-        {
-            try
-            {
-                var result = userService.Login("admin@bsccsl.com", "omdev0805");
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                ErrorLogService.InsertLog(ex);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
-
-        [HttpGet]
         public HttpResponseMessage Login(string username, string password)
         {
             try

@@ -312,7 +312,6 @@
     }
 
     function ValidateUserForm() {
-        debugger;
         $(".help-block").remove();
         $('.form-group').removeClass('has-error');
         $('.form-group').removeClass('help-block-error');
