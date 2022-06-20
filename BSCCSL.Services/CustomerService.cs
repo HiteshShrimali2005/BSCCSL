@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BSCCSL.Models;
 using System.Data.Entity;
+using BSCCSL.Services.SQLDataAccess;
+
 
 namespace BSCCSL.Services
 {
@@ -633,104 +635,111 @@ namespace BSCCSL.Services
 
         public object GetHolderData(string Account)
         {
-            using (var db = new BSCCSLEntity())
-            {
+            CustomerServiceSQL customerService = new CustomerServiceSQL();
 
-                var cpdetail = (from cp in db.CustomerProduct.AsEnumerable().Where(x => x.IsDelete == false && x.AccountNumber == Account)
-                                join c in db.Customer.Where(x => x.IsDelete == false) on cp.CustomerId equals c.CustomerId
-                                join b in db.Branch on c.BranchId equals b.BranchId
-                                join p in db.Product on cp.ProductId equals p.ProductId
-                                join t in db.Transaction.Where(a => a.Status == Status.Unclear) on cp.CustomerProductId equals t.CustomerProductId into trans
-                                from t in trans.DefaultIfEmpty()
-                                group new { t } by new { cp.ProductType, cp.ProductTypeName, b.BranchId, b.BranchName, cp.CustomerId, cp.CustomerProductId, cp.Balance, cp.AccountNumber, cp.Amount, cp.LastInstallmentDate, cp.IsFreeze, cp.Status,p.ProductName,p.ProductCode } into grp
-                                select new
-                                {
-                                    ProductType = grp.Key.ProductType,
-                                    ProductTypeName = grp.Key.ProductTypeName,
-                                    BranchID = grp.Key.BranchId,
-                                    BranchName = grp.Key.BranchName,
-                                    CustomerId = grp.Key.CustomerId,
-                                    AccountNo = grp.Key.AccountNumber,
-                                    CustomerProductId = grp.Key.CustomerProductId,
-                                    Balance = grp.Key.Balance != null ? grp.Key.Balance : 0,
-                                    UnclearBalance = grp.Select(a => a.t != null ? a.t.Amount : 0).Sum(),
-                                    Amount = grp.Key.Amount,
-                                    LastInstallmentDate = grp.Key.LastInstallmentDate,
-                                    IsFreeze = grp.Key.IsFreeze,
-                                    Status = grp.Key.Status,
-                                    ProductCode = grp.Key.ProductCode,
-                                    ProductName = grp.Key.ProductName
-                                    //transactionBlance = (db.Transaction.Where(x => x.CustomerId == grp.Key.CustomerId).OrderByDescending(x => x.TransactionTime).Select(x=> x.Balance).FirstOrDefault())
-                                    //transactionBlance = db.CustomerProduct.Where(x => x.CustomerId == grp.Key.CustomerProductId).Select(x => x.Balance)
-                                }).FirstOrDefault();
+            return customerService.GetHolderDataSQL(Account);
 
-                var data = new object();
+            #region "Old Method"
+            //using (var db = new BSCCSLEntity())
+            //{
 
-                if (cpdetail != null)
-                {
-                    var customerpersonaldetail = new object();
+            //    var cpdetail = (from cp in db.CustomerProduct.AsEnumerable().Where(x => x.IsDelete == false && x.AccountNumber == Account)
+            //                    join c in db.Customer.Where(x => x.IsDelete == false) on cp.CustomerId equals c.CustomerId
+            //                    join b in db.Branch on c.BranchId equals b.BranchId
+            //                    join p in db.Product on cp.ProductId equals p.ProductId
+            //                    join t in db.Transaction.Where(a => a.Status == Status.Unclear) on cp.CustomerProductId equals t.CustomerProductId into trans
+            //                    from t in trans.DefaultIfEmpty()
+            //                    group new { t } by new { cp.ProductType, cp.ProductTypeName, b.BranchId, b.BranchName, cp.CustomerId, cp.CustomerProductId, 
+            //                        cp.Balance, cp.AccountNumber, cp.Amount, cp.LastInstallmentDate, cp.IsFreeze, cp.Status,p.ProductName,p.ProductCode } into grp
+            //                    select new
+            //                    {
+            //                        ProductType = grp.Key.ProductType,
+            //                        ProductTypeName = grp.Key.ProductTypeName,
+            //                        BranchID = grp.Key.BranchId,
+            //                        BranchName = grp.Key.BranchName,
+            //                        CustomerId = grp.Key.CustomerId,
+            //                        AccountNo = grp.Key.AccountNumber,
+            //                        CustomerProductId = grp.Key.CustomerProductId,
+            //                        Balance = grp.Key.Balance != null ? grp.Key.Balance : 0,
+            //                        UnclearBalance = grp.Select(a => a.t != null ? a.t.Amount : 0).Sum(),
+            //                        Amount = grp.Key.Amount,
+            //                        LastInstallmentDate = grp.Key.LastInstallmentDate,
+            //                        IsFreeze = grp.Key.IsFreeze,
+            //                        Status = grp.Key.Status,
+            //                        ProductCode = grp.Key.ProductCode,
+            //                        ProductName = grp.Key.ProductName
+            //                        //transactionBlance = (db.Transaction.Where(x => x.CustomerId == grp.Key.CustomerId).OrderByDescending(x => x.TransactionTime).Select(x=> x.Balance).FirstOrDefault())
+            //                        //transactionBlance = db.CustomerProduct.Where(x => x.CustomerId == grp.Key.CustomerProductId).Select(x => x.Balance)
+            //                    }).FirstOrDefault();
 
-                    if (cpdetail != null)
-                    {
-                        customerpersonaldetail = (from cp in db.CustomerPersonalDetail.Where(a => !a.IsDelete && a.CustomerId == cpdetail.CustomerId)
-                                                  join ca in db.CustomerAddress on cp.PersonalDetailId equals ca.PersonalDetailId
-                                                  orderby cp.CustomerId
-                                                  select new
-                                                  {
-                                                      FirstName = cp.FirstName,
-                                                      MiddleName = cp.MiddleName,
-                                                      LastName = cp.LastName,
-                                                      DOB = cp.DOB,
-                                                      Sex = cp.Sex,
-                                                      Address = (!string.IsNullOrEmpty(ca.DoorNo) ? ca.DoorNo + ", " : "") + (!string.IsNullOrEmpty(ca.BuildingName) ? ca.BuildingName + ", " : "") + (!string.IsNullOrEmpty(ca.PlotNo_Street) ? ca.PlotNo_Street + ", " : "") + (!string.IsNullOrEmpty(ca.Area) ? ca.Area + ", " : "") + (!string.IsNullOrEmpty(ca.City) ? ca.City + ", " : "") + (!string.IsNullOrEmpty(ca.District) ? ca.District + ", " : "") + (!string.IsNullOrEmpty(ca.State) ? ca.State + ", " : "") + (!string.IsNullOrEmpty(ca.Pincode) ? ca.Pincode : ""),
-                                                      CustomerId = cp.CustomerId,
-                                                      HolderPhoto = cp.HolderPhotograph,
-                                                      Holdersign = cp.HolderSign
-                                                  }).ToList();
-                    }
+            //    var data = new object();
 
-                    decimal TotalPendingAmount = 0;
+            //    if (cpdetail != null)
+            //    {
+            //        var customerpersonaldetail = new object();
 
-                    try
-                    {
-                        if (cpdetail.ProductType == ProductType.Loan)
-                        {
-                            decimal TotalEMIAmount = 0;
-                            TotalEMIAmount = db.Loan.Where(a => a.CustomerProductId == cpdetail.CustomerProductId).Select(p => p.TotalAmountToPay.Value).FirstOrDefault();
+            //        if (cpdetail != null)
+            //        {
+            //            customerpersonaldetail = (from cp in db.CustomerPersonalDetail.Where(a => !a.IsDelete && a.CustomerId == cpdetail.CustomerId)
+            //                                      join ca in db.CustomerAddress on cp.PersonalDetailId equals ca.PersonalDetailId
+            //                                      orderby cp.CustomerId
+            //                                      select new
+            //                                      {
+            //                                          FirstName = cp.FirstName,
+            //                                          MiddleName = cp.MiddleName,
+            //                                          LastName = cp.LastName,
+            //                                          DOB = cp.DOB,
+            //                                          Sex = cp.Sex,
+            //                                          Address = (!string.IsNullOrEmpty(ca.DoorNo) ? ca.DoorNo + ", " : "") + (!string.IsNullOrEmpty(ca.BuildingName) ? ca.BuildingName + ", " : "") + (!string.IsNullOrEmpty(ca.PlotNo_Street) ? ca.PlotNo_Street + ", " : "") + (!string.IsNullOrEmpty(ca.Area) ? ca.Area + ", " : "") + (!string.IsNullOrEmpty(ca.City) ? ca.City + ", " : "") + (!string.IsNullOrEmpty(ca.District) ? ca.District + ", " : "") + (!string.IsNullOrEmpty(ca.State) ? ca.State + ", " : "") + (!string.IsNullOrEmpty(ca.Pincode) ? ca.Pincode : ""),
+            //                                          CustomerId = cp.CustomerId,
+            //                                          HolderPhoto = cp.HolderPhotograph,
+            //                                          Holdersign = cp.HolderSign
+            //                                      }).ToList();
+            //        }
+
+            //        decimal TotalPendingAmount = 0;
+
+            //        try
+            //        {
+            //            if (cpdetail.ProductType == ProductType.Loan)
+            //            {
+            //                decimal TotalEMIAmount = 0;
+            //                TotalEMIAmount = db.Loan.Where(a => a.CustomerProductId == cpdetail.CustomerProductId).Select(p => p.TotalAmountToPay.Value).FirstOrDefault();
 
 
 
-                            int c = 0;
-                            decimal TotalPaid = 0;
-                            c = db.RDPayment.Where(a => a.CustomerProductId == cpdetail.CustomerProductId && a.IsPaid == true && a.RDPaymentType == RDPaymentType.Installment).Count();
-                            if (c > 0)
-                            {
-                                TotalPaid = (db.RDPayment.Where(a => a.CustomerProductId == cpdetail.CustomerProductId && a.IsPaid == true && a.RDPaymentType == RDPaymentType.Installment).Sum(a => a.Amount));
-                            }
+            //                int c = 0;
+            //                decimal TotalPaid = 0;
+            //                c = db.RDPayment.Where(a => a.CustomerProductId == cpdetail.CustomerProductId && a.IsPaid == true && a.RDPaymentType == RDPaymentType.Installment).Count();
+            //                if (c > 0)
+            //                {
+            //                    TotalPaid = (db.RDPayment.Where(a => a.CustomerProductId == cpdetail.CustomerProductId && a.IsPaid == true && a.RDPaymentType == RDPaymentType.Installment).Sum(a => a.Amount));
+            //                }
 
-                            TotalPendingAmount = TotalEMIAmount - TotalPaid;
-                            if (TotalPendingAmount < 0)
-                            {
-                                TotalPendingAmount = 0;
-                            }
-                        }
+            //                TotalPendingAmount = TotalEMIAmount - TotalPaid;
+            //                if (TotalPendingAmount < 0)
+            //                {
+            //                    TotalPendingAmount = 0;
+            //                }
+            //            }
 
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorLogService.InsertLog(ex);
-                    }
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            ErrorLogService.InsertLog(ex);
+            //        }
 
-                    data = new
-                    {
-                        details = customerpersonaldetail,
-                        AccountDetail = cpdetail,
-                        TotalLoanPendingAmount = TotalPendingAmount
-                    };
-                }
+            //        data = new
+            //        {
+            //            details = customerpersonaldetail,
+            //            AccountDetail = cpdetail,
+            //            TotalLoanPendingAmount = TotalPendingAmount
+            //        };
+            //    }
 
-                return data;
-            }
+            //    return data;
+            //}
+            #endregion
         }
 
         //public bool UpdateBalance(CustomerUpdateData customer)

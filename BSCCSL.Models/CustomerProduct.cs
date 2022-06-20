@@ -300,5 +300,21 @@ namespace BSCCSL.Models
         public decimal TotalAmount { get; set; }
         public Guid PrematureBy { get; set; }
     }
-
+    public class HolderDataResult
+    {
+        public ProductType ProductType { get; set; }
+        public string ProductTypeName { get; set; }
+        public Guid BranchId { get; set; }
+        public string BranchName { get; set; }
+        public Guid CustomerId { get; set; }
+        public Guid CustomerProductId { get; set; }
+        public decimal? Balance { get; set; }
+        public string AccountNumber { get; set; }
+        public decimal? Amount { get; set; }
+        public DateTime? LastInstallmentDate { get; set; }
+        public bool? IsFreeze { get; set; }
+        public CustomerProductStatus Status { get; set; }
+        public string ProductName { get; set; }
+        public string ProductCode { get; set; }
+    }
 }
