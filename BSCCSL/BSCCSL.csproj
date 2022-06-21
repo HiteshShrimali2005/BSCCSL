@@ -1425,6 +1425,7 @@
     <Content Include="Views\LockScreen.html" />
     <Content Include="Views\JournalVoucher.html" />
     <Content Include="Views\ProductEnquiry.html" />
+    <Content Include="Views\ProductRank.html" />
     <Content Include="Views\Reports.html" />
     <Content Include="Views\RptAgentPerfomance.html" />
     <Content Include="Views\RptEmployeePerfomance.html" />

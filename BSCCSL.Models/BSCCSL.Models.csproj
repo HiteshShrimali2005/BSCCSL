@@ -91,6 +91,7 @@
     <Compile Include="CustomerProofDocument.cs" />
     <Compile Include="CustomerShare.cs" />
     <Compile Include="DailyInterest.cs" />
+    <Compile Include="DailyProcessConsoleDates.cs" />
     <Compile Include="DataTableSearch.cs" />
     <Compile Include="DDSPaymentListModel.cs" />
     <Compile Include="DisbursementLetter.cs" />

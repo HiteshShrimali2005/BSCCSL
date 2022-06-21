@@ -77,7 +77,7 @@
                         <div class="col-md-12" ng-show="HolderData.Status != 6">
                             <div class="col-md-8 pull-right" style="text-align:right">
                                 <button class="btn btn-warning btn-sm btn-flat" ng-click="CreateAutoFD()" ng-show="(HolderData.ProductType == 1 && HolderData.ProductCode == 'SA04')">Create FD</button>
-                                <button class="btn btn-primary btn-sm btn-flat" ng-click="OpenDepositModal()" ng-show="(HolderData.ProductType == 1 || HolderData.ProductType == 2)">Deposit</button>
+                                <button class="btn btn-primary btn-sm btn-flat" ng-click="OpenDepositModal()" ng-show="(HolderData.ProductType == 1 || HolderData.ProductType == 2|| HolderData.ProductType == 9|| HolderData.ProductType == 10)">Deposit</button>
                                 <button class="btn btn-success btn-sm btn-flat " ng-click="OpenWithdrawModal()" ng-show="(HolderData.ProductType == 1 || HolderData.ProductType == 2)">Withdraw</button>
                                 <button class="btn btn-info btn-sm btn-flat" ng-click="OpenInterAccTransferModal()" ng-show="(HolderData.ProductType == 1 || HolderData.ProductName == 'Akshaya Tritiya')">Inter Account</button>
                                 <button class="btn btn-sm btn-flat" ng-click="OpenBankTransfer()" ng-show="HolderData.ProductType == 1">Bank Transfer</button>
@@ -267,8 +267,8 @@
                                 <option value="">Select</option>
                                 <option value="1">Cash</option>
                                 <option value="2" ng-show="HolderData.ProductType == 1 || HolderData.ProductType == 2">DD</option>
-                                <option value="3" ng-show="HolderData.ProductType == 1 || HolderData.ProductType == 2">Cheque</option>
-                                <option value="5" ng-show="HolderData.ProductType == 1 || HolderData.ProductType == 2">Balance Transfer</option>
+                                <option value="3" ng-show="HolderData.ProductType == 1 || HolderData.ProductType == 2 || HolderData.ProductType == 9 || HolderData.ProductType == 10">Cheque</option>
+                                <option value="5" ng-show="HolderData.ProductType == 1 || HolderData.ProductType == 2 || HolderData.ProductType == 9 || HolderData.ProductType == 10">Balance Transfer</option>
                                 <option value="7" ng-show="HolderData.ProductType == 1 || HolderData.ProductType == 2">NEFT</option>
 
                             </select>

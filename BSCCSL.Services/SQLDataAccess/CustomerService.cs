@@ -17,17 +17,19 @@ namespace BSCCSL.Services.SQLDataAccess
 
         public CustomerServiceSQL()
         {
-            this._BSCCSLConnection = ConfigurationManager.AppSettings["BSCCSLConnection"]; //
+            this._BSCCSLConnection = System.Configuration.ConfigurationManager.AppSettings["BSCCSLConnection"]; //
         }
 
         public object GetHolderDataSQL(string Account)
         {
+            var db1 = new BSCCSLEntity();
+            string connectionstring = db1.Database.Connection.ConnectionString;
             var data = new object();
             var customerpersonaldetail = new object();
             decimal TotalPendingAmount = 0;
             var holderDataResult = new HolderDataResult();
 
-            using (IDbConnection connection = new SqlConnection(this._BSCCSLConnection))
+            using (IDbConnection connection = new SqlConnection(connectionstring))
             {
                 var parameters = new DynamicParameters();
                 var storedProcedureName = "GetHolderData";
@@ -37,84 +39,105 @@ namespace BSCCSL.Services.SQLDataAccess
 
                 foreach (var item in dbResult)
                 {
-                    holderDataResult = new HolderDataResult()
+                    if (item.status != null)
                     {
-                        ProductType = (ProductType)int.Parse(item.PRODUCTTYPE),
-                        BranchId = item.BRANCHID,
-                        BranchName = item.BRANCHNAME,
-                        CustomerId = item.CUSTOMERID,
-                        CustomerProductId = item.CUSTOMERPRODUCTID,
-                        Balance = item.BALANCE,
-                        AccountNumber = item.ACCOUNTNUMBER,
-                        Amount = item.AMOUNT,
-                        LastInstallmentDate = item.LASTINSTALLMENTDATE,
-                        IsFreeze = item.ISFREEZE,
-                        Status = (CustomerProductStatus)int.Parse((item.STATUS)),
-                        ProductName = item.PRODUCTNAME,
-                        ProductCode = item.PRODUCTCODE
-                    };
+                        holderDataResult = new HolderDataResult()
+                        {
+                            ProductType = (ProductType)Enum.Parse(typeof(ProductType), Convert.ToString(item.PRODUCTTYPE)),
+                            BranchId = item.BRANCHID,
+                            BranchName = item.BRANCHNAME,
+                            CustomerId = item.CUSTOMERID,
+                            CustomerProductId = item.CUSTOMERPRODUCTID,
+                            Balance = item.BALANCE,
+                            AccountNumber = item.ACCOUNTNUMBER,
+                            Amount = item.AMOUNT,
+                            LastInstallmentDate = item.LASTINSTALLMENTDATE,
+                            IsFreeze = item.ISFREEZE,
+                            Status = (CustomerProductStatus)Enum.Parse(typeof(CustomerProductStatus), Convert.ToString(item.STATUS)),
+                            ProductName = item.PRODUCTNAME,
+                            ProductCode = item.PRODUCTCODE
+                        };
+                    }
+                    else {
+                        holderDataResult = new HolderDataResult()
+                        {
+                            ProductType = (ProductType)Enum.Parse(typeof(ProductType), Convert.ToString(item.PRODUCTTYPE)),
+                            BranchId = item.BRANCHID,
+                            BranchName = item.BRANCHNAME,
+                            CustomerId = item.CUSTOMERID,
+                            CustomerProductId = item.CUSTOMERPRODUCTID,
+                            Balance = item.BALANCE,
+                            AccountNumber = item.ACCOUNTNUMBER,
+                            Amount = item.AMOUNT,
+                            LastInstallmentDate = item.LASTINSTALLMENTDATE,
+                            IsFreeze = item.ISFREEZE,
+                            //Status = (CustomerProductStatus)Enum.Parse(typeof(CustomerProductStatus), Convert.ToString(item.STATUS)),
+                            ProductName = item.PRODUCTNAME,
+                            ProductCode = item.PRODUCTCODE
+                        };
+                    }
+            }
+
+            if (holderDataResult != null && holderDataResult.AccountNumber.Length > 0)
+            {
+                using (var db = new BSCCSLEntity())
+                {
+                    customerpersonaldetail = (from cp in db.CustomerPersonalDetail.Where(a => !a.IsDelete && a.CustomerId == holderDataResult.CustomerId)
+                                              join ca in db.CustomerAddress on cp.PersonalDetailId equals ca.PersonalDetailId
+                                              orderby cp.CustomerId
+                                              select new
+                                              {
+                                                  FirstName = cp.FirstName,
+                                                  MiddleName = cp.MiddleName,
+                                                  LastName = cp.LastName,
+                                                  DOB = cp.DOB,
+                                                  Sex = cp.Sex,
+                                                  Address = (!string.IsNullOrEmpty(ca.DoorNo) ? ca.DoorNo + ", " : "") + (!string.IsNullOrEmpty(ca.BuildingName) ? ca.BuildingName + ", " : "") + (!string.IsNullOrEmpty(ca.PlotNo_Street) ? ca.PlotNo_Street + ", " : "") + (!string.IsNullOrEmpty(ca.Area) ? ca.Area + ", " : "") + (!string.IsNullOrEmpty(ca.City) ? ca.City + ", " : "") + (!string.IsNullOrEmpty(ca.District) ? ca.District + ", " : "") + (!string.IsNullOrEmpty(ca.State) ? ca.State + ", " : "") + (!string.IsNullOrEmpty(ca.Pincode) ? ca.Pincode : ""),
+                                                  CustomerId = cp.CustomerId,
+                                                  HolderPhoto = cp.HolderPhotograph,
+                                                  Holdersign = cp.HolderSign
+                                              }).ToList();
                 }
 
-                if (holderDataResult != null && holderDataResult.AccountNumber.Length > 0)
+
+
+                if (holderDataResult.ProductType == ProductType.Loan)
                 {
+                    decimal TotalEMIAmount = 0;
                     using (var db = new BSCCSLEntity())
                     {
-                        customerpersonaldetail = (from cp in db.CustomerPersonalDetail.Where(a => !a.IsDelete && a.CustomerId == holderDataResult.CustomerId)
-                                                  join ca in db.CustomerAddress on cp.PersonalDetailId equals ca.PersonalDetailId
-                                                  orderby cp.CustomerId
-                                                  select new
-                                                  {
-                                                      FirstName = cp.FirstName,
-                                                      MiddleName = cp.MiddleName,
-                                                      LastName = cp.LastName,
-                                                      DOB = cp.DOB,
-                                                      Sex = cp.Sex,
-                                                      Address = (!string.IsNullOrEmpty(ca.DoorNo) ? ca.DoorNo + ", " : "") + (!string.IsNullOrEmpty(ca.BuildingName) ? ca.BuildingName + ", " : "") + (!string.IsNullOrEmpty(ca.PlotNo_Street) ? ca.PlotNo_Street + ", " : "") + (!string.IsNullOrEmpty(ca.Area) ? ca.Area + ", " : "") + (!string.IsNullOrEmpty(ca.City) ? ca.City + ", " : "") + (!string.IsNullOrEmpty(ca.District) ? ca.District + ", " : "") + (!string.IsNullOrEmpty(ca.State) ? ca.State + ", " : "") + (!string.IsNullOrEmpty(ca.Pincode) ? ca.Pincode : ""),
-                                                      CustomerId = cp.CustomerId,
-                                                      HolderPhoto = cp.HolderPhotograph,
-                                                      Holdersign = cp.HolderSign
-                                                  }).ToList();
+                        TotalEMIAmount = db.Loan.Where(a => a.CustomerProductId == holderDataResult.CustomerProductId).Select(p => p.TotalAmountToPay.Value).FirstOrDefault();
                     }
 
-                    
 
-                    if (holderDataResult.ProductType == ProductType.Loan)
+                    int c = 0;
+                    decimal TotalPaid = 0;
+                    parameters = new DynamicParameters();
+                    storedProcedureName = "GetCustomerRDPaymentData";
+
+                    parameters.Add("@CustomerProductId", holderDataResult.CustomerProductId);
+                    dbResult = connection.Query(storedProcedureName, parameters, null, true, commandType: CommandType.StoredProcedure);
+
+                    foreach (var item in dbResult)
                     {
-                        decimal TotalEMIAmount = 0;
-                        using (var db = new BSCCSLEntity())
-                        {
-                            TotalEMIAmount = db.Loan.Where(a => a.CustomerProductId == holderDataResult.CustomerProductId).Select(p => p.TotalAmountToPay.Value).FirstOrDefault();
-                        }
-
-
-                        int c = 0;
-                        decimal TotalPaid = 0;
-                        parameters = new DynamicParameters();
-                        storedProcedureName = "GetCustomerRDPaymentData";
-
-                        parameters.Add("@CustomerProductId", holderDataResult.CustomerProductId);
-                        dbResult = connection.Query(storedProcedureName, parameters, null, true, commandType: CommandType.StoredProcedure);
-
-                        foreach (var item in dbResult)
-                        {
-                            TotalPaid = item.Amount;
-                        }
-
-                        TotalPendingAmount = TotalEMIAmount - TotalPaid;
-                        if (TotalPendingAmount < 0)
-                        {
-                            TotalPendingAmount = 0;
-                        }
+                        TotalPaid = item.Amount;
                     }
 
+                    TotalPendingAmount = TotalEMIAmount - TotalPaid;
+                    if (TotalPendingAmount < 0)
+                    {
+                        TotalPendingAmount = 0;
+                    }
                 }
+
             }
-            data = new
+        }
+        data = new
             {
                 details = customerpersonaldetail,
                 AccountDetail = holderDataResult,
                 TotalLoanPendingAmount = TotalPendingAmount
-            };
+    };
 
             return data;
         }
