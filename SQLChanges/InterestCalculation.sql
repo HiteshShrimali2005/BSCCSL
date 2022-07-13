@@ -1,3 +1,4 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Alter procedure [dbo].[InterestCalculation]
 @Date datetime
 As
@@ -34,6 +35,10 @@ SET NOCOUNT ON
 					IF  @ProductType = 9
 					BEGIN
 						EXEC DBO.InterestCalculation_CapitalBuilder @CustomerProductId, @Balance, @InterestRate, @IsFreeze, @CustomerId, @ProductType, @Date
+					END
+					ELSE IF @ProductType = 10
+					BEGIN
+						EXEC DBO.InterestCalculation_WealthCreator @CustomerProductId, @Balance, @InterestRate, @IsFreeze, @CustomerId, @ProductType, @Date
 					END
 					ELSE
 					BEGIN
@@ -73,3 +78,5 @@ SET NOCOUNT ON
 	SET NOCOUNT OFF 	
 
 End
+
+
