@@ -18,9 +18,10 @@ SET NOCOUNT ON
 	DECLARE @PaymentType int	
 	DECLARE @Transaction_WealthCreatorID BIGINT
 
-	SELECT @LastTransactionTime = max(DateofCreditAmount) FROM TRANSACTION_WEALTHCREATOR TR WITH(NOLOCK)  
+	SELECT top 1 @LastTransactionTime = DateofCreditAmount,@Transaction_WealthCreatorID = ID FROM TRANSACTION_WEALTHCREATOR TR WITH(NOLOCK)  
 	LEFT JOIN CustomerProduct CP WITH(NOLOCK) ON CP.CustomerProductId = TR.CustomerProductId
 	where TR.CustomerProductId = @CustomerProductId 
+	order by DateofCreditAmount desc
 	
 
 	Select TOP 1 @PaymentType = PaymentType from CustomerProduct with(nolock) 
@@ -49,8 +50,8 @@ SET NOCOUNT ON
 	IF @Interest > 0 and @Interest is not null
 	BEGIN		 
 
-		 INSERT INTO DailyInterest_WealthCreator (CustomerProductId, TodaysInterest,InterestRate, IsPaid, CreatedDate) values
-		 (@CustomerProductId, @Interest, @InterestRate, 0, @Date)
+		 INSERT INTO DailyInterest_WealthCreator (CustomerProductId, TodaysInterest,InterestRate, IsPaid, CreatedDate,Transaction_WealthCreatorID) values
+		 (@CustomerProductId, @Interest, @InterestRate, 0, @Date,@Transaction_WealthCreatorID)
 	END
 
 	SET NOCOUNT OFF 	
