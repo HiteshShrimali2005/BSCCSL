@@ -1,60 +1,89 @@
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-ALTER procedure [dbo].[InterestCalculation_WealthCreator]
-@CustomerProductId uniqueidentifier,
-@Balance decimal(18,4),
-@InterestRate decimal(18,4),
-@IsFreeze bit,
-@CustomerId uniqueidentifier,
-@ProductType int,
+CREATE procedure [dbo].[InterestCalculation_WealthCreator]
 @Date datetime
 As
 Begin
 SET NOCOUNT ON	
 
-	-- it's for debug purpose , can uncomment below statement and test the values
-	--SELECT @CustomerProductId,@Balance,@InterestRate,@IsFreeze,@CustomerId,@ProductType,@Date 
-
+	DECLARE @CustomerProductId uniqueidentifier
+	DECLARE @Balance decimal(18,4)
+	DECLARE @InterestRate decimal(18,4)
+	DECLARE @IsFreeze bit
+	DECLARE @CustomerId uniqueidentifier
+	DECLARE @ProductType int
 	DECLARE @LastTransactionTime datetime
-	DECLARE @PaymentType int	
-	DECLARE @Transaction_WealthCreatorID BIGINT
-
-	SELECT top 1 @LastTransactionTime = DateofCreditAmount,@Transaction_WealthCreatorID = ID FROM TRANSACTION_WEALTHCREATOR TR WITH(NOLOCK)  
-	LEFT JOIN CustomerProduct CP WITH(NOLOCK) ON CP.CustomerProductId = TR.CustomerProductId
-	where TR.CustomerProductId = @CustomerProductId 
-	order by DateofCreditAmount desc
+	DECLARE @Transaction_WealthCreatorID bigint
 	
 
-	Select TOP 1 @PaymentType = PaymentType from CustomerProduct with(nolock) 
-	where CustomerId = @CustomerId and ProductType = @ProductType
+	DECLARE interest CURSOR
 
-	IF ((DATEDIFF(MONTH, @LastTransactionTime, GETDATE())) > 6 and @PaymentType in (2,3)) OR 
-			((DATEDIFF(MONTH, @LastTransactionTime, GETDATE())) > 12 and @PaymentType in (4,5))
-	BEGIN
-		SET @InterestRate = 4
-	END
-	ELSE
-		SET @InterestRate = (Select TOP 1 InterestRate from CustomerProduct with(nolock) where CustomerId = @CustomerId and ProductType = @ProductType)
-	END
+	STATIC FOR 
+
+		SELECT CP.CustomerProductId,CP.Balance,CP.InterestRate, CP.IsFreeze, CP.CustomerId, CP.ProductType, TR.DateofCreditAmount,TR.ID 
+		FROM TRANSACTION_WEALTHCREATOR TR WITH(NOLOCK) 
+		left join CustomerProduct CP on CP.CustomerProductId = tr.CustomerProductId 
+		left join Customer CM on CM.CustomerId = CP.CustomerId where 
+		CP.CustomerId = CM.CustomerId and CM.IsDelete = 0 and CM.IsDelete = 0 and  CP.OpeningDate <= @Date and CP.ProductType in (10) and 
+		CP.IsActive = 1 and (CP.Status = 2 or CP.Status is null)
+
+	OPEN interest
+
+
+	IF @@CURSOR_ROWS > 0
+		 BEGIN 
+			 FETCH NEXT FROM interest INTO  @CustomerProductId, @Balance, @InterestRate, @IsFreeze, @CustomerId, @ProductType,@LastTransactionTime,@Transaction_WealthCreatorID
+				WHILE @@Fetch_status = 0
+				BEGIN
+
+					BEGIN TRANSACTION TRANSINTERESTCALCULATION
+						BEGIN TRY
+
+						
+
+							IF DATEDIFF(MONTH, @LastTransactionTime, GETDATE()) > 6  OR DATEDIFF(MONTH, @LastTransactionTime, GETDATE()) > 12
+							BEGIN
+								SET @InterestRate = 4
+							END
+							ELSE
+							BEGIN
+								SET @InterestRate = (Select TOP 1 InterestRate from CustomerProduct with(nolock) where CustomerId = @CustomerId and ProductType = @ProductType)
+							END
 	
 	
-	DECLARE @MonthlyTax decimal(18,4)
-	DECLARE @DailyTax decimal(18,4)
-	DECLARE @Interest decimal(18,4)
+						DECLARE @MonthlyTax decimal(18,4)
+						DECLARE @DailyTax decimal(18,4)
+						DECLARE @Interest decimal(18,4)
+	
+						SET @MonthlyTax = @InterestRate / 12
 
-	SET @MonthlyTax = @InterestRate / 12
+						SET @DailyTax = @MonthlyTax /  DAY(DATEADD(DD,-1,DATEADD(mm, DATEDIFF(mm, 0, @Date) + 1, 0)))
 
-	SET @DailyTax = @MonthlyTax /  DAY(DATEADD(DD,-1,DATEADD(mm, DATEDIFF(mm, 0, @Date) + 1, 0)))
+						SET @Interest = ((@Balance * @DailyTax)/100)  
 
-	SET @Interest = ((@Balance * @DailyTax)/100)  
+						IF @Interest > 0 and @Interest is not null
+						BEGIN		 
 
-	IF @Interest > 0 and @Interest is not null
-	BEGIN		 
+							 INSERT INTO DailyInterest_WealthCreator (CustomerProductId, TodaysInterest,InterestRate, IsPaid, CreatedDate,Transaction_WealthCreatorID) values
+							 (@CustomerProductId, @Interest, @InterestRate, 0, @Date,@Transaction_WealthCreatorID)
+						END
+						
+						
+						
+						END TRY
+						BEGIN CATCH
+							ROLLBACK TRANSACTION TRANSINTERESTCALCULATION
+						END CATCH
+					COMMIT TRANSACTION TRANSINTERESTCALCULATION
 
-		 INSERT INTO DailyInterest_WealthCreator (CustomerProductId, TodaysInterest,InterestRate, IsPaid, CreatedDate,Transaction_WealthCreatorID) values
-		 (@CustomerProductId, @Interest, @InterestRate, 0, @Date,@Transaction_WealthCreatorID)
-	END
+				FETCH NEXT FROM interest INTO  @CustomerProductId, @Balance, @InterestRate, @IsFreeze, @CustomerId, @ProductType,@LastTransactionTime,@Transaction_WealthCreatorID
+				END
+		END
+	CLOSE interest
+	DEALLOCATE interest
+	
+SET NOCOUNT OFF 	
 
-	SET NOCOUNT OFF 	
+END
+
 
 
 

@@ -68,6 +68,7 @@ namespace BSCCSL.Services
             date = lst.Where(x => x.DailyProcessCode == "006").Select(Y => Y.DailyProcessDate).FirstOrDefault();
             DailyInterestCalculation(date);
             //DailyInterestCalculationForFlexiLoan();
+            InterestCalculation_WealthCreator(date);
 
             date = lst.Where(x => x.DailyProcessCode == "007").Select(Y => Y.DailyProcessDate).FirstOrDefault();
             CreditInterestInCustomerAccount(date);
@@ -91,6 +92,51 @@ namespace BSCCSL.Services
                         string connectionstring = db.Database.Connection.ConnectionString;
                         SqlConnection sql = new SqlConnection(connectionstring);
                         SqlCommand cmd = new SqlCommand("InterestCalculation", sql);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandTimeout = 3600;
+                        //Create a parameter using the new SQL DB type viz. Structured to pass as table value parameter
+                        SqlParameter paramdate = cmd.Parameters.Add("@Date", SqlDbType.DateTime);
+                        paramdate.Value = (object)Date;
+
+                        //Execute the query
+                        sql.Open();
+                        //int result = cmdTimesheet.ExecuteNonQuery();
+                        var reader = cmd.ExecuteReader();
+
+                        // Read Blogs from the first result set
+                        var result = ((IObjectContextAdapter)db).ObjectContext.Translate<object>(reader).FirstOrDefault();
+                        sql.Close();
+                        db.Dispose();
+
+                        //return result;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ErrorLogService.InsertLog(ex);
+                    return false;
+                }
+            }
+            return true;
+
+        }
+
+        public object InterestCalculation_WealthCreator(DateTime Date)
+        {
+            int days = Convert.ToInt32((System.DateTime.Today.Date - Date).TotalDays);
+            for (int i = 0; i < days; i++)
+            {
+                Date = Date.AddDays(1);
+                try
+                {
+                    using (var db = new BSCCSLEntity())
+                    {
+                        //var result = db.Database.SqlQuery<object>("InterestCalculation @Date",
+                        //new SqlParameter("Date", DateTime.Now)).FirstOrDefault();
+
+                        string connectionstring = db.Database.Connection.ConnectionString;
+                        SqlConnection sql = new SqlConnection(connectionstring);
+                        SqlCommand cmd = new SqlCommand("InterestCalculation_WealthCreator", sql);
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.CommandTimeout = 3600;
                         //Create a parameter using the new SQL DB type viz. Structured to pass as table value parameter

@@ -1,5 +1,4 @@
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Alter procedure [dbo].[InterestCalculation]
+ALTER procedure [dbo].[InterestCalculation]
 @Date datetime
 As
 Begin
@@ -17,7 +16,7 @@ SET NOCOUNT ON
 	STATIC FOR 
 
 		select c.CustomerProductId,c.Balance,c.InterestRate, c.IsFreeze, c.CustomerId, c.ProductType from CustomerProduct c, Customer m where 
-		c.CustomerId = m.CustomerId and c.IsDelete = 0 and m.IsDelete = 0 and c.OpeningDate <= @Date and c.ProductType in (1,3,4,7,8,9,10) and 
+		c.CustomerId = m.CustomerId and c.IsDelete = 0 and m.IsDelete = 0 and c.OpeningDate <= @Date and c.ProductType in (1,3,4,7,8,9) and 
 		c.IsActive = 1 and (c.Status = 2 or c.Status is null)
 
 	OPEN interest
@@ -35,11 +34,7 @@ SET NOCOUNT ON
 					IF  @ProductType = 9
 					BEGIN
 						EXEC DBO.InterestCalculation_CapitalBuilder @CustomerProductId, @Balance, @InterestRate, @IsFreeze, @CustomerId, @ProductType, @Date
-					END
-					ELSE IF @ProductType = 10
-					BEGIN
-						EXEC DBO.InterestCalculation_WealthCreator @CustomerProductId, @Balance, @InterestRate, @IsFreeze, @CustomerId, @ProductType, @Date
-					END
+					END					
 					ELSE
 					BEGIN
 						IF(@IsFreeze = 1 and @ProductType = 4)
@@ -78,5 +73,7 @@ SET NOCOUNT ON
 	SET NOCOUNT OFF 	
 
 End
+
+
 
 
