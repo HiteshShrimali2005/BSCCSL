@@ -68,6 +68,8 @@ namespace BSCCSL.Services
             date = lst.Where(x => x.DailyProcessCode == "006").Select(Y => Y.DailyProcessDate).FirstOrDefault();
             DailyInterestCalculation(date);
             //DailyInterestCalculationForFlexiLoan();
+
+            date = lst.Where(x => x.DailyProcessCode == "010").Select(Y => Y.DailyProcessDate).FirstOrDefault();
             InterestCalculation_WealthCreator(date);
 
             date = lst.Where(x => x.DailyProcessCode == "007").Select(Y => Y.DailyProcessDate).FirstOrDefault();
