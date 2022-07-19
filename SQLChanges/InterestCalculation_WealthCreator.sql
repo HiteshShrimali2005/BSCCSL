@@ -1,4 +1,4 @@
-CREATE procedure [dbo].[InterestCalculation_WealthCreator]
+Create procedure [dbo].[InterestCalculation_WealthCreator]
 @Date datetime
 As
 Begin
@@ -12,7 +12,7 @@ SET NOCOUNT ON
 	DECLARE @ProductType int
 	DECLARE @LastTransactionTime datetime
 	DECLARE @Transaction_WealthCreatorID bigint
-	
+	DECLARE @TranErrCnt int
 
 	DECLARE interest CURSOR
 
@@ -24,6 +24,8 @@ SET NOCOUNT ON
 		left join Customer CM on CM.CustomerId = CP.CustomerId where 
 		CP.CustomerId = CM.CustomerId and CM.IsDelete = 0 and CM.IsDelete = 0 and  CP.OpeningDate <= @Date and CP.ProductType in (10) and 
 		CP.IsActive = 1 and (CP.Status = 2 or CP.Status is null)
+
+	SET @TRANERRCNT = 0
 
 	OPEN interest
 
@@ -80,6 +82,11 @@ SET NOCOUNT ON
 	CLOSE interest
 	DEALLOCATE interest
 	
+	  IF @TRANERRCNT = 0
+	  BEGIN  
+		UPDATE DAILYPROCESS_CONSOLE_LOG SET DAILYPROCESSDATE = @DATE WHERE DAILYPROCESSCODE = '010'
+	  END
+
 SET NOCOUNT OFF 	
 
 END
