@@ -25,6 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		SQLChanges\InterestCalculation.sql = SQLChanges\InterestCalculation.sql
 		SQLChanges\InterestCalculation_CapitalBuilder.sql = SQLChanges\InterestCalculation_CapitalBuilder.sql
 		SQLChanges\InterestCalculation_WealthCreator.sql = SQLChanges\InterestCalculation_WealthCreator.sql
+		SQLChanges\MaturedAmountTransfer_WealthCreator.sql = SQLChanges\MaturedAmountTransfer_WealthCreator.sql
 	EndProjectSection
 EndProject
 Global
