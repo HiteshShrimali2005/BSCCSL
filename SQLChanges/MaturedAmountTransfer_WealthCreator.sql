@@ -1,4 +1,4 @@
-create procedure [dbo].[MaturedAmountTransfer_WealthCreator]
+Create procedure [dbo].[MaturedAmountTransfer_WealthCreator]
 @Date datetime
 As
 Begin
@@ -9,7 +9,7 @@ Begin
 	DECLARE @Balance decimal(18,4)
 	DECLARE @UpdatedBalance decimal(18,4)
 	DECLARE @TotalInterest decimal(18,4)
-
+	DECLARE @TranErrCnt int
 	
 	DECLARE creditinterest CURSOR
 
@@ -20,6 +20,7 @@ Begin
 		and c.Status = 2 and c.IsDelete = 0 and m.IsDelete = 0 and c.ProductType in(10) and MaturityDate = CONVERT(char(10), @Date,126) and d.IsPaid = 0 
 		group by d.CustomerProductId,c.CustomerId,c.Balance, c.UpdatedBalance
 
+	SET @TRANERRCNT = 0
 	OPEN creditinterest
 
 	IF @@CURSOR_ROWS > 0
@@ -76,6 +77,12 @@ Begin
 	END
 	CLOSE creditinterest
 	DEALLOCATE creditinterest
+
+	  IF @TRANERRCNT = 0
+	  BEGIN  
+		UPDATE DAILYPROCESS_CONSOLE_LOG SET DAILYPROCESSDATE = @DATE WHERE DAILYPROCESSCODE = '008'
+	  END
+
 	SET NOCOUNT OFF 	
 End
 
