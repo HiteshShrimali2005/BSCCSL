@@ -1340,7 +1340,7 @@ namespace BSCCSL.Services
                         {
                             Guid? RdPaymentId = null;
 
-                            if (CustomerProductData.ProductType == ProductType.Recurring_Deposit || CustomerProductData.ProductType == ProductType.Regular_Income_Planner || CustomerProductData.ProductType == ProductType.Three_Year_Product)
+                            if (CustomerProductData.ProductType == ProductType.Recurring_Deposit || CustomerProductData.ProductType == ProductType.Regular_Income_Planner || CustomerProductData.ProductType == ProductType.Three_Year_Product || CustomerProductData.ProductType == ProductType.Capital_Builder || CustomerProductData.ProductType == ProductType.Wealth_Creator) 
                             {
                                 RDPayment rdPayment = new RDPayment();
                                 rdPayment.CustomerId = CustomerProductData.CustomerId;
@@ -1373,7 +1373,7 @@ namespace BSCCSL.Services
                         }
 
                         if (CustomerProductData.TimePeriod.HasValue && CustomerProductData.NoOfMonthsORYears.HasValue &&
-                            (CustomerProductData.ProductType == ProductType.Fixed_Deposit || CustomerProductData.ProductType == ProductType.Monthly_Income_Scheme))
+                            (CustomerProductData.ProductType == ProductType.Fixed_Deposit || CustomerProductData.ProductType == ProductType.Monthly_Income_Scheme || CustomerProductData.ProductType == ProductType.Capital_Builder || CustomerProductData.ProductType == ProductType.Wealth_Creator))
                         {
                             CustomerProductData.AgentCommission = (CustomerProductData.Amount * Comm) / 100;
                         }
@@ -1412,7 +1412,7 @@ namespace BSCCSL.Services
 
                         //SavingAccount.Balance = SavingAccount.Balance - CustomerProduct.Amount;
                         //SavingAccount.UpdatedBalance = SavingAccount.UpdatedBalance - CustomerProduct.Amount;
-
+                        transactionService.SaveWealthTransaction(transaction1, CustomerProduct.MaturityDate);  
                         db.SaveChanges();
                         DailyInterestCalculation(CustomerProductData.CustomerProductId, DateTime.Now);
                         if (CustomerProduct.ProductId == AkshyaTrityaProductId)
@@ -2056,7 +2056,8 @@ namespace BSCCSL.Services
                                           Email = ca.Email,
                                           CustomerName = cp.FirstName + " " + cp.MiddleName + " " + cp.LastName,
                                           HolderPhoto = cp.HolderPhotograph,
-                                          ClienId = c.ClienId
+                                          ClienId = c.ClienId,
+                                          City = ca.City
                                       }).ToList();
 
                 var customer = (from c in db.Customer.Where(x => x.CustomerId == id && x.IsDelete == false)

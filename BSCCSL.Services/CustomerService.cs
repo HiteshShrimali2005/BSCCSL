@@ -60,7 +60,7 @@ namespace BSCCSL.Services
                     setting.Value = clientid.ToString().PadLeft(6, '0');
 
                     int applicationnum = Convert.ToInt32(setting1.Value) + 1;
-                    setting1.Value = applicationnum.ToString().PadLeft(3, '0');
+                    setting1.Value = applicationnum.ToString().PadLeft(6, '0');
                     db.Entry(setting).State = EntityState.Modified;
                     db.SaveChanges();
                     SMSService.SendNewCustomerSMS(customerdetail);

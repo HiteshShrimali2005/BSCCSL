@@ -176,7 +176,47 @@ namespace BSCCSL.Services
                 return transctionId;
             }
         }
+        public bool SaveWealthTransaction(Transactions transaction,DateTime? MaturityDate1)
+        {
+            using (var db = new BSCCSLEntity())
+            {
+                //SaveWealthCreatorTransaction
+                SqlParameter CustomerProductId = new SqlParameter("CustomerProductId", transaction.CustomerProductId);               
+                SqlParameter Type = new SqlParameter("Type", transaction.Type);
+                SqlParameter CreatedBy = new SqlParameter("CreatedBy", transaction.CreatedBy);
+                SqlParameter CreatedDate = new SqlParameter("CreatedDate", transaction.CreatedDate);                
+                SqlParameter DateOfCreditAmount = new SqlParameter("DateOfCreditAmount", transaction.CreatedDate);
+                SqlParameter BalanceAmt = new SqlParameter("BalanceAmt", transaction.Amount);
+                SqlParameter MaturityDate = new SqlParameter("MaturityDate", MaturityDate1);
+                //SqlParameter TransactionType = new SqlParameter("TransactionType", transaction.TransactionType);
+                //SqlParameter CheckNumber = new SqlParameter("CheckNumber", (object)transaction.CheckNumber ?? DBNull.Value);
+                //SqlParameter ChequeDate = new SqlParameter("ChequeDate", (object)transaction.ChequeDate ?? DBNull.Value);
+                //SqlParameter BounceReason = new SqlParameter("BounceReason", (object)transaction.BounceReason ?? DBNull.Value);
+                //SqlParameter Penalty = new SqlParameter("Penalty", (object)transaction.Penalty ?? DBNull.Value);
+                //SqlParameter ChequeClearDate = new SqlParameter("ChequeClearDate", (object)transaction.ChequeClearDate ?? DBNull.Value);
+                //SqlParameter Status = new SqlParameter("Status", (object)transaction.Status ?? DBNull.Value);
+                //SqlParameter TransactionTime = new SqlParameter("TransactionTime", (object)transaction.TransactionTime ?? DBNull.Value);
+                //SqlParameter BankName = new SqlParameter("BankName", (object)transaction.BankName ?? DBNull.Value);
+                //SqlParameter BranchId = new SqlParameter("BranchId", transaction.BranchId);
+                //SqlParameter DescIndentify = new SqlParameter("DescIndentify", (object)transaction.DescIndentify ?? DBNull.Value);
+                //SqlParameter RefCustomerProductId = new SqlParameter("RefCustomerProductId", (object)transaction.RefCustomerProductId ?? DBNull.Value);
 
+                SqlParameter NEFTNumber = new SqlParameter("NEFTNumber", (object)transaction.NEFTNumber ?? DBNull.Value);
+                SqlParameter NEFTDate = new SqlParameter("NEFTDate", (object)transaction.NEFTDate ?? DBNull.Value);
+
+                SqlParameter Id = new SqlParameter
+                {
+
+                    ParameterName = "@Id",
+                    SqlDbType = System.Data.SqlDbType.UniqueIdentifier,
+                    Size = 50,
+                    Direction = System.Data.ParameterDirection.Output
+                };
+                db.Database.CommandTimeout = 3600;
+                var trans = db.Database.SqlQuery<object>("SaveWealthCreatorTransaction @CustomerProductId,@Type, @DateOfCreditAmount ,@BalanceAmt, @MaturityDate, @CreatedDate , @CreatedBy", CustomerProductId, Type,DateOfCreditAmount,BalanceAmt,MaturityDate, CreatedDate, CreatedBy).FirstOrDefault();
+            }
+            return true;
+        }
         public bool SaveTransaction(Transactions transaction)
         {
             using (var db = new BSCCSLEntity())
@@ -265,7 +305,7 @@ namespace BSCCSL.Services
 
 
                             CustomerProduct objcp = db.CustomerProduct.Where(a => a.CustomerProductId == transctiondetails.CustomerProductId.Value).FirstOrDefault();
-                            if(objcp != null)
+                            if (objcp != null)
                             {
                                 objcp.Balance = balance;
                                 db.SaveChanges();
@@ -1267,7 +1307,7 @@ namespace BSCCSL.Services
                             if (loan.TotalAmountToPay != null)
                             {
                                 decimal InterestAmount = (decimal)loan.TotalAmountToPay - loan.LoanAmount;
-                                if(InterestAmount != 0)
+                                if (InterestAmount != 0)
                                 {
                                     Transactions transactionLoanPrePaymentInterest = new Transactions();
                                     transactionLoanPrePaymentInterest.Amount = InterestAmount;

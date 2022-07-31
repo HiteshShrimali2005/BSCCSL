@@ -17,19 +17,19 @@ namespace BSCCSL.Services.SQLDataAccess
 
         public CustomerServiceSQL()
         {
-            this._BSCCSLConnection = System.Configuration.ConfigurationManager.AppSettings["BSCCSLConnection"]; //
+            this._BSCCSLConnection = System.Configuration.ConfigurationManager.ConnectionStrings["BSCCSLConnection"].ToString(); //
         }
 
         public object GetHolderDataSQL(string Account)
         {
-            var db1 = new BSCCSLEntity();
-            string connectionstring = db1.Database.Connection.ConnectionString;
+            //var db1 = new BSCCSLEntity();
+            //string connectionstring = db1.Database.Connection.ConnectionString;
             var data = new object();
             var customerpersonaldetail = new object();
             decimal TotalPendingAmount = 0;
             var holderDataResult = new HolderDataResult();
 
-            using (IDbConnection connection = new SqlConnection(connectionstring))
+            using (IDbConnection connection = new SqlConnection(this._BSCCSLConnection))
             {
                 var parameters = new DynamicParameters();
                 var storedProcedureName = "GetHolderData";
@@ -44,41 +44,45 @@ namespace BSCCSL.Services.SQLDataAccess
                         holderDataResult = new HolderDataResult()
                         {
                             ProductType = (ProductType)Enum.Parse(typeof(ProductType), Convert.ToString(item.PRODUCTTYPE)),
+                            ProductTypeName = Convert.ToString(Enum.GetName(typeof(ProductType), item.PRODUCTTYPE)).Replace("_", " "),
                             BranchId = item.BRANCHID,
                             BranchName = item.BRANCHNAME,
                             CustomerId = item.CUSTOMERID,
                             CustomerProductId = item.CUSTOMERPRODUCTID,
                             Balance = item.BALANCE,
-                            AccountNumber = item.ACCOUNTNUMBER,
+                            AccountNo = item.ACCOUNTNUMBER,
                             Amount = item.AMOUNT,
                             LastInstallmentDate = item.LASTINSTALLMENTDATE,
                             IsFreeze = item.ISFREEZE,
                             Status = (CustomerProductStatus)Enum.Parse(typeof(CustomerProductStatus), Convert.ToString(item.STATUS)),
                             ProductName = item.PRODUCTNAME,
-                            ProductCode = item.PRODUCTCODE
+                            ProductCode = item.PRODUCTCODE,
+                            UnclearBalance = item.UNCLEARBALANCE
                         };
                     }
                     else {
                         holderDataResult = new HolderDataResult()
                         {
                             ProductType = (ProductType)Enum.Parse(typeof(ProductType), Convert.ToString(item.PRODUCTTYPE)),
+                            ProductTypeName = Convert.ToString(Enum.GetName(typeof(ProductType), item.PRODUCTTYPE)).Replace("_"," "),                            
                             BranchId = item.BRANCHID,
                             BranchName = item.BRANCHNAME,
                             CustomerId = item.CUSTOMERID,
                             CustomerProductId = item.CUSTOMERPRODUCTID,
                             Balance = item.BALANCE,
-                            AccountNumber = item.ACCOUNTNUMBER,
+                            AccountNo = item.ACCOUNTNUMBER,
                             Amount = item.AMOUNT,
                             LastInstallmentDate = item.LASTINSTALLMENTDATE,
                             IsFreeze = item.ISFREEZE,
                             //Status = (CustomerProductStatus)Enum.Parse(typeof(CustomerProductStatus), Convert.ToString(item.STATUS)),
                             ProductName = item.PRODUCTNAME,
-                            ProductCode = item.PRODUCTCODE
+                            ProductCode = item.PRODUCTCODE,
+                            UnclearBalance = item.UNCLEARBALANCE
                         };
                     }
             }
 
-            if (holderDataResult != null && holderDataResult.AccountNumber.Length > 0)
+            if (holderDataResult != null && holderDataResult.AccountNo.Length > 0)
             {
                 using (var db = new BSCCSLEntity())
                 {

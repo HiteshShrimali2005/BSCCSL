@@ -199,6 +199,27 @@
                             $scope.CustomerProduct.NoOfMonthsORYears = 84;
                         }
                     }
+                    else if ($scope.CustomerProduct.ProductType == 10) {
+                        $scope.CustomerProduct.TimePeriod = 1 + "";
+                        $("#ddlPaymentTypeCP option[value='1']").remove();
+                        $("#ddlTimePeriod").attr("disabled", "true");
+                        if ($("#ddlProductNamelist").find(":selected").text() == "Wealth Creator 24") {
+                            $("#txtNoOfMonthsORYears").attr("readonly", "true");
+                            $scope.CustomerProduct.NoOfMonthsORYears = 24;
+                        }
+                        if ($("#ddlProductNamelist").find(":selected").text() == "Wealth Creator 30") {
+                            $("#txtNoOfMonthsORYears").attr("readonly", "true");
+                            $scope.CustomerProduct.NoOfMonthsORYears = 30;
+                        }
+                        if ($("#ddlProductNamelist").find(":selected").text() == "Wealth Creator 36") {
+                            $("#txtNoOfMonthsORYears").attr("readonly", "true");
+                            $scope.CustomerProduct.NoOfMonthsORYears = 36;
+                        }
+                        if ($("#ddlProductNamelist").find(":selected").text() == "Wealth Creator 48") {
+                            $("#txtNoOfMonthsORYears").attr("readonly", "true");
+                            $scope.CustomerProduct.NoOfMonthsORYears = 48;
+                        }
+                    }
                     else {
                         $scope.CustomerProduct.TimePeriod = "" + "";
                         $("#ddlTimePeriod").removeAttr("disabled");

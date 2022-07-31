@@ -309,7 +309,8 @@ namespace BSCCSL.Models
         public Guid CustomerId { get; set; }
         public Guid CustomerProductId { get; set; }
         public decimal? Balance { get; set; }
-        public string AccountNumber { get; set; }
+        public decimal? UnclearBalance { get; set; }
+        public string AccountNo { get; set; }
         public decimal? Amount { get; set; }
         public DateTime? LastInstallmentDate { get; set; }
         public bool? IsFreeze { get; set; }
