@@ -628,7 +628,7 @@
                 {
                     "mDataProp": "Balance",
                     "mRender": function (data, type, full) {
-                        if (full.Balance >= 0) {
+                        if (full.Type == 1) {
                             return "CR";
                         } else {
                             return "DR";

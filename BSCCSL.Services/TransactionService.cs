@@ -147,7 +147,7 @@ namespace BSCCSL.Services
                 db.Database.CommandTimeout = 3600;
                 var trans = db.Database.SqlQuery<object>("SaveTransaction @CustomerProductId,@CustomerId, @Amount ,@Balance, @Type, @CreatedBy, @CreatedDate,@ModifiedBy, @ModifiedDate,@TransactionType,@CheckNumber,@ChequeDate,@BounceReason,@Penalty,@ChequeClearDate,@Status,@TransactionTime,@BankName,@BranchId,@DescIndentify,@RefCustomerProductId,@NEFTNumber,@NEFTDate,@Id  OUT", CustomerProductId, CustomerId, Amount, Balance, Type, CreatedBy, CreatedDate, ModifiedBy, ModifiedDate, TransactionType, CheckNumber, ChequeDate, BounceReason, Penalty, ChequeClearDate, Status, TransactionTime, BankName, BranchId, DescIndentify, RefCustomerProductId, NEFTNumber, NEFTDate, Id).FirstOrDefault();
                 transctionId = Guid.Parse(Id.Value.ToString());
-
+                SaveWealthTransaction(transaction, null);
                 if (transaction.DescIndentify != Models.DescIndentify.Cheque_Bounce && transaction.DescIndentify != Models.DescIndentify.Panelty)
                 {
                     CustomerProduct objCustomerProduct = db.CustomerProduct.FirstOrDefault(a => a.CustomerProductId == transaction.CustomerProductId);
@@ -187,7 +187,7 @@ namespace BSCCSL.Services
                 SqlParameter CreatedDate = new SqlParameter("CreatedDate", transaction.CreatedDate);                
                 SqlParameter DateOfCreditAmount = new SqlParameter("DateOfCreditAmount", transaction.CreatedDate);
                 SqlParameter BalanceAmt = new SqlParameter("BalanceAmt", transaction.Amount);
-                SqlParameter MaturityDate = new SqlParameter("MaturityDate", MaturityDate1);
+                SqlParameter MaturityDate = new SqlParameter("MaturityDate", (object)MaturityDate1 ?? DBNull.Value );
                 //SqlParameter TransactionType = new SqlParameter("TransactionType", transaction.TransactionType);
                 //SqlParameter CheckNumber = new SqlParameter("CheckNumber", (object)transaction.CheckNumber ?? DBNull.Value);
                 //SqlParameter ChequeDate = new SqlParameter("ChequeDate", (object)transaction.ChequeDate ?? DBNull.Value);
@@ -201,17 +201,17 @@ namespace BSCCSL.Services
                 //SqlParameter DescIndentify = new SqlParameter("DescIndentify", (object)transaction.DescIndentify ?? DBNull.Value);
                 //SqlParameter RefCustomerProductId = new SqlParameter("RefCustomerProductId", (object)transaction.RefCustomerProductId ?? DBNull.Value);
 
-                SqlParameter NEFTNumber = new SqlParameter("NEFTNumber", (object)transaction.NEFTNumber ?? DBNull.Value);
-                SqlParameter NEFTDate = new SqlParameter("NEFTDate", (object)transaction.NEFTDate ?? DBNull.Value);
+                //SqlParameter NEFTNumber = new SqlParameter("NEFTNumber", (object)transaction.NEFTNumber ?? DBNull.Value);
+                //SqlParameter NEFTDate = new SqlParameter("NEFTDate", (object)transaction.NEFTDate ?? DBNull.Value);
 
-                SqlParameter Id = new SqlParameter
-                {
+                //SqlParameter Id = new SqlParameter
+                //{
 
-                    ParameterName = "@Id",
-                    SqlDbType = System.Data.SqlDbType.UniqueIdentifier,
-                    Size = 50,
-                    Direction = System.Data.ParameterDirection.Output
-                };
+                //    ParameterName = "@Id",
+                //    SqlDbType = System.Data.SqlDbType.UniqueIdentifier,
+                //    Size = 50,
+                //    Direction = System.Data.ParameterDirection.Output
+                //};
                 db.Database.CommandTimeout = 3600;
                 var trans = db.Database.SqlQuery<object>("SaveWealthCreatorTransaction @CustomerProductId,@Type, @DateOfCreditAmount ,@BalanceAmt, @MaturityDate, @CreatedDate , @CreatedBy", CustomerProductId, Type,DateOfCreditAmount,BalanceAmt,MaturityDate, CreatedDate, CreatedBy).FirstOrDefault();
             }

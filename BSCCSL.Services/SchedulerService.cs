@@ -77,6 +77,7 @@ namespace BSCCSL.Services
 
             date = lst.Where(x => x.DailyProcessCode == "008").Select(Y => Y.DailyProcessDate).FirstOrDefault();
             MaturedAmountTransfer(date);
+            date = lst.Where(x => x.DailyProcessCode == "010").Select(Y => Y.DailyProcessDate).FirstOrDefault();
             MaturedAmountTransfer_WealthCreator(date);
 
 
