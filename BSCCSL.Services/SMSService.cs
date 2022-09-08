@@ -47,38 +47,44 @@ namespace BSCCSL.Services
 
         public static void SendNewAccountOpenSMS(Guid CustomerProductId)
         {
-            using (var db = new BSCCSLEntity())
+            try
             {
-                var CustomerProductDetail = (from c in db.CustomerProduct.Where(a => a.CustomerProductId == CustomerProductId)
-                                             join p in db.CustomerPersonalDetail.AsEnumerable() on c.CustomerId equals p.CustomerId
-                                             join m in db.CustomerAddress.AsEnumerable() on p.PersonalDetailId equals m.PersonalDetailId
-                                             select new
-                                             {
-                                                 CustomerId = c.CustomerId,
-                                                 FirstName = p.FirstName,
-                                                 AccountType = c.ProductType,
-                                                 MobileNo = m.MobileNo,
-                                                 AccountNumber = c.AccountNumber,
-                                             }).ToList();
-
-                foreach (var det in CustomerProductDetail)
+                using (var db = new BSCCSLEntity())
                 {
-                    var NewCustomerSMS = db.Messages.Where(x => x.Name == MessageType.NEW_ACCOUNT).FirstOrDefault();
-                    string sms = "", smsname = "";
+                    var CustomerProductDetail = (from c in db.CustomerProduct.Where(a => a.CustomerProductId == CustomerProductId)
+                                                 join p in db.CustomerPersonalDetail.AsEnumerable() on c.CustomerId equals p.CustomerId
+                                                 join m in db.CustomerAddress.AsEnumerable() on p.PersonalDetailId equals m.PersonalDetailId
+                                                 select new
+                                                 {
+                                                     CustomerId = c.CustomerId,
+                                                     FirstName = p.FirstName,
+                                                     AccountType = c.ProductType,
+                                                     MobileNo = m.MobileNo,
+                                                     AccountNumber = c.AccountNumber,
+                                                 }).ToList();
 
-                    smsname = MessageType.NEW_ACCOUNT.ToString().Replace("_", " ");
-                    sms = NewCustomerSMS.Message;
-                    sms = sms.Replace("{FirstName}", det.FirstName);
-                    sms = sms.Replace("{ACCOUNTType}", det.AccountType.ToString().Replace("_", " "));
-                    sms = sms.Replace("{AccountNumber}", det.AccountNumber);
-                    bool flag = SendSMS(sms, det.MobileNo);
-                    if (flag)
+                    foreach (var det in CustomerProductDetail)
                     {
-                        InserSMSLog(det.MobileNo, sms, smsname);
-                    }
+                        var NewCustomerSMS = db.Messages.Where(x => x.Name == MessageType.NEW_ACCOUNT).FirstOrDefault();
+                        string sms = "", smsname = "";
 
-                    sms = "";
+                        smsname = MessageType.NEW_ACCOUNT.ToString().Replace("_", " ");
+                        sms = NewCustomerSMS.Message;
+                        sms = sms.Replace("{FirstName}", det.FirstName);
+                        sms = sms.Replace("{ACCOUNTType}", det.AccountType.ToString().Replace("_", " "));
+                        sms = sms.Replace("{AccountNumber}", det.AccountNumber);
+                        bool flag = SendSMS(sms, det.MobileNo);
+                        if (flag)
+                        {
+                            InserSMSLog(det.MobileNo, sms, smsname);
+                        }
+
+                        sms = "";
+                    }
                 }
+            }
+            catch (Exception ex)
+            { 
             }
 
         }
@@ -328,29 +334,37 @@ namespace BSCCSL.Services
         public static string UpdateToken(Type type, MessageType name, Dictionary<string, string> dic)
         {
             string SMS = "";
-            using (var db = new BSCCSLEntity())
+            try
             {
-                var msg = db.Messages.Where(a => a.Type == type && a.Name == name).Select(a => a.Message).FirstOrDefault();
-                SMS = msg;
-                SMS = SMS.Replace("{amount}", dic["Amount"]);
-                SMS = SMS.Replace("{AccountNumber}", dic["AccountNumber"]);
-                SMS = SMS.Replace("{TYPE}", dic["TransactionType"]);
-                SMS = SMS.Replace("{date}", dic["Date"]);
-                SMS = SMS.Replace("{AC}", dic["AC"]);
-                if (dic["TransactionType"] == TransactionType.Cheque.ToString() && dic["Type"] == TypeCRDR.CR.ToString() && dic["Status"] == Status.Unclear.ToString())
+                
+                using (var db = new BSCCSLEntity())
                 {
-                    SMS = SMS.Replace("Avbl Bal Rs. {Balance}", string.Empty);
-                    SMS += "-Subject to realization";
-                }
-                else
-                {
-                    SMS = SMS.Replace("{Balance}", dic["Balance"]);
-                }
+                    var msg = db.Messages.Where(a => a.Type == type && a.Name == name).Select(a => a.Message).FirstOrDefault();
+                    SMS = msg;
+                    SMS = SMS.Replace("{amount}", dic["Amount"]);
+                    SMS = SMS.Replace("{AccountNumber}", dic["AccountNumber"]);
+                    SMS = SMS.Replace("{TYPE}", dic["TransactionType"]);
+                    SMS = SMS.Replace("{date}", dic["Date"]);
+                    SMS = SMS.Replace("{AC}", dic["AC"]);
+                    if (dic["TransactionType"] == TransactionType.Cheque.ToString() && dic["Type"] == TypeCRDR.CR.ToString() && dic["Status"] == Status.Unclear.ToString())
+                    {
+                        SMS = SMS.Replace("Avbl Bal Rs. {Balance}", string.Empty);
+                        SMS += "-Subject to realization";
+                    }
+                    else
+                    {
+                        SMS = SMS.Replace("{Balance}", dic["Balance"]);
+                    }
 
-                if (dic.ContainsKey("RefProductType"))
-                {
-                    SMS += " towards AccountNumber " + dic["RefProductType"].Replace("_", "-") + " " + dic["RefAccountNumber"];
+                    if (dic.ContainsKey("RefProductType"))
+                    {
+                        SMS += " towards AccountNumber " + dic["RefProductType"].Replace("_", "-") + " " + dic["RefAccountNumber"];
+                    }
                 }
+            }
+            catch (Exception ex)
+            { 
+
             }
             return SMS;
         }

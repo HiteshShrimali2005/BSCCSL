@@ -498,7 +498,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="focusedinput" class="control-label lablefont">Amount</label>
-                            <input type="number" class="form-control input-sm" id="txtAmount" placeholder="Amount" ng-model="Amount" step="0.01" valid-Number readonly>
+                            <input type="number" class="form-control input-sm" id="txtAmount" placeholder="Amount" ng-model="Amount" step="0.01" valid-Number>
                         </div>
                     </div>
                 </div>
@@ -535,7 +535,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveInterAccountTransfer()" ng-show="PendingInstallments.length > 0"><i class="fa fa-check"></i>Transfer</button>
+                <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveInterAccountTransfer()" <!--ng-show="PendingInstallments.length > 0"-->><i class="fa fa-check"></i>Transfer</button>
                 <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal"><i class="fa fa-remove"></i>&nbsp;Close</button>
             </div>
         </div>

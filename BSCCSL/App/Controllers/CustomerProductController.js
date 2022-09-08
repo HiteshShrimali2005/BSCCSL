@@ -620,6 +620,7 @@
             }
             else if ($scope.CustomerProduct.ProductType == "4" || $scope.CustomerProduct.ProductType == "6" || $scope.CustomerProduct.ProductType == "7" || $scope.CustomerProduct.ProductType == "8" || $scope.CustomerProduct.ProductType == "9" || $scope.CustomerProduct.ProductType == "10") {
                 $scope.CustomerProduct.DueDate = moment(new Date($("#txtDueDate").data("DateTimePicker").date())).format('YYYY-MM-DD');
+                $scope.CustomerProduct.NextInstallmentDate = moment(new Date($("#txtnextInstallmentdate").data("DateTimePicker").date())).format('YYYY-MM-DD');
                 $scope.CustomerProduct.MaturityDate = moment(new Date($("#txtMaturityDate").data("DateTimePicker").date())).format('YYYY-MM-DD')
                 $scope.CustomerProduct.LIType = 0;
                 if ($scope.CustomerProduct.ProductType == "9" || $scope.CustomerProduct.ProductType == "10") {
@@ -714,6 +715,7 @@
         $('#txtPreviousOpeningDateCP').data("DateTimePicker").clear();
         $('#txtOpeningDateCP').data("DateTimePicker").clear();
         $('#txtDueDate').data("DateTimePicker").clear();
+        $('#txtnextInstallmentdate').data("DateTimePicker").clear();        
         $('#txtLIDueDate').data("DateTimePicker").clear();
         $('#txtGIDueDate').data("DateTimePicker").clear();
 
@@ -1220,6 +1222,7 @@
             $scope.CustomerProduct.Amount = $scope.CustomerProduct.Amount;
             $scope.CustomerProduct.Status = $scope.CustomerProduct.Status;
             $("#txtDueDate").data("DateTimePicker").date($filter('date')($scope.CustomerProduct.DueDate, 'dd/MM/yyyy'))
+            $("#txtnextInstallmentdate").data("DateTimePicker").date($filter('date')($scope.CustomerProduct.NextInstallmentDate, 'dd/MM/yyyy'))
             $("#txtMaturityDate").data("DateTimePicker").date($filter('date')($scope.CustomerProduct.MaturityDate, 'dd/MM/yyyy'))
             $scope.CustomerProduct.CertificateNumber = $scope.CustomerProduct.CertificateNumber;
         }
@@ -1250,6 +1253,9 @@
             obj.InterestRate = $scope.CustomerProduct.InterestRate;
             if ($("#txtDueDate").val() != null && $("#txtDueDate").val() != "") {
                 obj.DueDate = moment(new Date($("#txtDueDate").data("DateTimePicker").date())).format('YYYY-MM-DD');
+            }
+            if ($("#txtnextInstallmentdate").val() != null && $("#txtnextInstallmentdate").val() != "") {
+                obj.NextInstallmentDate = moment(new Date($("#txtnextInstallmentdate").data("DateTimePicker").date())).format('YYYY-MM-DD');
             }
             obj.PaymentType = $scope.CustomerProduct.PaymentType;
             obj.Amount = $scope.CustomerProduct.Amount;

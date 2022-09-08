@@ -280,27 +280,29 @@ namespace BSCCSL.Services
                     CustomerProductData.CertificateNumber = CustomerProductdata.CertificateNumber;
                     CustomerProductData.OldAccountNumber = CustomerProductdata.OldAccountNumber;
 
-                    if (CustomerProductData.Status != null && CustomerProductData.Status == CustomerProductStatus.Pending)
-                    {
-                        CustomerProductData.OpeningDate = CustomerProductdata.OpeningDate;
-                        CustomerProductData.MaturityDate = CustomerProductdata.MaturityDate;
-                        CustomerProductData.MaturityAmount = CustomerProductdata.MaturityAmount;
-                        CustomerProductData.OpeningBalance = CustomerProductdata.OpeningBalance;
-                        CustomerProductData.NoOfMonthsORYears = CustomerProductdata.NoOfMonthsORYears;
-                        CustomerProductData.TimePeriod = CustomerProductdata.TimePeriod;
-                        CustomerProductData.SkipFirstInstallment = CustomerProductdata.SkipFirstInstallment;
-                        CustomerProductData.DueDate = CustomerProductdata.DueDate;
-                        CustomerProductData.Amount = CustomerProductdata.Amount;
+                    //Comment by Vishal as need to update product
+                    //if (CustomerProductData.Status != null && CustomerProductData.Status == CustomerProductStatus.Pending)
+                    //{
+                    CustomerProductData.OpeningDate = CustomerProductdata.OpeningDate;
+                    CustomerProductData.MaturityDate = CustomerProductdata.MaturityDate;
+                    CustomerProductData.MaturityAmount = CustomerProductdata.MaturityAmount;
+                    CustomerProductData.OpeningBalance = CustomerProductdata.OpeningBalance;
+                    CustomerProductData.NoOfMonthsORYears = CustomerProductdata.NoOfMonthsORYears;
+                    CustomerProductData.TimePeriod = CustomerProductdata.TimePeriod;
+                    CustomerProductData.SkipFirstInstallment = CustomerProductdata.SkipFirstInstallment;
+                    CustomerProductData.DueDate = CustomerProductdata.DueDate;
+                    CustomerProductData.NextInstallmentDate = CustomerProductdata.NextInstallmentDate;
+                    CustomerProductData.Amount = CustomerProductdata.Amount;
 
-                        if (CustomerProductData.TimePeriod.HasValue && CustomerProductdata.NoOfMonthsORYears.HasValue && CustomerProductdata.Status == CustomerProductStatus.Pending &&
-                            (CustomerProductdata.ProductType == ProductType.Recurring_Deposit || CustomerProductdata.ProductType == ProductType.Fixed_Deposit
-                            || CustomerProductdata.ProductType == ProductType.Regular_Income_Planner || CustomerProductdata.ProductType == ProductType.Monthly_Income_Scheme))
-                        {
-                            int totalmonthyear = CalculateTotalInstallment(CustomerProductdata.TimePeriod.Value, CustomerProductdata.PaymentType, CustomerProductdata.NoOfMonthsORYears.Value);
-                            CustomerProductData.TotalInstallment = totalmonthyear;
-                            CustomerProductData.TotalDays = Convert.ToInt32((CustomerProductdata.MaturityDate.Value - CustomerProductdata.OpeningDate).TotalDays) - 1;
-                        }
+                    if (CustomerProductData.TimePeriod.HasValue && CustomerProductdata.NoOfMonthsORYears.HasValue && CustomerProductdata.Status == CustomerProductStatus.Pending &&
+                        (CustomerProductdata.ProductType == ProductType.Recurring_Deposit || CustomerProductdata.ProductType == ProductType.Fixed_Deposit
+                        || CustomerProductdata.ProductType == ProductType.Regular_Income_Planner || CustomerProductdata.ProductType == ProductType.Monthly_Income_Scheme))
+                    {
+                        int totalmonthyear = CalculateTotalInstallment(CustomerProductdata.TimePeriod.Value, CustomerProductdata.PaymentType, CustomerProductdata.NoOfMonthsORYears.Value);
+                        CustomerProductData.TotalInstallment = totalmonthyear;
+                        CustomerProductData.TotalDays = Convert.ToInt32((CustomerProductdata.MaturityDate.Value - CustomerProductdata.OpeningDate).TotalDays) - 1;
                     }
+                    //}
                     // CustomerProductData.InsuranceCommencementDate = CustomerProductdata.InsuranceCommencementDate;
                     //CustomerProductData.Premium = CustomerProductdata.Premium;
                     CustomerProductData.ModifyBy = user.UserId;
@@ -1340,7 +1342,7 @@ namespace BSCCSL.Services
                         {
                             Guid? RdPaymentId = null;
 
-                            if (CustomerProductData.ProductType == ProductType.Recurring_Deposit || CustomerProductData.ProductType == ProductType.Regular_Income_Planner || CustomerProductData.ProductType == ProductType.Three_Year_Product || CustomerProductData.ProductType == ProductType.Capital_Builder || CustomerProductData.ProductType == ProductType.Wealth_Creator) 
+                            if (CustomerProductData.ProductType == ProductType.Recurring_Deposit || CustomerProductData.ProductType == ProductType.Regular_Income_Planner || CustomerProductData.ProductType == ProductType.Three_Year_Product || CustomerProductData.ProductType == ProductType.Capital_Builder || CustomerProductData.ProductType == ProductType.Wealth_Creator)
                             {
                                 RDPayment rdPayment = new RDPayment();
                                 rdPayment.CustomerId = CustomerProductData.CustomerId;
@@ -1412,7 +1414,7 @@ namespace BSCCSL.Services
 
                         //SavingAccount.Balance = SavingAccount.Balance - CustomerProduct.Amount;
                         //SavingAccount.UpdatedBalance = SavingAccount.UpdatedBalance - CustomerProduct.Amount;
-                        transactionService.SaveWealthTransaction(transaction1, CustomerProduct.MaturityDate);  
+                        transactionService.SaveWealthTransaction(transaction1, CustomerProduct.MaturityDate);
                         db.SaveChanges();
                         DailyInterestCalculation(CustomerProductData.CustomerProductId, DateTime.Now);
                         if (CustomerProduct.ProductId == AkshyaTrityaProductId)
@@ -2341,7 +2343,7 @@ namespace BSCCSL.Services
                                         calculate.NoofMonthOrYear = j;
                                         calculate.TotalProductYear = i;
                                         if (j == 2)
-                                            calculate.PreviousYearsBalance = MainList.Where(a=>a.Years == "1 Year" && a.Account == "2nd Acc").Select(a=>a.MaturityAmount).FirstOrDefault();
+                                            calculate.PreviousYearsBalance = MainList.Where(a => a.Years == "1 Year" && a.Account == "2nd Acc").Select(a => a.MaturityAmount).FirstOrDefault();
                                         if (j == 3)
                                             calculate.PreviousYearsBalance = MainList.Where(a => a.Years == "1 Year" && a.Account == "3rd Acc").Select(a => a.MaturityAmount).FirstOrDefault();
 
@@ -2412,7 +2414,7 @@ namespace BSCCSL.Services
                                         calculate.NoofMonthsandYearforParentRD = calculatematurity.NoOfMonthsORYears;
                                         calculate.OpeningDate = calculatematurity.OpeningDate;
                                         calculate.MaturityDate = calculatematurity.OpeningDate.AddYears(1);
-                                        calculate.PaymentType =(Frequency) calculatematurity.PaymentType;
+                                        calculate.PaymentType = (Frequency)calculatematurity.PaymentType;
                                         calculate.DueDate = calculatematurity.DueDate;
                                         calculate.Amount = calculatematurity.Amount;
                                         calculate.InterestRate = calculatematurity.InterestRate;
