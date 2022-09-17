@@ -213,6 +213,7 @@
     <Content Include="App\Controllers\LockScreenController.js" />
     <Content Include="App\Controllers\JournalVoucherController.js" />
     <Content Include="App\Controllers\ProductEnquiryController.js" />
+    <Content Include="App\Controllers\ProductRankController.js" />
     <Content Include="App\Controllers\RptAgentPerfomanceController.js" />
     <Content Include="App\Controllers\RptEmployeePerfomanceController.js" />
     <Content Include="App\Controllers\RptLoanStatementDetailsController.js" />
