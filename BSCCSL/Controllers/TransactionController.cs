@@ -43,7 +43,7 @@ namespace BSCCSL.Controllers
 
         [HttpPost]
         public HttpResponseMessage GetTransactionData(DataTableSearch search)
-        {
+            {
             try
             {
                 var result = transactionService.GetTransactionData(search);

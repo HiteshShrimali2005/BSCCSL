@@ -2891,8 +2891,8 @@ namespace BSCCSL.Services
                 int TotalMonthtillDate = 12 * (DateTime.Now.Date.Year - customerProduct.OpeningDate.Year) + DateTime.Now.Date.Month - customerProduct.OpeningDate.Month;
                 if (TotalMonthtillDate == 0)
                     TotalMonthtillDate = 1;
-
-                decimal totalyear = Math.Ceiling(Convert.ToDecimal(customerProduct.TotalDays.Value) / 365);
+                int totaldays = Convert.ToInt32((customerProduct.MaturityDate.Value - customerProduct.OpeningDate).TotalDays);
+                decimal totalyear = Math.Ceiling(Convert.ToDecimal(totaldays) / 365);
 
                 if (totalyear == 0)
                 {

@@ -124,7 +124,7 @@ namespace BSCCSL.Services.SQLDataAccess
 
                     foreach (var item in dbResult)
                     {
-                        TotalPaid = item.Amount;
+                        TotalPaid = TotalPaid + item.Amount;
                     }
 
                     TotalPendingAmount = TotalEMIAmount - TotalPaid;
