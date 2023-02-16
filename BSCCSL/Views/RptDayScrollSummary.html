@@ -59,20 +59,20 @@
                                 <table id="tblAccountsCRDR" class="table table-bordered" role="grid" style="width:100%;" ng-if="BranchHO">
                                     <thead>
                                         <tr>
-                                            <th> Product Name </th>
+                                            <th> Branch Name </th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="(key, value) in AccountsCRDR | groupBy: 'ProductName'">
+                                        <tr ng-repeat="(key, value) in AccountsCRDR | groupBy: 'BranchName'">
                                             <td>
-                                                {{key}}
+                                                <a ng-click="BranchChangeCRDR(key)">{{key}}</a>
                                             </td>
                                             <td>
                                                 <table style="width:100%;">
                                                     <thead>
                                                         <tr>
-                                                            <th> Branch Name </th>
+                                                            <th> Product Name </th>
                                                             <th width="25%" class="text-right"> Opening Balance </th>
                                                             <th width="25%" class="text-right"> Credit </th>
                                                             <th width="25%" class="text-right"> Debit </th>
@@ -81,7 +81,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr ng-repeat="branch in value" style="border-bottom:1px dotted black">
-                                                            <td>{{branch.BranchName}}</td>
+                                                            <td>{{branch.ProductName}}</td>
                                                             <td class="text-right">
                                                                 <span ng-show="branch.OpeningBalance < 0"> {{branch.OpeningBalance * - 1 | number : 2}} Dr</span>
                                                                 <span ng-show="branch.OpeningBalance > 0"> {{branch.OpeningBalance | number : 2}} Cr</span>

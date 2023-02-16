@@ -88,8 +88,8 @@ namespace BSCCSL.Services
                     list = list.Where(c => DbFunctions.TruncateTime(c.TransactionTime) <= search.toDate);
                 }
 
-                var TransactionList = list.OrderBy(a => a.TransactionTime).ThenBy(a => a.TransactionId).Skip(search.iDisplayStart).Take(search.iDisplayLength).ToList();
-                var TotalTransactionList = list.OrderBy(a => a.TransactionTime).ThenBy(a => a.TransactionId).ToList();
+                var TransactionList = list.OrderBy(a => new { a.Date, a.TransactionTime }).Skip(search.iDisplayStart).Take(search.iDisplayLength).ToList();
+                var TotalTransactionList = list.OrderBy(a => a.Date).ThenBy(a => a.TransactionTime).ToList();
                 var LastTransId = TotalTransactionList.OrderByDescending(p => p.TransactionTime).FirstOrDefault();
                 var data = new
                 {
@@ -176,18 +176,18 @@ namespace BSCCSL.Services
                 return transctionId;
             }
         }
-        public bool SaveWealthTransaction(Transactions transaction,DateTime? MaturityDate1)
+        public bool SaveWealthTransaction(Transactions transaction, DateTime? MaturityDate1)
         {
             using (var db = new BSCCSLEntity())
             {
                 //SaveWealthCreatorTransaction
-                SqlParameter CustomerProductId = new SqlParameter("CustomerProductId", transaction.CustomerProductId);               
+                SqlParameter CustomerProductId = new SqlParameter("CustomerProductId", transaction.CustomerProductId);
                 SqlParameter Type = new SqlParameter("Type", transaction.Type);
                 SqlParameter CreatedBy = new SqlParameter("CreatedBy", transaction.CreatedBy);
-                SqlParameter CreatedDate = new SqlParameter("CreatedDate", transaction.CreatedDate);                
+                SqlParameter CreatedDate = new SqlParameter("CreatedDate", transaction.CreatedDate);
                 SqlParameter DateOfCreditAmount = new SqlParameter("DateOfCreditAmount", transaction.CreatedDate);
                 SqlParameter BalanceAmt = new SqlParameter("BalanceAmt", transaction.Amount);
-                SqlParameter MaturityDate = new SqlParameter("MaturityDate", (object)MaturityDate1 ?? DBNull.Value );
+                SqlParameter MaturityDate = new SqlParameter("MaturityDate", (object)MaturityDate1 ?? DBNull.Value);
                 //SqlParameter TransactionType = new SqlParameter("TransactionType", transaction.TransactionType);
                 //SqlParameter CheckNumber = new SqlParameter("CheckNumber", (object)transaction.CheckNumber ?? DBNull.Value);
                 //SqlParameter ChequeDate = new SqlParameter("ChequeDate", (object)transaction.ChequeDate ?? DBNull.Value);
@@ -213,7 +213,7 @@ namespace BSCCSL.Services
                 //    Direction = System.Data.ParameterDirection.Output
                 //};
                 db.Database.CommandTimeout = 3600;
-                var trans = db.Database.SqlQuery<object>("SaveWealthCreatorTransaction @CustomerProductId,@Type, @DateOfCreditAmount ,@BalanceAmt, @MaturityDate, @CreatedDate , @CreatedBy", CustomerProductId, Type,DateOfCreditAmount,BalanceAmt,MaturityDate, CreatedDate, CreatedBy).FirstOrDefault();
+                var trans = db.Database.SqlQuery<object>("SaveWealthCreatorTransaction @CustomerProductId,@Type, @DateOfCreditAmount ,@BalanceAmt, @MaturityDate, @CreatedDate , @CreatedBy", CustomerProductId, Type, DateOfCreditAmount, BalanceAmt, MaturityDate, CreatedDate, CreatedBy).FirstOrDefault();
             }
             return true;
         }
@@ -615,7 +615,7 @@ namespace BSCCSL.Services
 
             using (var db = new BSCCSLEntity())
             {
-                var TransactionData = (from cp in db.CustomerProduct.Where(a => a.AccountNumber == search.AccountNo && (a.ProductType == ProductType.Saving_Account || a.ProductType == ProductType.Current_Account || a.ProductType == ProductType.Recurring_Deposit))
+                var TransactionData = (from cp in db.CustomerProduct.Where(a => a.AccountNumber == search.AccountNo && (a.ProductType == ProductType.Saving_Account || a.ProductType == ProductType.Current_Account || a.ProductType == ProductType.Recurring_Deposit || a.ProductType == ProductType.Capital_Builder || a.ProductType == ProductType.Wealth_Creator))
                                        join c in db.Customer.Where(a => a.IsDelete == false) on cp.CustomerId equals c.CustomerId
                                        join t in db.Transaction on cp.CustomerProductId equals t.CustomerProductId
                                        select new
@@ -626,7 +626,8 @@ namespace BSCCSL.Services
                                            t.NEFTNumber,
                                            t.Balance,
                                            t.Type,
-                                           t.Description
+                                           t.Description,
+                                           t.Date
                                        }).AsQueryable();
 
                 var passbookprint = db.PassbookPrint.Where(a => a.AccountNo == search.AccountNo).OrderByDescending(a => a.PassbookPrintDate).FirstOrDefault();
@@ -647,7 +648,7 @@ namespace BSCCSL.Services
 
                 var data = new
                 {
-                    TransactionData = TransactionData.OrderBy(a => a.TransactionTime).ToList(),
+                    TransactionData = TransactionData.OrderBy(a => new { a.Date, a.TransactionTime }).ToList(),
                     //Passbookprint = passbookprint,
                 };
                 return data;
@@ -734,67 +735,70 @@ namespace BSCCSL.Services
                 CustomerProduct customerProductnew = db.CustomerProduct.Where(a => a.CustomerProductId == rdPendingPayment.transaction.CustomerProductId).FirstOrDefault();
                 Transactions transaction = new Transactions();
                 transaction = rdPendingPayment.transaction;
-
-                Guid CustomerProductId = rdPendingPayment.rdPaymentList[0].CustomerProductId;
+                Guid CustomerProductId = System.Guid.Empty;
+                if (rdPendingPayment.rdPaymentList.Count > 0)
+                    CustomerProductId = rdPendingPayment.rdPaymentList[0].CustomerProductId;
+                else
+                    CustomerProductId = customerProductnew.CustomerProductId;
                 CustomerProduct customerProduct = db.CustomerProduct.Where(a => a.CustomerProductId == CustomerProductId).FirstOrDefault();
 
                 if (customerProductnew.Balance >= rdPendingPayment.rdPaymentList.Sum(a => a.Amount))
                 {
 
-                    DateTime NextInstallmentdate = rdPendingPayment.rdPaymentList.Max(b => b.NextDate.Value);
-
                     if (!transaction.TransactionTime.HasValue)
                     {
                         transaction.TransactionTime = DateTime.Now.Date;
                     }
+                    //Comment by Vishal Because it is of no use. Open when needed
 
-                    if (customerProduct.ProductType == ProductType.Recurring_Deposit && customerProduct.PaymentType != Frequency.Daily)
-                    {
-                        CalculateMaturityAmount calculateMaturityAmount = new CalculateMaturityAmount();
-                        calculateMaturityAmount.Amount = customerProduct.Amount;
-                        calculateMaturityAmount.InterestRate = customerProduct.InterestRate;
-                        calculateMaturityAmount.DueDate = customerProduct.DueDate;
-                        calculateMaturityAmount.MaturityDate = NextInstallmentdate;
-                        calculateMaturityAmount.NoOfMonthsORYears = customerProduct.NoOfMonthsORYears;
-                        calculateMaturityAmount.OpeningDate = customerProduct.OpeningDate;
-                        calculateMaturityAmount.ProductType = customerProduct.ProductType;
-                        calculateMaturityAmount.PaymentType = customerProduct.PaymentType;
-                        calculateMaturityAmount.TimePeriod = customerProduct.TimePeriod;
-                        calculateMaturityAmount.OpeningBalance = customerProduct.OpeningBalance;
-                        calculateMaturityAmount.InterestType = db.Product.Where(a => a.ProductId == customerProduct.ProductId).FirstOrDefault().Frequency;
+                    //////if (customerProduct.ProductType == ProductType.Recurring_Deposit && customerProduct.PaymentType != Frequency.Daily)
+                    //////{
+                    //////    DateTime NextInstallmentdate = rdPendingPayment.rdPaymentList.Max(b => b.NextDate.Value);
+                    //////    CalculateMaturityAmount calculateMaturityAmount = new CalculateMaturityAmount();
+                    //////    calculateMaturityAmount.Amount = customerProduct.Amount;
+                    //////    calculateMaturityAmount.InterestRate = customerProduct.InterestRate;
+                    //////    calculateMaturityAmount.DueDate = customerProduct.DueDate;
+                    //////    calculateMaturityAmount.MaturityDate = NextInstallmentdate;
+                    //////    calculateMaturityAmount.NoOfMonthsORYears = customerProduct.NoOfMonthsORYears;
+                    //////    calculateMaturityAmount.OpeningDate = customerProduct.OpeningDate;
+                    //////    calculateMaturityAmount.ProductType = customerProduct.ProductType;
+                    //////    calculateMaturityAmount.PaymentType = customerProduct.PaymentType;
+                    //////    calculateMaturityAmount.TimePeriod = customerProduct.TimePeriod;
+                    //////    calculateMaturityAmount.OpeningBalance = customerProduct.OpeningBalance;
+                    //////    calculateMaturityAmount.InterestType = db.Product.Where(a => a.ProductId == customerProduct.ProductId).FirstOrDefault().Frequency;
 
-                        decimal maturity = customerProductService.CalculateRDMaturity(calculateMaturityAmount);
+                    //////    decimal maturity = customerProductService.CalculateRDMaturity(calculateMaturityAmount);
 
-                        // decimal TotalInstallmentPaid = db.RDPayment.Where(a => a.CustomerProductId == CustomerProductId && a.RDPaymentType == RDPaymentType.Installment && a.CreatedDate < NextInstallmentdate).Sum(a => a.Amount);
+                    //////    // decimal TotalInstallmentPaid = db.RDPayment.Where(a => a.CustomerProductId == CustomerProductId && a.RDPaymentType == RDPaymentType.Installment && a.CreatedDate < NextInstallmentdate).Sum(a => a.Amount);
 
-                        decimal TotalInterstTillDate = db.DailyInterest.Where(a => a.CustomerProductId == CustomerProductId && a.CreatedDate < NextInstallmentdate && a.IsPaid == false).Select(a => a.TodaysInterest).DefaultIfEmpty(0).Sum();
-                        //if (TotalInterstTillDate == null)
-                        //    TotalInterstTillDate = 0;
-                        //decimal total = TotalInstallmentPaid + TotalInterstTillDate;
+                    //////    decimal TotalInterstTillDate = db.DailyInterest.Where(a => a.CustomerProductId == CustomerProductId && a.CreatedDate < NextInstallmentdate && a.IsPaid == false).Select(a => a.TodaysInterest).DefaultIfEmpty(0).Sum();
+                    //////    //if (TotalInterstTillDate == null)
+                    //////    //    TotalInterstTillDate = 0;
+                    //////    //decimal total = TotalInstallmentPaid + TotalInterstTillDate;
 
-                        decimal TotalInstallmenttobePaid = rdPendingPayment.rdPaymentList.Sum(a => a.Amount);
+                    //////    decimal TotalInstallmenttobePaid = rdPendingPayment.rdPaymentList.Sum(a => a.Amount);
 
-                        decimal total = customerProduct.Balance.Value + TotalInterstTillDate + TotalInstallmenttobePaid;
+                    //////    decimal total = customerProduct.Balance.Value + TotalInterstTillDate + TotalInstallmenttobePaid;
 
-                        decimal interesttoCredit = maturity - total;
+                    //////    decimal interesttoCredit = maturity - total;
 
-                        //Remove this code due to Interest Amount wrongly Paid
-                        //DailyInterest dailyInterest = new DailyInterest();
-                        //dailyInterest.TodaysInterest = interesttoCredit;
-                        //dailyInterest.CreatedDate = DateTime.Now;
-                        //dailyInterest.CustomerProductId = CustomerProductId;
-                        //dailyInterest.IsPaid = false;
-                        //dailyInterest.InterestRate = customerProduct.InterestRate;
-                        //db.Entry(dailyInterest).State = EntityState.Added;
-                        //db.SaveChanges();
-                    }
-
+                    //////    //Remove this code due to Interest Amount wrongly Paid
+                    //////    //DailyInterest dailyInterest = new DailyInterest();
+                    //////    //dailyInterest.TodaysInterest = interesttoCredit;
+                    //////    //dailyInterest.CreatedDate = DateTime.Now;
+                    //////    //dailyInterest.CustomerProductId = CustomerProductId;
+                    //////    //dailyInterest.IsPaid = false;
+                    //////    //dailyInterest.InterestRate = customerProduct.InterestRate;
+                    //////    //db.Entry(dailyInterest).State = EntityState.Added;
+                    //////    //db.SaveChanges();
+                    //////}
+                    //Coomnet by Vishal End
                     decimal updatedBalance = customerProduct.UpdatedBalance.Value;
 
                     foreach (var installment in rdPendingPayment.rdPaymentList.OrderBy(a => a.CreatedDate))
                     {
                         decimal comm = 0;
-                        if (customerProduct.ProductType == ProductType.Recurring_Deposit || customerProduct.ProductType == ProductType.Regular_Income_Planner || customerProduct.ProductType == ProductType.Three_Year_Product)
+                        if (customerProduct.ProductType == ProductType.Recurring_Deposit || customerProduct.ProductType == ProductType.Regular_Income_Planner || customerProduct.ProductType == ProductType.Three_Year_Product || customerProduct.ProductType == ProductType.Capital_Builder || customerProduct.ProductType == ProductType.Wealth_Creator)
                         {
                             decimal totalyear = customerProduct.TotalDays.Value / 365;
 
@@ -830,7 +834,32 @@ namespace BSCCSL.Services
                             //{
                             //    comm = (customerProduct.Amount * commissiondata.Commission) / 100;
                             //}
-
+                            if (installment.RDPaymentId == Guid.Empty || installment.RDPaymentId == null)
+                            {
+                                RDPayment rdPayment1 = new RDPayment();
+                                rdPayment1.CustomerId = customerProduct.CustomerId;
+                                rdPayment1.CustomerProductId = customerProduct.CustomerProductId;
+                                rdPayment1.Amount = customerProduct.Amount;
+                                rdPayment1.IsPaid = true;
+                                rdPayment1.RDPaymentType = RDPaymentType.Installment;
+                                rdPayment1.PaidDate = DateTime.Now;
+                                rdPayment1.AgentCommission = comm;
+                                //rdPayment1.PaidDate = transaction.TransactionTime;
+                                rdPayment1.PaidDate = installment.CreatedDate;
+                                //if(installment.CreatedDate)
+                                db.Entry(rdPayment1).State = EntityState.Added;
+                                db.SaveChanges();
+                                installment.RDPaymentId = rdPayment1.RDPaymentId;
+                            }
+                            else
+                            {
+                                var rdPayment2 = new RDPayment() { RDPaymentId = installment.RDPaymentId, IsPaid = true, AgentCommission = comm, PaidDate = transaction.TransactionTime };
+                                db.RDPayment.Attach(rdPayment2);
+                                db.Entry(rdPayment2).Property(x => x.IsPaid).IsModified = true;
+                                db.Entry(rdPayment2).Property(x => x.AgentCommission).IsModified = true;
+                                db.Entry(rdPayment2).Property(x => x.PaidDate).IsModified = true;
+                                db.SaveChanges();
+                            }
                             ProductAgentCommission productAgentCommission = new ProductAgentCommission();
                             productAgentCommission.RankId = RankId;
                             productAgentCommission.CustomerProductId = customerProduct.CustomerProductId;
@@ -838,18 +867,21 @@ namespace BSCCSL.Services
                             productAgentCommission.RDPaymentId = installment.RDPaymentId;
                             productAgentCommission.AgentId = customerProduct.AgentId.Value;
                             productAgentCommission.OpeningDate = customerProduct.OpeningDate;
-                            productAgentCommission.Amount = customerProduct.Amount;
+                            if (installment.Amount > 0)
+                                productAgentCommission.Amount = installment.Amount;
+                            else
+                                productAgentCommission.Amount = customerProduct.Amount;
                             productAgentCommission.TotalDays = customerProduct.TotalDays.Value;
                             productAgentCommission.Date = installment.CreatedDate;
                             customerProductService.ProductAgentCommission(productAgentCommission);
                         }
 
-                        var rdPayment = new RDPayment() { RDPaymentId = installment.RDPaymentId, IsPaid = true, AgentCommission = comm, PaidDate = transaction.TransactionTime };
-                        db.RDPayment.Attach(rdPayment);
-                        db.Entry(rdPayment).Property(x => x.IsPaid).IsModified = true;
-                        db.Entry(rdPayment).Property(x => x.AgentCommission).IsModified = true;
-                        db.Entry(rdPayment).Property(x => x.PaidDate).IsModified = true;
-                        db.SaveChanges();
+                        //var rdPayment = new RDPayment() { RDPaymentId = installment.RDPaymentId, IsPaid = true, AgentCommission = comm, PaidDate = transaction.TransactionTime };
+                        //db.RDPayment.Attach(rdPayment);
+                        //db.Entry(rdPayment).Property(x => x.IsPaid).IsModified = true;
+                        //db.Entry(rdPayment).Property(x => x.AgentCommission).IsModified = true;
+                        //db.Entry(rdPayment).Property(x => x.PaidDate).IsModified = true;
+                        //db.SaveChanges();
 
                         //transaction.TransactionTime = transaction.TransactionTime.Value.AddSeconds(5);
 
@@ -869,6 +901,7 @@ namespace BSCCSL.Services
                         transactionSaving.CreatedBy = transaction.CreatedBy;
                         transactionSaving.CreatedDate = transaction.CreatedDate;
                         transactionSaving.TransactionTime = transaction.TransactionTime;
+                        //transactionSaving.TransactionTime = installment.CreatedDate;
                         transactionSaving.DescIndentify = DescIndentify.Maturity;
                         transactionSaving.CustomerId = customerProduct.CustomerId;
                         transactionSaving.RefCustomerProductId = CustomerProductId;
@@ -894,6 +927,7 @@ namespace BSCCSL.Services
                         transactionRD.CreatedBy = transaction.CreatedBy;
                         transactionRD.CreatedDate = transaction.CreatedDate;
                         transactionRD.TransactionTime = transaction.TransactionTime;
+                        // transactionRD.TransactionTime = installment.CreatedDate;
                         if (customerProduct.ProductType == ProductType.Recurring_Deposit || customerProduct.ProductType == ProductType.Regular_Income_Planner)
                         {
                             transactionRD.DescIndentify = DescIndentify.Maturity;
@@ -928,6 +962,7 @@ namespace BSCCSL.Services
                             transactionLatePayment.CreatedDate = transaction.CreatedDate;
                             transactionLatePayment.CustomerId = customerProduct.CustomerId;
                             transactionLatePayment.TransactionTime = transaction.TransactionTime;
+                            // transactionLatePayment.TransactionTime = installment.CreatedDate;
                             transactionLatePayment.DescIndentify = DescIndentify.LatePaymentCharges;
                             transactionLatePayment.RefCustomerProductId = CustomerProductId;
                             transactionLatePayment.TransactionId = InsertTransctionUsingSP(transactionLatePayment);
@@ -1082,7 +1117,7 @@ namespace BSCCSL.Services
                     PdfPTable pdfDetail = new PdfPTable(4);
                     pdfDetail.DefaultCell.Border = Rectangle.NO_BORDER;
 
-                    Image logo = Image.GetInstance(HttpContext.Current.Server.MapPath("~/dist/img/bslogo.png")); //create image with company logo
+                    Image logo = Image.GetInstance(HttpContext.Current.Server.MapPath("~/dist/img/bslogo1.png")); //create image with company logo
                     logo.ScalePercent(50f); //scale it  to fit in page
 
                     PdfPCell pdfCell = new PdfPCell(logo); //create a new table cell with logo image

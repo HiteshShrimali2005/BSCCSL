@@ -45,20 +45,30 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="table-responsive" id="divCashBook">
-                                <div style="text-align:center;display:none" id="HeaderDiv">
+                                <!--<div style="text-align:center;display:none" id="HeaderDiv">
                                     <h4>Cash Book Report</h4>
-                                </div>
-
-                                <div style="text-align:center;padding-top:10px;" id="divDuration">
-                                    <span style="font-weight:bold">
-                                        {{FirstDate}} To {{LastDate}}
-                                    </span>
-                                </div>
+                                </div>-->
+                                <!--<div style="text-align:center;padding-top:10px;" id="divDuration">-->
+                                <!--<span style="font-weight:bold">
+                                    {{FirstDate}} To {{LastDate}}
+                                </span>-->
 
                                 <table id="tblCashBook" class="table" role="grid" style="width:100%;" ng-if="BranchHO">
                                     <thead>
                                         <tr>
-                                            <th> Date </th>
+                                            <th colspan="2" style="text-align:center;padding-bottom:0px;">
+                                                <h4>Cash Book Report</h4>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2" style="text-align: center; padding-top: 1px;">
+                                                <span style="font-weight:bold">
+                                                    {{FirstDate}} To {{LastDate}}
+                                                </span>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th> Date</th>
                                             <th ng-show="CashBookData.length > 0" style="float:right">Opening Balance : {{OpeningBalance}}</th>
                                         </tr>
                                     </thead>
@@ -125,11 +135,22 @@
                                         </tr>
                                     </tbody>
                                 </table>
-
                                 <table id="tblCashBooknotHO" class="table" role="grid" style="width:100%;" ng-if="!BranchHO">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:left"> Date </th>
+                                            <th colspan="2" style="text-align:center;padding-bottom:0px;">
+                                                <h4>Cash Book Report</h4>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2" style="text-align: center; padding-top: 1px;">
+                                                <span style="font-weight:bold">
+                                                    {{FirstDate}} To {{LastDate}}
+                                                </span>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:left"> Date</th>
                                             <th ng-show="CashBookData.length > 0" style="float:right">Opening Balance : {{OpeningBalance}}</th>
                                         </tr>
                                     </thead>
@@ -194,6 +215,7 @@
 
                                     </tbody>
                                 </table>
+                                <!--  </div>-->
                             </div>
                         </div>
                     </div>

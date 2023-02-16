@@ -253,7 +253,24 @@ namespace BSCCSL.Services
                 return employeedata;
             }
         }
+        public object GetAllCustomerBranhId(Guid? Id)
+        {
+            using (var db = new BSCCSLEntity())
+            {
 
+                var customrdata = (from cu in db.Customer.Where(x=> x.BranchId == Id)  
+                                   join cper in db.CustomerPersonalDetail on cu.CustomerId equals cper.CustomerId
+                                   join cp in db.CustomerProduct.Where(c => c.BranchId==Id && c.ProductType == ProductType.Saving_Account && c.IsActive == true) on cu.CustomerId equals cp.CustomerId
+                                   select new
+                                   {
+                                       Custname = cper.FirstName + " " + cper.MiddleName + " " + cper.LastName + " (" + cp.AccountNumber + ")",
+                                       custid = cu.CustomerId,
+                                       branchid = cu.BranchId
+                                   }
+                                    ).ToList();
+                return customrdata.Where(a=> a.branchid == Id).OrderBy(a=>a.Custname);
+            }
+        }
         public object GetAgentList(DataTableSearch search)
         {
             using (BSCCSLEntity db = new BSCCSLEntity())

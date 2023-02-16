@@ -706,6 +706,21 @@ app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $ocLazyL
                 authorizedRoles: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.cashier, USER_ROLES.clerk, USER_ROLES.cashierplusclerk, USER_ROLES.sales_manager, USER_ROLES.scree_sales]
             }
         })
+        .state("App.RptDayScrollSummary", {
+            parent: 'App',
+            url: "/RptDayScrollSummary",
+            templateUrl: "/Views/RptDayScrollSummary.html",
+            controller: 'RptDayScrollSummaryController',
+            resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(['datatableexport', 'App/Controllers/RptDayScrollSummaryController.js'], { serie: true }, { cache: false });
+                }]
+            },
+            authorize: true,
+            data: {
+                authorizedRoles: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.cashier, USER_ROLES.clerk, USER_ROLES.cashierplusclerk, USER_ROLES.sales_manager, USER_ROLES.scree_sales]
+            }
+        })
         .state("App.PassbookPrint", {
             parent: 'App',
             url: "/PassbookPrint",

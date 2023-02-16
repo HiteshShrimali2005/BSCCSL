@@ -269,7 +269,7 @@
                         <div class="col-md-3" ng-show="CustomerProduct.CustomerProductId != null">
                             <div class="form-group">
                                 <label for="focusedinput" ng-show="CustomerProduct.CustomerProductId != null" class="control-label lablefont">Next Installment Date</label>
-                                <input id="txtnextInstallmentdate" ng-show="CustomerProduct.CustomerProductId != null" class="form-control input-sm datepicker" type="text" placeholder="Next Installment Date">
+                                <input id="txtnextInstallmentdate" ng-show="CustomerProduct.CustomerProductId != null" class="form-control input-sm datepicker" type="text" placeholder="Next Installment Date" ng-model="CustomerProduct.NextInstallmentDate">
                             </div>
                         </div>
                         <div class="col-md-3" ng-show="(CustomerProduct.ProductType == 4 || CustomerProduct.ProductType == 8) && (CustomerProduct.Status <= 2 ||  CustomerProduct.Status == null)">

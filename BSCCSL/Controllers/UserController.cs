@@ -39,7 +39,7 @@ namespace BSCCSL.Controllers
         {
             try
             {
-                var result = userService.UserRegister(user,Request.GetCurrentUser());
+                var result = userService.UserRegister(user, Request.GetCurrentUser());
                 return Request.CreateResponse(HttpStatusCode.OK, result);
 
             }
@@ -160,6 +160,22 @@ namespace BSCCSL.Controllers
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [Route("api/User/GetAllCustomerByBranhId/{anyString}")]
+        [HttpGet]
+        public HttpResponseMessage GetAllCustomerByBranhId(Guid anyString)
+        {
+            try
+            {
+                var result = userService.GetAllCustomerBranhId(anyString);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogService.InsertLog(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
 

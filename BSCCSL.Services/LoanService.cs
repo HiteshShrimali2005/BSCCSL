@@ -1870,6 +1870,37 @@ namespace BSCCSL.Services
                 return true;
             }
         }
+        public decimal TotalInterestTilDate(DateTime CreatedDate, Guid? customerproductid)
+        {
+            decimal totalinterest = 0;
+            //DateTime fromdate = CreatedDate;
+            //DateTime todate = DateTime.Now.Date;
+            //int days = Convert.ToInt32((todate - fromdate).TotalDays);
+            //for (int i = 0; i <= days; i++)
+            //{
+            using (var db = new BSCCSLEntity())
+            {
+                string connectionstring = db.Database.Connection.ConnectionString;
+
+                SqlConnection sql = new SqlConnection(connectionstring);
+                SqlCommand cmdTimesheet = new SqlCommand("LoanInterestGetByCPID", sql);
+                cmdTimesheet.CommandType = CommandType.StoredProcedure;
+                SqlParameter CustProdId = cmdTimesheet.Parameters.Add("@CPId", SqlDbType.UniqueIdentifier);
+                CustProdId.Value = customerproductid;
+                //SqlParameter cdate = cmdTimesheet.Parameters.Add("@Date", SqlDbType.DateTime);
+                //cdate.Value = fromdate;
+
+                sql.Open();
+                var reader = cmdTimesheet.ExecuteReader();
+                if (reader.HasRows)
+                    totalinterest = totalinterest + ((IObjectContextAdapter)db).ObjectContext.Translate<decimal>(reader).FirstOrDefault();
+                sql.Close();
+                db.Dispose();
+            }
+            //    fromdate = fromdate.AddDays(1);
+            //}
+            return totalinterest;
+        }
 
         public Amountisation LoanAmountisation(LoanAmountisation loanAmountisation)
         {
@@ -2458,7 +2489,8 @@ namespace BSCCSL.Services
                                 MonthlyInstallmentAmount = grp.Key.MonthlyInstallmentAmount,
                                 Term = grp.Key.Term,
                                 InstallmentDate = grp.Key.InstallmentDate,
-                                TotalLoanAmount = grp.Key.TotalDisbursementAmount + grp.Key.TotalCharges,
+                                //TotalLoanAmount = grp.Key.TotalDisbursementAmount + grp.Key.TotalCharges,
+                                TotalLoanAmount = grp.Key.TotalDisbursementAmount,
                                 NextInstallmentDate = grp.Key.NextInstallmentDate,
                                 LoanIntrestRate = grp.Key.LoanIntrestRate,
                                 CustomerProductId = grp.Key.CustomerProductId,
@@ -2512,10 +2544,13 @@ namespace BSCCSL.Services
                 RemainingPrincipalAmount = EMIAmountisation.Sum(x => x.PrincipalAmt);
                 CurrentMonthsInterestAmount = EMIAmountisation.Select(x => x.Interest).FirstOrDefault();
                 TotalDaysbetweenCurrentMonthinstallment = Math.Ceiling((EMIAmountisation.Select(x => x.Installmentdate).FirstOrDefault() - LastPaidDate).TotalDays);
-                double dailyinterest = ((double)CurrentMonthsInterestAmount / (double)TotalDaysbetweenCurrentMonthinstallment);
+                //double dailyinterest = ((double)CurrentMonthsInterestAmount / (double)TotalDaysbetweenCurrentMonthinstallment);
+                double dailyinterest = ((double)CurrentMonthsInterestAmount / 30);
                 double totalremaininginteresttilldate = dailyinterest * TotalDaysTillToday;
                 if (totalremaininginteresttilldate < 0)
                     totalremaininginteresttilldate = 0;
+                decimal totalremaininginteresttilldate1 = TotalInterestTilDate(LastPaidDate, Id);
+                totalremaininginteresttilldate = totalremaininginteresttilldate + Convert.ToDouble(totalremaininginteresttilldate1);
                 var data = new
                 {
                     Loan = loan,

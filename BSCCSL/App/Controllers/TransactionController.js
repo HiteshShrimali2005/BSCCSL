@@ -18,6 +18,10 @@
         format: 'DD/MM/YYYY',
         useCurrent: false,
     });
+    $("#txtinterAcTransactionTime").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false,
+    });
 
     $("#txtserchEndDate,#txtChequeDate,#txtWithdrawCheckDate,#txtChequeCleanceDate,#txtNEFTDate,#txtWithdrawNEFTDate").datetimepicker({
         format: 'DD/MM/YYYY',
@@ -153,7 +157,7 @@
         if ($scope.HolderData.Balance > 2500) {
             var FDAmount = $scope.HolderData.Balance - 2500;
             var SavingCustomerProductId = $scope.HolderData.Id;
-          
+
             bootbox.dialog({
                 message: "Are you sure want to create FD of " + FDAmount.toFixed(2) + " Rs ?",
                 title: "Confirmation !",
@@ -434,12 +438,12 @@
             else {
                 return showToastMsg(3, 'Cannot withdraw amount due to Insufficient balance');
             }
-            if ($scope.HolderData.ProductCode == "SA04" || $scope.HolderData.ProductName == "Smart Saving Plus") {
-                var MinumumBalance = $scope.HolderData.Balance - parseFloat($scope.WithdrawAmount);
-                if (MinumumBalance < 2500) {
-                    return showToastMsg(3, 'You can not withdraw this Amount. The minimun balance should be 2500.');
-                }
-            }
+            //if ($scope.HolderData.ProductCode == "SA04" || $scope.HolderData.ProductName == "Smart Saving Plus") {
+            //    var MinumumBalance = $scope.HolderData.Balance - parseFloat($scope.WithdrawAmount);
+            //    if (MinumumBalance < 2500) {
+            //        return showToastMsg(3, 'You can not withdraw this Amount. The minimun balance should be 2500.');
+            //    }
+            //}
 
 
             $scope.TransactionData.CustomerId = $scope.HolderData.CustomerId;
@@ -1154,7 +1158,8 @@
 
         var toalpay = 0;
         $scope.UpdateRDStatus = [];
-        var midinstallment = 0
+        var midinstallment = 0;
+        var createdate = "";
         angular.forEach($scope.PendingInstallments, function (value, index) {
             if (value.Check == true) {
 
@@ -1169,6 +1174,7 @@
                 else {
                     midinstallment = 0
                     toalpay += (parseFloat(value.Amount) + parseFloat(value.LatePaymentCharges));
+                    createdate = value.CreatedDate;
                     $scope.UpdateRDStatus.push(value);
                 }
             }
@@ -1179,7 +1185,7 @@
         $('#DisplayPendingInstallment').modal('hide');
         $scope.Amount = toalpay;
         $scope.DepositAmount = toalpay;
-
+        CreatedDate = createdate;
         return flag;
     }
 
@@ -1230,39 +1236,58 @@
 
         flag1 = ValidateInterAccountTransfer();
         flag2 = $scope.SelectInstallments();
+        if ($scope.UpdateRDStatus.length === 0) {
+            flag2 = true;
+        }
         if (flag1 && flag2) {
             $(':focus').blur();
-            if ($scope.UpdateRDStatus.length > 0) {
-                $scope.TransactionData = new Object();
-                $scope.TransactionData.BranchId = $scope.UserBranch.BranchId;
-                $scope.TransactionData.CustomerProductId = $scope.HolderData.CustomerProductId
-                $scope.TransactionData.Status = 0;
-                if ($scope.HolderData.Balance >= parseFloat($scope.Amount)) {
-                    $scope.TransactionData.Balance = $scope.HolderData.Balance;
-                    $scope.TransactionData.ProductwiseBalance = (parseFloat($scope.HolderData.Balance) + parseFloat($scope.HolderData.UnclearBalance)) - parseFloat($scope.WithdrawAmount);
-                }
-                else {
-                    return showToastMsg(3, 'Cannot transfer amount due to Insufficient balance');
-                }
-
-                $scope.TransactionData.CustomerId = $scope.HolderData.CustomerId;
-                $scope.TransactionData.Amount = $scope.Amount
-                $scope.TransactionData.Type = 2;
-                $scope.TransactionData.TransactionType = 4;
-                $scope.TransactionData.RefCustomerProductId = $scope.RefCustomerProductId;
-                $scope.TransactionData.CreatedBy = $cookies.getObject('User').UserId;
-                $scope.TransactionData.BranchId = $cookies.get('Branch');
-                //$scope.TransactionData.TransactionTime = moment(new Date($("#txtinterAcTransactionTime").data("DateTimePicker").date())).format('YYYY-MM-DD hh:mm:ss a');
-
-                var obj = new Object();
-                obj.rdPaymentList = $scope.UpdateRDStatus;
-                obj.transaction = $scope.TransactionData;
-
-                RDManualPaymentofIsntallment(obj);
+            //if ($scope.UpdateRDStatus.length > 0) {
+            $scope.TransactionData = new Object();
+            $scope.TransactionData.BranchId = $scope.UserBranch.BranchId;
+            $scope.TransactionData.CustomerProductId = $scope.HolderData.CustomerProductId;
+            $scope.TransactionData.Status = 0;
+            if ($scope.HolderData.Balance >= parseFloat($scope.Amount)) {
+                $scope.TransactionData.Balance = $scope.HolderData.Balance;
+                $scope.TransactionData.ProductwiseBalance = (parseFloat($scope.HolderData.Balance) + parseFloat($scope.HolderData.UnclearBalance)) - parseFloat($scope.WithdrawAmount);
             }
+            else {
+                return showToastMsg(3, 'Cannot transfer amount due to Insufficient balance');
+            }
+
+            $scope.TransactionData.CustomerId = $scope.HolderData.CustomerId;
+            $scope.TransactionData.Amount = $scope.Amount
+            $scope.TransactionData.Type = 2;
+            $scope.TransactionData.TransactionType = 4;
+            $scope.TransactionData.RefCustomerProductId = $scope.RefCustomerProductId;
+            $scope.TransactionData.CreatedBy = $cookies.getObject('User').UserId;
+            $scope.TransactionData.BranchId = $cookies.get('Branch');
+            //$scope.TransactionData.TransactionTime = moment(new Date($("#txtinterAcTransactionTime").data("DateTimePicker").date())).format('YYYY-MM-DD hh:mm:ss a');
+            if ($scope.UpdateRDStatus.length === 0) {
+                $scope.UpdateRDStatus.push({ Amount: $("#txtAmount").val(), CreatedDate: formatDate($("#txtinterAcTransactionTime").val()), CustomerProductId: $scope.RefCustomerProductId })
+                $scope.TransactionData.TransactionTime = formatDate($("#txtinterAcTransactionTime").val());
+            }
+            var obj = new Object();
+            obj.rdPaymentList = $scope.UpdateRDStatus;
+            obj.transaction = $scope.TransactionData;
+
+            RDManualPaymentofIsntallment(obj);
+            //}
         }
     }
+    function formatDate(date) {
+        //var d = new Date(date);
 
+        //month = '' + (date.getMonth() + 1);
+        //day = '' + date.getDate();
+        //year = date.getFullYear();
+
+        //if (month.length < 2)
+        //    month = '0' + month;
+        //if (day.length < 2)
+        //    day = '0' + day;
+        var newdate = date.split("/").reverse().join("-");
+        return newdate;
+    }
     function ValidateBankAccountTransfer() {
         $(".help-block").remove();
         $('.form-group').removeClass('has-error');
@@ -1404,32 +1429,33 @@
                 $scope.PrePayment.NextInstallmentDate = p2.data.Loan.NextInstallmentDate;
                 $scope.PrePayment.LoanIntrestRate = p2.data.Loan.LoanIntrestRate;
                 $scope.PrePayment.LoanTypeName = p2.data.Loan.LoanTypeName;
-                if (p2.data.Loan.LoanTypeName != "Flexi Loan") {
-                    $scope.PrePayment.TotalLoanAmount = p2.data.Loan.TotalLoanAmount;
-                    $("#PrePaymentMonthlyDiv").show();
-                    $("#PrePaymentTermDiv").show();
-                    $("#PrePaymentClosingLoandiv").show();
-                    $("#btnCloseLoan").attr("disabled", false);
+                $scope.PrePayment.Totalremaininginteresttilldate = p2.data.Totalremaininginteresttilldate;
+                //if (p2.data.Loan.LoanTypeName != "Flexi Loan") {
+                $scope.PrePayment.TotalLoanAmount = p2.data.Loan.TotalLoanAmount;
+                $("#PrePaymentMonthlyDiv").show();
+                $("#PrePaymentTermDiv").show();
+                $("#PrePaymentClosingLoandiv").show();
+                $("#btnCloseLoan").attr("disabled", false);
 
-                }
-                else {
-                    $scope.PrePayment.TotalLoanAmount = p2.data.Loan.TotalAmountToPay;
-                    $("#PrePaymentMonthlyDiv").hide();
-                    $("#PrePaymentTermDiv").hide();
-                    $("#PrePaymentClosingLoandiv").hide();
-                    $("#btnCloseLoan").attr("disabled", true);
+                //}
+                //else {
+                //    $scope.PrePayment.TotalLoanAmount = p2.data.Loan.TotalAmountToPay;
+                //    $("#PrePaymentMonthlyDiv").hide();
+                //    $("#PrePaymentTermDiv").hide();
+                //    $("#PrePaymentClosingLoandiv").hide();
+                //    $("#btnCloseLoan").attr("disabled", true);
 
-                }
+                //}
                 $scope.PrePayment.LoanId = p2.data.Loan.LoanId;
                 $scope.PrePayment.RemainingAmount = ($scope.PrePayment.TotalLoanAmount - $scope.PrePayment.PaidPrincipalAmount).toFixed(2);
-                if (p2.data.LoanTypeName != "Flexi Loan") {
-                    if (p2.data.Totalremaininginteresttilldate != 0 || p2.data.Totalremaininginteresttilldate != null) {
-                        //$scope.PrePayment.RemainingAmount = (parseFloat($scope.PrePayment.RemainingAmount) + parseFloat(p2.data.Totalremaininginteresttilldate)).toFixed(2);
-                        $scope.TotalBalancetillDate = (parseFloat($scope.PrePayment.RemainingAmount) + parseFloat(p2.data.Totalremaininginteresttilldate)).toFixed(2);
+                //if (p2.data.LoanTypeName != "Flexi Loan") {
+                if (p2.data.Totalremaininginteresttilldate != 0 || p2.data.Totalremaininginteresttilldate != null) {
+                    //$scope.PrePayment.RemainingAmount = (parseFloat($scope.PrePayment.RemainingAmount) + parseFloat(p2.data.Totalremaininginteresttilldate)).toFixed(2);
+                    $scope.TotalBalancetillDate = (parseFloat($scope.PrePayment.RemainingAmount) + parseFloat(p2.data.Totalremaininginteresttilldate)).toFixed(2);
 
-                        $scope.Totalremaininginteresttilldate = p2.data.Totalremaininginteresttilldate.toFixed(2);
-                    }
+                    $scope.Totalremaininginteresttilldate = p2.data.Totalremaininginteresttilldate.toFixed(2);
                 }
+                //}
                 if (parseFloat($scope.PrePayment.TotalPendingInstallmentAmount) > 0) {
                     $scope.TotalBalancetillDate = (parseFloat($scope.TotalBalancetillDate) + parseFloat($scope.PrePayment.TotalPendingInstallmentAmount.toFixed(2))).toFixed(2);
 
@@ -1447,7 +1473,8 @@
         obj.LoanId = $scope.PrePayment.LoanId;
         if ($scope.PrePayment.PaymentAmount != null && $scope.PrePayment.PaymentAmount != "" && $scope.PrePayment.Term != "" && $scope.PrePayment.Term != undefined) {
             //obj.PrincipalAmount = $scope.PrePayment.TotalLoanAmount - $scope.PrePayment.PaidPrincipalAmount - $scope.PrePayment.PaymentAmount);
-            var RemainingAmount = parseFloat($scope.PrePayment.TotalLoanAmount - $scope.PrePayment.PaidPrincipalAmount);
+
+            var RemainingAmount = parseFloat($scope.PrePayment.TotalLoanAmount - $scope.PrePayment.PaidPrincipalAmount + $scope.PrePayment.Totalremaininginteresttilldate);
             if (parseFloat(RemainingAmount) < 0) {
                 RemainingAmount = 0;
             }

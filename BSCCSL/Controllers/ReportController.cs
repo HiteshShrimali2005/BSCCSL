@@ -372,7 +372,27 @@ namespace BSCCSL.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
-
+        [HttpGet]
+        public HttpResponseMessage RptSummaryCRDR(Guid Id1, string Id2, DateTime? Id3, DateTime? Id4)
+        {
+            try
+            {
+                var agentCustomerlist = reportservice.RptSummaryCRDR(Id1, Id2, Request.GetCurrentUser(), Id3, Id4);
+                if (agentCustomerlist != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, agentCustomerlist);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogService.InsertLog(ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
         [HttpPost]
         public HttpResponseMessage RptAgentHierarchyCommission(ReportSearch data)
         {

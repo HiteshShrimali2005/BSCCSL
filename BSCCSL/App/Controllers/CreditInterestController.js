@@ -396,12 +396,12 @@
             else {
                 return showToastMsg(3, 'Cannot withdraw amount due to Insufficient balance');
             }
-            if ($scope.HolderData.ProductCode == "SA04" || $scope.HolderData.ProductName == "Smart Saving Plus") {
-                var MinumumBalance = $scope.HolderData.Balance - parseFloat($scope.WithdrawAmount);
-                if (MinumumBalance < 2500) {
-                    return showToastMsg(3, 'You can not withdraw this Amount. The minimun balance should be 2500.');
-                }
-            }
+            //if ($scope.HolderData.ProductCode == "SA04" || $scope.HolderData.ProductName == "Smart Saving Plus") {
+            //    var MinumumBalance = $scope.HolderData.Balance - parseFloat($scope.WithdrawAmount);
+            //    if (MinumumBalance < 2500) {
+            //        return showToastMsg(3, 'You can not withdraw this Amount. The minimun balance should be 2500.');
+            //    }
+            //}
 
 
             $scope.TransactionData.CustomerId = $scope.HolderData.CustomerId;

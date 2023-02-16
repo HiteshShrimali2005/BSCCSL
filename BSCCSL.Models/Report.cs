@@ -185,6 +185,7 @@ namespace BSCCSL.Models
         public int Year { get; set; }
         public bool? CommissionPaid { get; set; }
         public string Rank { get; set; }
+        public decimal? CommissionPercentage { get; set; }
     }
 
     public class RptCommissionPayment

@@ -145,8 +145,18 @@
                                         </label>
                                     </div>
                                 </div>
+                               
                             </div>
-
+                            <div class="row">
+                                <div class="col-md-8" ng-show="User.Role == 4">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="control-label lablefont">Customer</label>
+                                        <select class="form-control input-sm" id="customer" ng-model="User.CustomerId" ng-options="item.custid as item.Custname for item in CustomerList">
+                                            <option value="">Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-3 pull-right">
                                     <button type="button" class="btn btn-primary btn-sm btn-flat" ng-click="SaveUser()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>

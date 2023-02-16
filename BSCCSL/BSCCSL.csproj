@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BSCCSL.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\BSCCSL.Services\bin\Debug\BSCCSL.Services.dll</HintPath>
+    </Reference>
     <Reference Include="ClosedXML, Version=0.94.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXML.0.94.2\lib\net40\ClosedXML.dll</HintPath>
     </Reference>
@@ -214,6 +218,7 @@
     <Content Include="App\Controllers\JournalVoucherController.js" />
     <Content Include="App\Controllers\ProductEnquiryController.js" />
     <Content Include="App\Controllers\ProductRankController.js" />
+    <Content Include="App\Controllers\RptDayScrollSummaryController.js" />
     <Content Include="App\Controllers\RptAgentPerfomanceController.js" />
     <Content Include="App\Controllers\RptEmployeePerfomanceController.js" />
     <Content Include="App\Controllers\RptLoanStatementDetailsController.js" />
@@ -1428,6 +1433,7 @@
     <Content Include="Views\ProductRank.html" />
     <Content Include="Views\Reports.html" />
     <Content Include="Views\RptAgentPerfomance.html" />
+    <Content Include="Views\RptDayScrollSummary.html" />
     <Content Include="Views\RptEmployeePerfomance.html" />
     <Content Include="Views\RptLoanStatementDetails.html" />
     <Content Include="Views\RptLoanStatement.html" />
@@ -1580,10 +1586,6 @@
     <ProjectReference Include="..\BSCCSL.Models\BSCCSL.Models.csproj">
       <Project>{6c029d90-40d3-411a-9296-dc49cbb36939}</Project>
       <Name>BSCCSL.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BSCCSL.Services\BSCCSL.Services.csproj">
-      <Project>{82771216-89f8-4d7d-96a7-b126dc6fdf2a}</Project>
-      <Name>BSCCSL.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

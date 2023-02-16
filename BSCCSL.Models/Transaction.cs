@@ -66,6 +66,7 @@ namespace BSCCSL.Models
         }
         public long? NEFTNumber { get; set; }
         public DateTime? NEFTDate { get; set; }
+        public DateTime? Date { get; set; }
 
     }
 

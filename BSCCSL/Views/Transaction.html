@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-12" ng-show="HolderData.Status != 6">
                             <div class="col-md-8 pull-right" style="text-align:right">
-                                <button class="btn btn-warning btn-sm btn-flat" ng-click="CreateAutoFD()" ng-show="(HolderData.ProductType == 1 && HolderData.ProductCode == 'SA04')">Create FD</button>
+                                <button class="btn btn-warning btn-sm btn-flat" ng-click="CreateAutoFD()" ng-show="(HolderData.ProductType == 1)">Create FD</button>
                                 <button class="btn btn-primary btn-sm btn-flat" ng-click="OpenDepositModal()" ng-show="(HolderData.ProductType == 1 || HolderData.ProductType == 2|| HolderData.ProductType == 9|| HolderData.ProductType == 10)">Deposit</button>
                                 <button class="btn btn-success btn-sm btn-flat " ng-click="OpenWithdrawModal()" ng-show="(HolderData.ProductType == 1 || HolderData.ProductType == 2)">Withdraw</button>
                                 <button class="btn btn-info btn-sm btn-flat" ng-click="OpenInterAccTransferModal()" ng-show="(HolderData.ProductType == 1 || HolderData.ProductName == 'Akshaya Tritiya')">Inter Account</button>
@@ -489,12 +489,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <!--<div class="col-md-6">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="focusedinput" class="control-label lablefont">Transaction Time</label>
-                            <input type="text" class="form-control input-sm" id="txtinterAcTransactionTime" placeholder="TransactionTime">
+                            <input type="text" ui-date-format="dd/mm/yyyy" class="form-control input-sm" id="txtinterAcTransactionTime" ng-model="CreatedDate" placeholder="TransactionTime" />                           
+                            <!--<input type="text" id="txtinterAcTransactionTime" class="form-control input-sm datepicker" placeholder="TransactionTime">-->
                         </div>
-                    </div>-->
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="focusedinput" class="control-label lablefont">Amount</label>

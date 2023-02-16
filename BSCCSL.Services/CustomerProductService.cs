@@ -294,9 +294,10 @@ namespace BSCCSL.Services
                     CustomerProductData.NextInstallmentDate = CustomerProductdata.NextInstallmentDate;
                     CustomerProductData.Amount = CustomerProductdata.Amount;
 
-                    if (CustomerProductData.TimePeriod.HasValue && CustomerProductdata.NoOfMonthsORYears.HasValue && CustomerProductdata.Status == CustomerProductStatus.Pending &&
+                    if (CustomerProductData.TimePeriod.HasValue && CustomerProductdata.NoOfMonthsORYears.HasValue && 
+                        //CustomerProductdata.Status == CustomerProductStatus.Pending &&
                         (CustomerProductdata.ProductType == ProductType.Recurring_Deposit || CustomerProductdata.ProductType == ProductType.Fixed_Deposit
-                        || CustomerProductdata.ProductType == ProductType.Regular_Income_Planner || CustomerProductdata.ProductType == ProductType.Monthly_Income_Scheme))
+                        || CustomerProductdata.ProductType == ProductType.Regular_Income_Planner || CustomerProductdata.ProductType == ProductType.Monthly_Income_Scheme || CustomerProductdata.ProductType == ProductType.Capital_Builder || CustomerProductdata.ProductType == ProductType.Wealth_Creator))
                     {
                         int totalmonthyear = CalculateTotalInstallment(CustomerProductdata.TimePeriod.Value, CustomerProductdata.PaymentType, CustomerProductdata.NoOfMonthsORYears.Value);
                         CustomerProductData.TotalInstallment = totalmonthyear;
@@ -678,6 +679,7 @@ namespace BSCCSL.Services
                                            OldAccountNumber = c.OldAccountNumber,
                                            OpeningBalance = c.OpeningBalance,
                                            SkipFirstInstallment = c.SkipFirstInstallment,
+                                           NextInstallmentDate = c.NextInstallmentDate
                                        }).FirstOrDefault();
 
                     return Productdata;
@@ -2628,7 +2630,8 @@ namespace BSCCSL.Services
             using (var db = new BSCCSLEntity())
             {
                 int totalmonthyear = CalculateTotalInstallment(calculatematurity.TimePeriod.Value, calculatematurity.PaymentType.Value, calculatematurity.NoOfMonthsORYears.Value);
-
+                if (calculatematurity.ProductName == "Dhan Vruddhi Yojana")
+                    totalmonthyear = 3;
 
                 SqlParameter Amount = new SqlParameter("Amount", calculatematurity.Amount);
                 SqlParameter InterestRate = new SqlParameter("InterestRate", calculatematurity.InterestRate);
@@ -2808,7 +2811,7 @@ namespace BSCCSL.Services
         {
             using (var db = new BSCCSLEntity())
             {
-                var list1 = (from c in db.CustomerProduct.Where(a => a.IsDelete == false && a.IsActive == true && a.IsFreeze == null && a.Status == CustomerProductStatus.Approved && (a.ProductType == ProductType.Recurring_Deposit || a.ProductType == ProductType.Regular_Income_Planner || a.ProductType == ProductType.Three_Year_Product) && a.CustomerId == CustomerId && a.ReferenceCustomerProductId == null)
+                var list1 = (from c in db.CustomerProduct.Where(a => a.IsDelete == false && a.IsActive == true && a.IsFreeze == null && a.Status == CustomerProductStatus.Approved && (a.ProductType == ProductType.Recurring_Deposit || a.ProductType == ProductType.Regular_Income_Planner || a.ProductType == ProductType.Three_Year_Product || a.ProductType == ProductType.Wealth_Creator || a.ProductType == ProductType.Capital_Builder) && a.CustomerId == CustomerId && a.ReferenceCustomerProductId == null)
                              join p in db.Product on c.ProductId equals p.ProductId
                              select new InterAccountList
                              {
@@ -2899,8 +2902,8 @@ namespace BSCCSL.Services
                     totalyear = 1;
                 }
 
-                //if (totalyear > 5)
-                //{ totalyear = 5; }
+                if (totalyear > 6)
+                { totalyear = 6; }
 
                 //if (yeartillnow > 5)
                 //{ yeartillnow = 5; }

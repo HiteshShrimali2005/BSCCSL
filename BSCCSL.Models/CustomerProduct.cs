@@ -27,7 +27,6 @@ namespace BSCCSL.Models
         //public DateTime StartDate { get; set; }
         //public DateTime EndDate { get; set; }
         public DateTime OpeningDate { get; set; }
-
         [ForeignKey("CustomerId")]
         public Customer Customer { get; set; }
 
@@ -125,7 +124,10 @@ namespace BSCCSL.Models
             IsActive = true;
             CreatedDate = DateTime.Now;
         }
-
+        //public DateTime? Date
+        //{
+        //    get; set;
+        //}
     }
 
 

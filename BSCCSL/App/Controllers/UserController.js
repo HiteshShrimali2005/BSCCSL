@@ -99,6 +99,16 @@
     GetAllEmployee();
 
 
+    function GetAllCustomer() {
+
+        AppService.GetDetailsById("User", "GetAllCustomerByBranhId",$scope.UserBranch.BranchId).then(function (p1) {
+            if (p1.data != null) {
+                $scope.CustomerList = [];
+                $scope.CustomerList = p1.data;
+            }
+        });
+    }
+
     function GetAllEmployee() {
 
         var getemployeedata = AppService.GetDetailsWithoutId("User", "GetAllEmployee");
@@ -157,6 +167,7 @@
                 if ($scope.User.Role == 4) {
                     GetAllAgentList()
                     GetAgentRankList()
+                    GetAllCustomer()
                 }
                 else {
                     $scope.AgentRankData = [];
@@ -164,7 +175,7 @@
                 $scope.User.Password = "";
                 $("#txtDOB").data("DateTimePicker").date($filter('date')($scope.User.DateOfBirth, 'dd/MM/yyyy'));
                 $scope.User.Role = p1.data.Role + "";
-              
+
 
 
                 // $("#role").val($scope.User.Role)
@@ -252,7 +263,7 @@
     $scope.SaveAgentHierarchy = function () {
 
         var flag = true;
-      //  flag = ValidateAgentHierarchyForm();
+        //  flag = ValidateAgentHierarchyForm();
         if (flag) {
             $(':focus').blur();
             angular.forEach($scope.AgentRankData, function (data, index) {
@@ -409,18 +420,18 @@
             searching: false,
             dom: 'l<"floatRight"B>frtip',
             buttons: [
-                 {
-                     extend: 'pdf',
-                     exportOptions: {
-                         columns: [0, 1, 2, 3, 4, 5, 6]
-                     }
-                 },
-                  {
-                      extend: 'print',
-                      exportOptions: {
-                          columns: [0, 1, 2, 3, 4, 5, 6]
-                      }
-                  }
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    }
+                }
             ],
             "sAjaxSource": urlpath + "User/GetUserList",
             "fnServerData": function (sSource, aoData, fnCallback) {
@@ -445,9 +456,9 @@
                     return full.FirstName + ' ' + full.LastName
                 },
             },
-             {
-                 "mDataProp": "Gender",
-             },
+            {
+                "mDataProp": "Gender",
+            },
             {
                 "mDataProp": "PhoneNumber",
             },
@@ -460,9 +471,9 @@
             {
                 "mDataProp": "Branch.BranchName",
             },
-              {
-                  "mDataProp": "UserCode",
-              },
+            {
+                "mDataProp": "UserCode",
+            },
             {
                 "mDataProp": "RoleName",
                 "mRender": function (data, type, full) {

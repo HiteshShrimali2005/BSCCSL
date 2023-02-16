@@ -1283,6 +1283,101 @@ namespace BSCCSL.Services
                 return data;
             }
         }
+        public object RptSummaryCRDR(Guid branchId, string finYear, User user, DateTime? startDate, DateTime? endDate)
+        {
+            using (var db = new BSCCSLEntity())
+            {
+                string connectionstring = db.Database.Connection.ConnectionString;
+
+                SqlConnection sql = new SqlConnection(connectionstring);
+                SqlCommand cmdTimesheet = new SqlCommand("RptSummaryCRDR", sql);
+                cmdTimesheet.CommandType = CommandType.StoredProcedure;
+
+                var IsHO = db.Branch.Where(c => c.BranchId == branchId).Select(s => s.IsHO).FirstOrDefault();
+                if (IsHO && user.Role == Role.Admin)
+                {
+                    SqlParameter paramBranchId = cmdTimesheet.Parameters.Add("@BranchId", SqlDbType.UniqueIdentifier);
+                    paramBranchId.Value = DBNull.Value;
+                }
+                else
+                {
+                    SqlParameter paramBranchId = cmdTimesheet.Parameters.Add("@BranchId", SqlDbType.UniqueIdentifier);
+                    paramBranchId.Value = branchId;
+                }
+                if (string.IsNullOrEmpty(finYear))
+                {
+                    SqlParameter paramfinYear = cmdTimesheet.Parameters.Add("@FinYear", SqlDbType.VarChar);
+                    paramfinYear.Value = DBNull.Value;
+                }
+                else
+                {
+                    SqlParameter paramfinYear = cmdTimesheet.Parameters.Add("@FinYear", SqlDbType.VarChar);
+                    paramfinYear.Value = finYear;
+                }
+
+                if (startDate == null)
+                {
+                    SqlParameter paramfromDate = cmdTimesheet.Parameters.Add("@FromDate", SqlDbType.DateTime);
+                    paramfromDate.Value = DBNull.Value;
+                }
+                else
+                {
+                    SqlParameter paramfromDate = cmdTimesheet.Parameters.Add("@FromDate", SqlDbType.DateTime);
+                    paramfromDate.Value = startDate;
+                }
+                if (endDate == null)
+                {
+                    SqlParameter paramtoDate = cmdTimesheet.Parameters.Add("@ToDate", SqlDbType.DateTime);
+                    paramtoDate.Value = DBNull.Value;
+                }
+                else
+                {
+                    SqlParameter paramtoDate = cmdTimesheet.Parameters.Add("@ToDate", SqlDbType.DateTime);
+                    paramtoDate.Value = endDate;
+                }
+
+                //SqlParameter paramEdt = cmdTimesheet.Parameters.Add("@Start", SqlDbType.Int);
+                //paramEdt.Value = Search.iDisplayStart;
+
+                //SqlParameter parampartpost = cmdTimesheet.Parameters.Add("@Length", SqlDbType.Int);
+                //parampartpost.Value = Search.iDisplayLength;
+
+                //Execute the query
+                sql.Open();
+
+                //int result = cmdTimesheet.ExecuteNonQuery();
+                var reader = cmdTimesheet.ExecuteReader();
+
+                // Read Blogs from the first result set
+                List<RptAccountsCRDR> rptlist = ((IObjectContextAdapter)db).ObjectContext.Translate<RptAccountsCRDR>(reader).ToList();
+                //reader.NextResult();
+                decimal TotalCredit = 0; decimal TotalDebit = 0; decimal TotalOpeningBalance = 0;
+                TotalCredit = Convert.ToDecimal(rptlist.Select(x => x.Credit).Sum());
+                TotalDebit = Convert.ToDecimal(rptlist.Select(x => x.Debit).Sum());
+                TotalOpeningBalance = Convert.ToDecimal(rptlist.Select(x => x.OpeningBalance).Sum());
+                var data = new
+                {
+                    rptlist = rptlist,
+                    TotalCredit = TotalCredit,
+                    TotalDebit = TotalDebit,
+                    TotalOpeningBalance = TotalOpeningBalance,
+                };
+
+
+                // int Count = ((IObjectContextAdapter)db).ObjectContext.Translate<int>(reader).FirstOrDefault();
+
+                //var data = new
+                //{
+                //    sEcho = Search.sEcho,
+                //    iTotalRecords = rptlist.Count(),
+                //    iTotalDisplayRecords = rptlist.Count,
+                //    aaData = rptlist,
+                //};
+                sql.Close();
+                db.Dispose();
+                return data;
+            }
+        }
 
         public object RptAgentHierarchyCommission(ReportSearch Search, User user)
         {

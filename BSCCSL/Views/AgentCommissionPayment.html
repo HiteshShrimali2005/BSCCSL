@@ -149,7 +149,8 @@
                                         <td>{{sub.ProductName}}</td>
                                         <td class="text-center">{{sub.Date | date:'dd/MM/yyyy'}}</td>
                                         <td class="text-right">{{sub.Amount | number : 2}}</td>
-                                        <td class="text-center">{{(sub.agentCommission * 100)/ sub.Amount | number:2}}</td>
+                                        <!--<td class="text-center">{{(sub.agentCommission * 100)/ sub.Amount | number:2}}</td>-->
+                                        <td class="text-center">{{sub.CommissionPercentage}}</td>
                                         <td class="text-right">{{sub.agentCommission | number : 2}}</td>
                                     </tr>
                                     <tr ng-if="CommissionSubData.length == 0">
